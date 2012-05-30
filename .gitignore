@@ -1,0 +1,7 @@
+# development tool artifacts
+xcuserdata
+*.xcuserdatad
+*.tmproj
+
+# OS Artifacts
+.DS_Store
