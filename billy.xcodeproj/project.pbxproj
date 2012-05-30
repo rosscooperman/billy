@@ -11,10 +11,10 @@
 		91B9CC591576C3ED00AAEDC0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC581576C3ED00AAEDC0 /* Foundation.framework */; };
 		91B9CC5B1576C3ED00AAEDC0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC5A1576C3ED00AAEDC0 /* CoreGraphics.framework */; };
 		91B9CC781576C4FA00AAEDC0 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B9CC751576C4FA00AAEDC0 /* BLAppDelegate.m */; };
-		91B9CC791576C4FA00AAEDC0 /* BLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B9CC771576C4FA00AAEDC0 /* BLViewController.m */; };
-		91B9CC7C1576C54300AAEDC0 /* BLViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CC7B1576C54300AAEDC0 /* BLViewController.xib */; };
 		91B9CC811576C5D200AAEDC0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B9CC7F1576C5D200AAEDC0 /* main.m */; };
 		91B9CC891576C62900AAEDC0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CC881576C62900AAEDC0 /* InfoPlist.strings */; };
+		91B9CC911576D20A00AAEDC0 /* BLSplitCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B9CC8F1576D20A00AAEDC0 /* BLSplitCountViewController.m */; };
+		91B9CC951576D22100AAEDC0 /* BLSplitCountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,13 +24,13 @@
 		91B9CC5A1576C3ED00AAEDC0 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		91B9CC741576C4FA00AAEDC0 /* BLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAppDelegate.h; path = Classes/BLAppDelegate.h; sourceTree = "<group>"; };
 		91B9CC751576C4FA00AAEDC0 /* BLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAppDelegate.m; path = Classes/BLAppDelegate.m; sourceTree = "<group>"; };
-		91B9CC761576C4FA00AAEDC0 /* BLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLViewController.h; path = Classes/BLViewController.h; sourceTree = "<group>"; };
-		91B9CC771576C4FA00AAEDC0 /* BLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLViewController.m; path = Classes/BLViewController.m; sourceTree = "<group>"; };
-		91B9CC7B1576C54300AAEDC0 /* BLViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLViewController.xib; path = NIBs/BLViewController.xib; sourceTree = "<group>"; };
 		91B9CC7D1576C5D200AAEDC0 /* billy-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "billy-Info.plist"; path = "Support/billy-Info.plist"; sourceTree = SOURCE_ROOT; };
 		91B9CC7E1576C5D200AAEDC0 /* billy-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "billy-Prefix.pch"; path = "Support/billy-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		91B9CC7F1576C5D200AAEDC0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Support/main.m; sourceTree = SOURCE_ROOT; };
 		91B9CC881576C62900AAEDC0 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = InfoPlist.strings; path = Support/InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		91B9CC8E1576D20A00AAEDC0 /* BLSplitCountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLSplitCountViewController.h; path = Classes/BLSplitCountViewController.h; sourceTree = "<group>"; };
+		91B9CC8F1576D20A00AAEDC0 /* BLSplitCountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSplitCountViewController.m; path = Classes/BLSplitCountViewController.m; sourceTree = "<group>"; };
+		91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLSplitCountViewController.xib; path = NIBs/BLSplitCountViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,8 +93,8 @@
 			children = (
 				91B9CC741576C4FA00AAEDC0 /* BLAppDelegate.h */,
 				91B9CC751576C4FA00AAEDC0 /* BLAppDelegate.m */,
-				91B9CC761576C4FA00AAEDC0 /* BLViewController.h */,
-				91B9CC771576C4FA00AAEDC0 /* BLViewController.m */,
+				91B9CC8E1576D20A00AAEDC0 /* BLSplitCountViewController.h */,
+				91B9CC8F1576D20A00AAEDC0 /* BLSplitCountViewController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -102,7 +102,7 @@
 		91B9CC7A1576C53600AAEDC0 /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
-				91B9CC7B1576C54300AAEDC0 /* BLViewController.xib */,
+				91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */,
 			);
 			name = NIBs;
 			sourceTree = "<group>";
@@ -159,8 +159,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91B9CC7C1576C54300AAEDC0 /* BLViewController.xib in Resources */,
 				91B9CC891576C62900AAEDC0 /* InfoPlist.strings in Resources */,
+				91B9CC951576D22100AAEDC0 /* BLSplitCountViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,8 +172,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				91B9CC781576C4FA00AAEDC0 /* BLAppDelegate.m in Sources */,
-				91B9CC791576C4FA00AAEDC0 /* BLViewController.m in Sources */,
 				91B9CC811576C5D200AAEDC0 /* main.m in Sources */,
+				91B9CC911576D20A00AAEDC0 /* BLSplitCountViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,6 +266,7 @@
 				91B9CC721576C3ED00AAEDC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

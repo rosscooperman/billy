@@ -14,6 +14,11 @@
 @interface BLAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) BLViewController *viewController;
+@property (strong, nonatomic) UINavigationController *viewController;
+@property (assign, nonatomic) NSInteger splitCount;
+
+
++ (BLAppDelegate *)appDelegate;
+- (UIColor *)colorAtIndex:(NSInteger)index;
 
 @end
