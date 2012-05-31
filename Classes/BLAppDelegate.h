@@ -18,7 +18,12 @@
 @property (assign, nonatomic) NSInteger splitCount;
 
 
+// class methods
 + (BLAppDelegate *)appDelegate;
+
+// instance methods
 - (UIColor *)colorAtIndex:(NSInteger)index;
+- (NSString *)nameAtIndex:(NSInteger)index;
+- (void)setName:(NSString *)name atIndex:(NSInteger)index;
 
 @end

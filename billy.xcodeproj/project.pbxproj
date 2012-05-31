@@ -66,7 +66,6 @@
 				91B9CC7A1576C53600AAEDC0 /* NIBs */,
 				91B9CC5D1576C3ED00AAEDC0 /* Supporting Files */,
 				91B9CC551576C3ED00AAEDC0 /* Frameworks */,
-				91B9CCA01576E53700AAEDC0 /* libz.dylib */,
 				91B9CC531576C3ED00AAEDC0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -82,6 +81,7 @@
 		91B9CC551576C3ED00AAEDC0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				91B9CCA01576E53700AAEDC0 /* libz.dylib */,
 				91B9CC9C1576E4A900AAEDC0 /* TestFlight */,
 				91B9CC561576C3ED00AAEDC0 /* UIKit.framework */,
 				91B9CC581576C3ED00AAEDC0 /* Foundation.framework */,

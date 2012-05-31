@@ -15,5 +15,7 @@
 
 - (IBAction)nextScreen:(id)sender;
 - (IBAction)previousScreen:(id)sender;
+- (IBAction)contentAreaTapped:(UITapGestureRecognizer *)recognizer;
+
 
 @end

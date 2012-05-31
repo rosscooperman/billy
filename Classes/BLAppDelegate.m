@@ -14,6 +14,9 @@
 
 @property (nonatomic, strong) NSArray *colors;
 
+
+- (void)setDefaultNames;
+
 @end
 
 
@@ -74,6 +77,41 @@
   }
   
   return (index < self.colors.count) ? [self.colors objectAtIndex:index] : [self.colors objectAtIndex:0];
+}
+
+
+- (void)setDefaultNames
+{
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSArray *names = [defaults arrayForKey:@"names"];
+  if (!names) {
+    [defaults setObject:[NSArray arrayWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil] forKey:@"names"];
+    [defaults synchronize];
+  }
+}
+
+
+- (void)setName:(NSString *)name atIndex:(NSInteger)index
+{
+  [self setDefaultNames];
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  NSMutableArray *names = [NSMutableArray arrayWithArray:[defaults arrayForKey:@"names"]];
+  if (names.count > index) {
+    [names replaceObjectAtIndex:index withObject:name];
+    [defaults setObject:[NSArray arrayWithArray:names] forKey:@"names"];
+    [defaults synchronize];
+  }
+}
+
+
+- (NSString *)nameAtIndex:(NSInteger)index
+{
+  [self setDefaultNames];
+  NSArray *names = [[NSUserDefaults standardUserDefaults] arrayForKey:@"names"];
+  if (names.count > index) {
+    return [names objectAtIndex:index];
+  }
+  return @"";
 }
 
 
