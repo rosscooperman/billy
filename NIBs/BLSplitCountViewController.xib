@@ -50,7 +50,7 @@
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">0</string>
-						<object class="NSColor" key="IBUITextColor" id="658006750">
+						<object class="NSColor" key="IBUITextColor" id="834462723">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
 						</object>
@@ -96,7 +96,7 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MAA</bytes>
 						</object>
-						<reference key="IBUIDisabledTitleColor" ref="658006750"/>
+						<reference key="IBUIDisabledTitleColor" ref="834462723"/>
 						<reference key="IBUINormalTitleColor" ref="22772324"/>
 						<object class="NSColor" key="IBUINormalTitleShadowColor" id="32250685">
 							<int key="NSColorSpace">3</int>
@@ -120,7 +120,7 @@
 						<string key="NSFrame">{{274, 207}, {46, 46}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="705671391"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -136,7 +136,7 @@
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
 						<string key="IBUINormalTitle">+</string>
 						<reference key="IBUIHighlightedTitleColor" ref="22772324"/>
-						<reference key="IBUIDisabledTitleColor" ref="658006750"/>
+						<reference key="IBUIDisabledTitleColor" ref="834462723"/>
 						<reference key="IBUINormalTitleColor" ref="22772324"/>
 						<reference key="IBUINormalTitleShadowColor" ref="32250685"/>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
@@ -186,6 +186,44 @@
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Futura-Medium</string>
 							<double key="NSSize">16</double>
+							<int key="NSfFlags">16</int>
+						</object>
+					</object>
+					<object class="IBUIButton" id="705671391">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{264, 404}, {46, 46}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MCAwLjggMC4yOTQxMTc2NDcxAA</bytes>
+						</object>
+						<bool key="IBUIOpaque">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<int key="IBUIContentHorizontalAlignment">0</int>
+						<int key="IBUIContentVerticalAlignment">0</int>
+						<double key="IBUITitleEdgeInsets.top">2</double>
+						<double key="IBUITitleEdgeInsets.bottom">0.0</double>
+						<double key="IBUITitleEdgeInsets.left">2</double>
+						<double key="IBUITitleEdgeInsets.right">0.0</double>
+						<string key="IBUINormalTitle">&gt;</string>
+						<object class="NSColor" key="IBUIHighlightedTitleColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MQA</bytes>
+						</object>
+						<reference key="IBUINormalTitleColor" ref="22772324"/>
+						<reference key="IBUINormalTitleShadowColor" ref="32250685"/>
+						<object class="IBUIFontDescription" key="IBUIFontDescription">
+							<string key="name">Futura-CondensedExtraBold</string>
+							<string key="family">Futura</string>
+							<int key="traits">2</int>
+							<double key="pointSize">22</double>
+						</object>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">Futura-CondensedExtraBold</string>
+							<double key="NSSize">22</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -253,6 +291,15 @@
 					</object>
 					<int key="connectionID">12</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">nextScreen:</string>
+						<reference key="source" ref="705671391"/>
+						<reference key="destination" ref="372490531"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">14</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -270,6 +317,7 @@
 							<reference ref="121927741"/>
 							<reference ref="959852004"/>
 							<reference ref="22227018"/>
+							<reference ref="705671391"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -308,6 +356,12 @@
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Split Count</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">13</int>
+						<reference key="object" ref="705671391"/>
+						<reference key="parent" ref="191373211"/>
+						<string key="objectName">Next Screen Button</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -316,6 +370,8 @@
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="13.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="4.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="3" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
@@ -329,7 +385,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">12</int>
+			<int key="maxID">14</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -339,6 +395,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="decrementCount:">id</string>
 						<string key="incrementCount:">id</string>
+						<string key="nextScreen:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="decrementCount:">
@@ -347,6 +404,10 @@
 						</object>
 						<object class="IBActionInfo" key="incrementCount:">
 							<string key="name">incrementCount:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="nextScreen:">
+							<string key="name">nextScreen:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>

@@ -17,5 +17,6 @@
 
 - (IBAction)incrementCount:(id)sender;
 - (IBAction)decrementCount:(id)sender;
+- (IBAction)nextScreen:(id)sender;
 
 @end

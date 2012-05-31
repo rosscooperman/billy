@@ -7,6 +7,7 @@
 //
 
 #import "BLSplitCountViewController.h"
+#import "BLNamesViewController.h"
 
 
 @interface BLSplitCountViewController ()
@@ -63,6 +64,13 @@
 {
   [BLAppDelegate appDelegate].splitCount--;
   [self setCount:[BLAppDelegate appDelegate].splitCount];
+}
+
+
+- (void)nextScreen:(id)sender
+{
+  BLNamesViewController *namesController = [[BLNamesViewController alloc] init];
+  [self.navigationController pushViewController:namesController animated:YES];
 }
 
 @end
