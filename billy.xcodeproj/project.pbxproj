@@ -17,6 +17,8 @@
 		91B9CC951576D22100AAEDC0 /* BLSplitCountViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */; };
 		91B9CC9F1576E4A900AAEDC0 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC9D1576E4A900AAEDC0 /* libTestFlight.a */; };
 		91B9CCA11576E53700AAEDC0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CCA01576E53700AAEDC0 /* libz.dylib */; };
+		91B9CCAE1577D0DE00AAEDC0 /* BLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B9CCAC1577D0DE00AAEDC0 /* BLCameraViewController.m */; };
+		91B9CCB21577D10B00AAEDC0 /* BLCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCB11577D10B00AAEDC0 /* BLCameraViewController.xib */; };
 		91EC8CCF15772291000E7DE8 /* BLNamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EC8CCD15772291000E7DE8 /* BLNamesViewController.m */; };
 		91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */; };
 /* End PBXBuildFile section */
@@ -38,6 +40,9 @@
 		91B9CC9D1576E4A900AAEDC0 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		91B9CC9E1576E4A900AAEDC0 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		91B9CCA01576E53700AAEDC0 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		91B9CCAB1577D0DE00AAEDC0 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = Classes/BLCameraViewController.h; sourceTree = "<group>"; };
+		91B9CCAC1577D0DE00AAEDC0 /* BLCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCameraViewController.m; path = Classes/BLCameraViewController.m; sourceTree = "<group>"; };
+		91B9CCB11577D10B00AAEDC0 /* BLCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLCameraViewController.xib; path = NIBs/BLCameraViewController.xib; sourceTree = "<group>"; };
 		91EC8CCC15772291000E7DE8 /* BLNamesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLNamesViewController.h; path = Classes/BLNamesViewController.h; sourceTree = "<group>"; };
 		91EC8CCD15772291000E7DE8 /* BLNamesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLNamesViewController.m; path = Classes/BLNamesViewController.m; sourceTree = "<group>"; };
 		91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLNamesViewController.xib; path = NIBs/BLNamesViewController.xib; sourceTree = "<group>"; };
@@ -107,6 +112,8 @@
 			children = (
 				91B9CC741576C4FA00AAEDC0 /* BLAppDelegate.h */,
 				91B9CC751576C4FA00AAEDC0 /* BLAppDelegate.m */,
+				91B9CCAB1577D0DE00AAEDC0 /* BLCameraViewController.h */,
+				91B9CCAC1577D0DE00AAEDC0 /* BLCameraViewController.m */,
 				91EC8CCC15772291000E7DE8 /* BLNamesViewController.h */,
 				91EC8CCD15772291000E7DE8 /* BLNamesViewController.m */,
 				91B9CC8E1576D20A00AAEDC0 /* BLSplitCountViewController.h */,
@@ -118,6 +125,7 @@
 		91B9CC7A1576C53600AAEDC0 /* NIBs */ = {
 			isa = PBXGroup;
 			children = (
+				91B9CCB11577D10B00AAEDC0 /* BLCameraViewController.xib */,
 				91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */,
 				91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */,
 			);
@@ -189,6 +197,7 @@
 				91B9CC891576C62900AAEDC0 /* InfoPlist.strings in Resources */,
 				91B9CC951576D22100AAEDC0 /* BLSplitCountViewController.xib in Resources */,
 				91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */,
+				91B9CCB21577D10B00AAEDC0 /* BLCameraViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -203,6 +212,7 @@
 				91B9CC811576C5D200AAEDC0 /* main.m in Sources */,
 				91B9CC911576D20A00AAEDC0 /* BLSplitCountViewController.m in Sources */,
 				91EC8CCF15772291000E7DE8 /* BLNamesViewController.m in Sources */,
+				91B9CCAE1577D0DE00AAEDC0 /* BLCameraViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
