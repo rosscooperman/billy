@@ -12,6 +12,11 @@
 		9148ADDA1577DDBF00985CA0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9148ADD91577DDBF00985CA0 /* AVFoundation.framework */; };
 		9148ADDE1577E6DD00985CA0 /* BLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9148ADDC1577E6DD00985CA0 /* BLCropViewController.m */; };
 		9148ADE11577E6F600985CA0 /* BLCropViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9148ADE01577E6F600985CA0 /* BLCropViewController.xib */; };
+		9148ADE41577FD6B00985CA0 /* cropDot.png in Resources */ = {isa = PBXBuildFile; fileRef = 9148ADE21577FD6B00985CA0 /* cropDot.png */; };
+		9148ADE51577FD6B00985CA0 /* cropDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9148ADE31577FD6B00985CA0 /* cropDot@2x.png */; };
+		9148ADE7157800D600985CA0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9148ADE6157800D600985CA0 /* QuartzCore.framework */; };
+		9148ADEA1578147300985CA0 /* iconCheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 9148ADE81578147300985CA0 /* iconCheck.png */; };
+		9148ADEB1578147300985CA0 /* iconCheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9148ADE91578147300985CA0 /* iconCheck@2x.png */; };
 		91B9CC571576C3ED00AAEDC0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC561576C3ED00AAEDC0 /* UIKit.framework */; };
 		91B9CC591576C3ED00AAEDC0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC581576C3ED00AAEDC0 /* Foundation.framework */; };
 		91B9CC5B1576C3ED00AAEDC0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC5A1576C3ED00AAEDC0 /* CoreGraphics.framework */; };
@@ -41,6 +46,11 @@
 		9148ADDB1577E6DD00985CA0 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = Classes/BLCropViewController.h; sourceTree = "<group>"; };
 		9148ADDC1577E6DD00985CA0 /* BLCropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCropViewController.m; path = Classes/BLCropViewController.m; sourceTree = "<group>"; };
 		9148ADE01577E6F600985CA0 /* BLCropViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLCropViewController.xib; path = NIBs/BLCropViewController.xib; sourceTree = "<group>"; };
+		9148ADE21577FD6B00985CA0 /* cropDot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cropDot.png; sourceTree = "<group>"; };
+		9148ADE31577FD6B00985CA0 /* cropDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cropDot@2x.png"; sourceTree = "<group>"; };
+		9148ADE6157800D600985CA0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9148ADE81578147300985CA0 /* iconCheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconCheck.png; sourceTree = "<group>"; };
+		9148ADE91578147300985CA0 /* iconCheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconCheck@2x.png"; sourceTree = "<group>"; };
 		91B9CC521576C3ED00AAEDC0 /* billy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B9CC561576C3ED00AAEDC0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		91B9CC581576C3ED00AAEDC0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -76,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9148ADE7157800D600985CA0 /* QuartzCore.framework in Frameworks */,
 				9148ADDA1577DDBF00985CA0 /* AVFoundation.framework in Frameworks */,
 				91B9CC571576C3ED00AAEDC0 /* UIKit.framework in Frameworks */,
 				91B9CC591576C3ED00AAEDC0 /* Foundation.framework in Frameworks */,
@@ -113,6 +124,7 @@
 			children = (
 				91B9CCA01576E53700AAEDC0 /* libz.dylib */,
 				91B9CC9C1576E4A900AAEDC0 /* TestFlight */,
+				9148ADE6157800D600985CA0 /* QuartzCore.framework */,
 				9148ADD91577DDBF00985CA0 /* AVFoundation.framework */,
 				91B9CC561576C3ED00AAEDC0 /* UIKit.framework */,
 				91B9CC581576C3ED00AAEDC0 /* Foundation.framework */,
@@ -180,8 +192,12 @@
 				91B9CCC51577D72500AAEDC0 /* Icon-72@2x.png */,
 				91B9CCC61577D72500AAEDC0 /* Icon.png */,
 				91B9CCC71577D72500AAEDC0 /* Icon@2x.png */,
+				9148ADE21577FD6B00985CA0 /* cropDot.png */,
+				9148ADE31577FD6B00985CA0 /* cropDot@2x.png */,
 				9148ADD51577DCC200985CA0 /* iconCamera.png */,
 				9148ADD61577DCC200985CA0 /* iconCamera@2x.png */,
+				9148ADE81578147300985CA0 /* iconCheck.png */,
+				9148ADE91578147300985CA0 /* iconCheck@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -251,6 +267,10 @@
 				9148ADD71577DCC200985CA0 /* iconCamera.png in Resources */,
 				9148ADD81577DCC200985CA0 /* iconCamera@2x.png in Resources */,
 				9148ADE11577E6F600985CA0 /* BLCropViewController.xib in Resources */,
+				9148ADE41577FD6B00985CA0 /* cropDot.png in Resources */,
+				9148ADE51577FD6B00985CA0 /* cropDot@2x.png in Resources */,
+				9148ADEA1578147300985CA0 /* iconCheck.png in Resources */,
+				9148ADEB1578147300985CA0 /* iconCheck@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

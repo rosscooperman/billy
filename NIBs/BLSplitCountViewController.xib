@@ -195,7 +195,6 @@
 						<string key="NSFrame">{{272, 405}, {38, 45}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -210,10 +209,7 @@
 						<double key="IBUITitleEdgeInsets.left">2</double>
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
 						<string key="IBUINormalTitle">&gt;</string>
-						<object class="NSColor" key="IBUIHighlightedTitleColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
-						</object>
+						<reference key="IBUIHighlightedTitleColor" ref="22772324"/>
 						<reference key="IBUINormalTitleColor" ref="22772324"/>
 						<reference key="IBUINormalTitleShadowColor" ref="32250685"/>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
@@ -373,6 +369,7 @@
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="13.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
+				<real value="1" key="13.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="4.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="3" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>

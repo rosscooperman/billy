@@ -14,8 +14,17 @@
 @property (nonatomic, strong) NSData *photoData;
 @property (nonatomic, strong) IBOutlet UIImageView *previewView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (nonatomic, strong) IBOutlet UIView *cropBoundary;
+@property (nonatomic, strong) IBOutlet UIButton *leftHandle;
+@property (nonatomic, strong) IBOutlet UIButton *topHandle;
+@property (nonatomic, strong) IBOutlet UIButton *rightHandle;
+@property (nonatomic, strong) IBOutlet UIButton *bottomHandle;
+@property (nonatomic, strong) IBOutlet UIButton *processImageButton;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *processingImageIndicator;
 
 
 - (IBAction)previousScreen:(id)sender;
+- (IBAction)dragHandle:(UIPanGestureRecognizer *)recognizer;
+- (IBAction)processImage:(id)sender;
 
 @end
