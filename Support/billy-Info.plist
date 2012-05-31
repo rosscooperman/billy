@@ -21,11 +21,10 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>iTunesArtwork</string>
-				<string>Icon.png</string>
-				<string>Icon@2x.png</string>
-				<string>Icon-72.png</string>
-				<string>Icon-72@2x.png</string>
+				<string>Icon-72@2x</string>
+				<string>Icon-72</string>
+				<string>Icon@2x</string>
+				<string>Icon</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
