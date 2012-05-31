@@ -21,7 +21,7 @@
 
 @synthesize window = _window;
 @synthesize viewController = _viewController;
-@synthesize splitCount;
+@synthesize splitCount = _splitCount;
 @synthesize colors;
 
 
@@ -34,6 +34,9 @@
   
   // every app deserves a window
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+  
+  // initialize application data
+  self.splitCount = 2;
   
   // construct the only navigation controller we'll ever need
   self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLSplitCountViewController alloc] init]];
@@ -71,6 +74,14 @@
   }
   
   return (index < self.colors.count) ? [self.colors objectAtIndex:index] : [self.colors objectAtIndex:0];
+}
+
+
+#pragma mark - Property Implementations
+
+- (void)setSplitCount:(NSInteger)splitCount
+{
+  if (splitCount >= 2 && splitCount <= 8) _splitCount = splitCount;
 }
 
 @end

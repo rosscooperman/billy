@@ -11,7 +11,7 @@
 
 @interface BLSplitCountViewController ()
 
-@property (nonatomic, assign) NSInteger count;
+- (void)setCount:(NSInteger)count;
 
 @end
 
@@ -21,7 +21,6 @@
 @synthesize countLabel;
 @synthesize minusButton;
 @synthesize plusButton;
-@synthesize count = _count;
 
 
 #pragma mark - View Lifecycle
@@ -29,25 +28,23 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  self.count = [BLAppDelegate appDelegate].splitCount;
+  [self setCount:[BLAppDelegate appDelegate].splitCount];
 }
 
 
-#pragma mark - Property Implementations
+#pragma mark - Instance Methods
 
 - (void)setCount:(NSInteger)count
 {
-  _count = count;
-  
   self.minusButton.enabled = YES;
   self.plusButton.enabled = YES;
-  self.countLabel.text = [NSString stringWithFormat:@"%d", self.count];
-  self.countLabel.textColor = [[BLAppDelegate appDelegate] colorAtIndex:self.count];
+  self.countLabel.text = [NSString stringWithFormat:@"%d", count];
+  self.countLabel.textColor = [[BLAppDelegate appDelegate] colorAtIndex:count];
   
-  if (self.count <= 0) {
+  if (count <= 2) {
     self.minusButton.enabled = NO;
   }
-  else if (self.count >= 8) {
+  else if (count >= 8) {
     self.plusButton.enabled = NO;
   }
 }
@@ -57,13 +54,15 @@
 
 - (void)incrementCount:(id)sender
 {
-  self.count++;
+  [BLAppDelegate appDelegate].splitCount++;
+  [self setCount:[BLAppDelegate appDelegate].splitCount];
 }
 
 
 - (void)decrementCount:(id)sender
 {
-  self.count--;
+  [BLAppDelegate appDelegate].splitCount--;
+  [self setCount:[BLAppDelegate appDelegate].splitCount];
 }
 
 @end
