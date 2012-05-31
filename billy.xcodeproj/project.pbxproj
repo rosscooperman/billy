@@ -19,12 +19,12 @@
 		91B9CCA11576E53700AAEDC0 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CCA01576E53700AAEDC0 /* libz.dylib */; };
 		91B9CCAE1577D0DE00AAEDC0 /* BLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B9CCAC1577D0DE00AAEDC0 /* BLCameraViewController.m */; };
 		91B9CCB21577D10B00AAEDC0 /* BLCameraViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCB11577D10B00AAEDC0 /* BLCameraViewController.xib */; };
-		91B9CCBA1577D50800AAEDC0 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCB41577D50800AAEDC0 /* Icon-72.png */; };
-		91B9CCBB1577D50800AAEDC0 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCB51577D50800AAEDC0 /* Icon-72@2x.png */; };
-		91B9CCBC1577D50800AAEDC0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCB61577D50800AAEDC0 /* Icon.png */; };
-		91B9CCBD1577D50800AAEDC0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCB71577D50800AAEDC0 /* Icon@2x.png */; };
-		91B9CCBE1577D50800AAEDC0 /* iTunesArtwork.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCB81577D50800AAEDC0 /* iTunesArtwork.png */; };
-		91B9CCBF1577D50800AAEDC0 /* iTunesArtwork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCB91577D50800AAEDC0 /* iTunesArtwork@2x.png */; };
+		91B9CCCA1577D72500AAEDC0 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCC41577D72500AAEDC0 /* Icon-72.png */; };
+		91B9CCCB1577D72500AAEDC0 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCC51577D72500AAEDC0 /* Icon-72@2x.png */; };
+		91B9CCCC1577D72500AAEDC0 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCC61577D72500AAEDC0 /* Icon.png */; };
+		91B9CCCD1577D72500AAEDC0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCC71577D72500AAEDC0 /* Icon@2x.png */; };
+		91B9CCCE1577D72500AAEDC0 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCC81577D72500AAEDC0 /* iTunesArtwork */; };
+		91B9CCCF1577D72500AAEDC0 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCC91577D72500AAEDC0 /* iTunesArtwork@2x */; };
 		91EC8CCF15772291000E7DE8 /* BLNamesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EC8CCD15772291000E7DE8 /* BLNamesViewController.m */; };
 		91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */; };
 /* End PBXBuildFile section */
@@ -49,12 +49,12 @@
 		91B9CCAB1577D0DE00AAEDC0 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = Classes/BLCameraViewController.h; sourceTree = "<group>"; };
 		91B9CCAC1577D0DE00AAEDC0 /* BLCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLCameraViewController.m; path = Classes/BLCameraViewController.m; sourceTree = "<group>"; };
 		91B9CCB11577D10B00AAEDC0 /* BLCameraViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLCameraViewController.xib; path = NIBs/BLCameraViewController.xib; sourceTree = "<group>"; };
-		91B9CCB41577D50800AAEDC0 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		91B9CCB51577D50800AAEDC0 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = "<group>"; };
-		91B9CCB61577D50800AAEDC0 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		91B9CCB71577D50800AAEDC0 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		91B9CCB81577D50800AAEDC0 /* iTunesArtwork.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iTunesArtwork.png; sourceTree = "<group>"; };
-		91B9CCB91577D50800AAEDC0 /* iTunesArtwork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iTunesArtwork@2x.png"; sourceTree = "<group>"; };
+		91B9CCC41577D72500AAEDC0 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = SOURCE_ROOT; };
+		91B9CCC51577D72500AAEDC0 /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72@2x.png"; sourceTree = SOURCE_ROOT; };
+		91B9CCC61577D72500AAEDC0 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = SOURCE_ROOT; };
+		91B9CCC71577D72500AAEDC0 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
+		91B9CCC81577D72500AAEDC0 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = SOURCE_ROOT; };
+		91B9CCC91577D72500AAEDC0 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = SOURCE_ROOT; };
 		91EC8CCC15772291000E7DE8 /* BLNamesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLNamesViewController.h; path = Classes/BLNamesViewController.h; sourceTree = "<group>"; };
 		91EC8CCD15772291000E7DE8 /* BLNamesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLNamesViewController.m; path = Classes/BLNamesViewController.m; sourceTree = "<group>"; };
 		91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLNamesViewController.xib; path = NIBs/BLNamesViewController.xib; sourceTree = "<group>"; };
@@ -158,12 +158,12 @@
 		91B9CCB31577D50800AAEDC0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				91B9CCB41577D50800AAEDC0 /* Icon-72.png */,
-				91B9CCB51577D50800AAEDC0 /* Icon-72@2x.png */,
-				91B9CCB61577D50800AAEDC0 /* Icon.png */,
-				91B9CCB71577D50800AAEDC0 /* Icon@2x.png */,
-				91B9CCB81577D50800AAEDC0 /* iTunesArtwork.png */,
-				91B9CCB91577D50800AAEDC0 /* iTunesArtwork@2x.png */,
+				91B9CCC41577D72500AAEDC0 /* Icon-72.png */,
+				91B9CCC51577D72500AAEDC0 /* Icon-72@2x.png */,
+				91B9CCC61577D72500AAEDC0 /* Icon.png */,
+				91B9CCC71577D72500AAEDC0 /* Icon@2x.png */,
+				91B9CCC81577D72500AAEDC0 /* iTunesArtwork */,
+				91B9CCC91577D72500AAEDC0 /* iTunesArtwork@2x */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -224,12 +224,12 @@
 				91B9CC951576D22100AAEDC0 /* BLSplitCountViewController.xib in Resources */,
 				91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */,
 				91B9CCB21577D10B00AAEDC0 /* BLCameraViewController.xib in Resources */,
-				91B9CCBA1577D50800AAEDC0 /* Icon-72.png in Resources */,
-				91B9CCBB1577D50800AAEDC0 /* Icon-72@2x.png in Resources */,
-				91B9CCBC1577D50800AAEDC0 /* Icon.png in Resources */,
-				91B9CCBD1577D50800AAEDC0 /* Icon@2x.png in Resources */,
-				91B9CCBE1577D50800AAEDC0 /* iTunesArtwork.png in Resources */,
-				91B9CCBF1577D50800AAEDC0 /* iTunesArtwork@2x.png in Resources */,
+				91B9CCCA1577D72500AAEDC0 /* Icon-72.png in Resources */,
+				91B9CCCB1577D72500AAEDC0 /* Icon-72@2x.png in Resources */,
+				91B9CCCC1577D72500AAEDC0 /* Icon.png in Resources */,
+				91B9CCCD1577D72500AAEDC0 /* Icon@2x.png in Resources */,
+				91B9CCCE1577D72500AAEDC0 /* iTunesArtwork in Resources */,
+				91B9CCCF1577D72500AAEDC0 /* iTunesArtwork@2x in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
