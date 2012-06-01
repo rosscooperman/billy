@@ -7,7 +7,7 @@
 //
 
 #define TEXT_BOX_HEIGHT 45
-#define TEXT_BOX_WIDTH 230
+#define TEXT_BOX_WIDTH 216
 
 
 #import "BLNamesViewController.h"
@@ -84,7 +84,7 @@
   // set up the text field
   UITextField *textField = [[UITextField alloc] initWithFrame:CGRectInset(wrapper.bounds, 10, 0)];
   textField.borderStyle = UITextBorderStyleNone;
-  textField.font = [UIFont fontWithName:@"Futura-Medium" size:16];
+  textField.font = [UIFont fontWithName:@"Futura-Medium" size:22];
   textField.backgroundColor = [UIColor clearColor];
   textField.textColor = [UIColor blackColor];
   textField.autocorrectionType = UITextAutocorrectionTypeNo;
