@@ -163,30 +163,50 @@
 
 - (UIImage *)cropImage:(UIImage *)image
 {
-  CGFloat topAdjustment = 0.0;
-  CGFloat leftAdjustment = 0.0;
-  
+  // figure out where the black bars appear on the image and calculate the scaling factor applied to the image
   CGFloat realAspectRatio = image.size.width / image.size.height;
-  CGFloat previewAspectRatio = self.cropBoundary.frame.size.width / self.cropBoundary.frame.size.height;
-  
+  CGFloat previewAspectRatio = self.cropBoundary.bounds.size.width / self.cropBoundary.bounds.size.height;
+  CGFloat scaleFactor = 0.0, reverseScaleFactor = 0.0;
   if (realAspectRatio > previewAspectRatio) {
-    topAdjustment = (realAspectRatio - previewAspectRatio) * self.cropBoundary.frame.size.height;
+    scaleFactor = self.cropBoundary.bounds.size.width / image.size.width;
+    reverseScaleFactor = image.size.width / self.cropBoundary.bounds.size.width;
   }
   else {
-    leftAdjustment = (previewAspectRatio - realAspectRatio) * self.cropBoundary.frame.size.width;
+    scaleFactor = self.cropBoundary.bounds.size.height / image.size.height;
+    reverseScaleFactor = image.size.height / self.cropBoundary.bounds.size.height;
   }
   
-  CGFloat widthFactor = (image.size.width / self.cropBoundary.frame.size.width);
-  CGFloat heightFactor = (image.size.height / self.cropBoundary.frame.size.height);
+  // figure out the scaled size of the image (on screen)
+  CGSize scaledSize = CGSizeMake(image.size.width * scaleFactor, image.size.height * scaleFactor);
   
-  CGFloat realX = (self.cropLeft - (leftAdjustment / 4.0)) * widthFactor;
-  CGFloat realY = (self.cropTop - (topAdjustment / 4.0)) * heightFactor;
-  CGFloat realWidth = ((self.cropRight - self.cropLeft) + (leftAdjustment / 2.0)) * widthFactor;
-  CGFloat realHeight = ((self.cropBottom - self.cropTop) + (topAdjustment / 2.0)) * heightFactor;
+  // generate the *real* cropping rectangle
+  CGRect cropRect = self.cropBoundary.bounds;
+  cropRect.origin.x += (self.cropBoundary.bounds.size.width - scaledSize.width) / 2.0;
+  cropRect.origin.y += (self.cropBoundary.bounds.size.height - scaledSize.height) / 2.0;
+  cropRect.size.width -= self.cropBoundary.bounds.size.width - scaledSize.width;
+  cropRect.size.height -= self.cropBoundary.bounds.size.height - scaledSize.height;
   
-  CGRect croppingBox = CGRectMake(realX, realY, realWidth, realHeight);
-  CGImageRef croppedImageRef = CGImageCreateWithImageInRect(image.CGImage, croppingBox);
-  UIImage *croppedImage = [UIImage imageWithCGImage:croppedImageRef]; 
+  // adjust the crop offsets based on the new cropping rectangle
+  self.cropLeft -= cropRect.origin.x;
+  self.cropRight -= cropRect.origin.x;
+  self.cropTop -= cropRect.origin.y;
+  self.cropBottom -= cropRect.origin.y;
+  
+  // adjust the cropping rectangle based on the crop points
+  cropRect.origin.x = self.cropLeft;
+  cropRect.origin.y = self.cropTop;
+  cropRect.size.width = self.cropRight - self.cropLeft;
+  cropRect.size.height = self.cropBottom - self.cropTop;
+  
+  // expand the cropping rectangle using the reverse scaling factor
+  cropRect.origin.x *= reverseScaleFactor;
+  cropRect.origin.y *= reverseScaleFactor;
+  cropRect.size.width *= reverseScaleFactor;
+  cropRect.size.height *= reverseScaleFactor;
+  
+  // crop!
+  CGImageRef croppedImageRef = CGImageCreateWithImageInRect(image.CGImage, cropRect);
+  UIImage *croppedImage = [UIImage imageWithCGImage:croppedImageRef];
   CGImageRelease(croppedImageRef);
   return croppedImage;
 }
@@ -364,8 +384,11 @@
   UIImage *reoriented = [self reorientImage:self.previewView.image];
   UIImage *cropped = [self cropImage:reoriented];
   UIImage *gray = [self grayscaleizeImage:cropped];
+  
+  // this is just some stub code to visualize the change
   self.previewView.image = gray;
   self.cropBoundary.alpha = 0.0;
+  self.processImageButton.hidden = YES;
 }
 
 @end
