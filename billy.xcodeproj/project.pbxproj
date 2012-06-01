@@ -22,6 +22,9 @@
 		9148ADF915791D1400985CA0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9148ADF815791D1400985CA0 /* OpenGLES.framework */; };
 		9148ADFD157925ED00985CA0 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9148ADFC157925ED00985CA0 /* ImageIO.framework */; };
 		9148ADFF157926DF00985CA0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9148ADFE157926DF00985CA0 /* CoreMedia.framework */; };
+		9148AE0315792E7500985CA0 /* BLFixItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9148AE0115792E7400985CA0 /* BLFixItemsViewController.m */; };
+		9148AE0615792E9700985CA0 /* BLFixItemsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9148AE0515792E9700985CA0 /* BLFixItemsViewController.xib */; };
+		9148AE0A1579473700985CA0 /* BLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9148AE091579473700985CA0 /* BLTextField.m */; };
 		91B9CC571576C3ED00AAEDC0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC561576C3ED00AAEDC0 /* UIKit.framework */; };
 		91B9CC591576C3ED00AAEDC0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC581576C3ED00AAEDC0 /* Foundation.framework */; };
 		91B9CC5B1576C3ED00AAEDC0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC5A1576C3ED00AAEDC0 /* CoreGraphics.framework */; };
@@ -62,6 +65,11 @@
 		9148ADF815791D1400985CA0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		9148ADFC157925ED00985CA0 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		9148ADFE157926DF00985CA0 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		9148AE0015792E7400985CA0 /* BLFixItemsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLFixItemsViewController.h; path = Classes/BLFixItemsViewController.h; sourceTree = "<group>"; };
+		9148AE0115792E7400985CA0 /* BLFixItemsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLFixItemsViewController.m; path = Classes/BLFixItemsViewController.m; sourceTree = "<group>"; };
+		9148AE0515792E9700985CA0 /* BLFixItemsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLFixItemsViewController.xib; path = NIBs/BLFixItemsViewController.xib; sourceTree = "<group>"; };
+		9148AE081579473700985CA0 /* BLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTextField.h; path = CustomUI/BLTextField.h; sourceTree = "<group>"; };
+		9148AE091579473700985CA0 /* BLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTextField.m; path = CustomUI/BLTextField.m; sourceTree = "<group>"; };
 		91B9CC521576C3ED00AAEDC0 /* billy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B9CC561576C3ED00AAEDC0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		91B9CC581576C3ED00AAEDC0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -124,11 +132,21 @@
 			path = Frameworks/Tesseract;
 			sourceTree = "<group>";
 		};
+		9148AE071579471600985CA0 /* Custom UI */ = {
+			isa = PBXGroup;
+			children = (
+				9148AE081579473700985CA0 /* BLTextField.h */,
+				9148AE091579473700985CA0 /* BLTextField.m */,
+			);
+			name = "Custom UI";
+			sourceTree = "<group>";
+		};
 		91B9CC471576C3ED00AAEDC0 = {
 			isa = PBXGroup;
 			children = (
 				91B9CC731576C4EC00AAEDC0 /* Classes */,
 				91B9CC7A1576C53600AAEDC0 /* NIBs */,
+				9148AE071579471600985CA0 /* Custom UI */,
 				91B9CC5D1576C3ED00AAEDC0 /* Supporting Files */,
 				91B9CCB31577D50800AAEDC0 /* Images */,
 				91B9CC551576C3ED00AAEDC0 /* Frameworks */,
@@ -184,6 +202,8 @@
 				91B9CCAC1577D0DE00AAEDC0 /* BLCameraViewController.m */,
 				9148ADDB1577E6DD00985CA0 /* BLCropViewController.h */,
 				9148ADDC1577E6DD00985CA0 /* BLCropViewController.m */,
+				9148AE0015792E7400985CA0 /* BLFixItemsViewController.h */,
+				9148AE0115792E7400985CA0 /* BLFixItemsViewController.m */,
 				91EC8CCC15772291000E7DE8 /* BLNamesViewController.h */,
 				91EC8CCD15772291000E7DE8 /* BLNamesViewController.m */,
 				91B9CC8E1576D20A00AAEDC0 /* BLSplitCountViewController.h */,
@@ -197,6 +217,7 @@
 			children = (
 				91B9CCB11577D10B00AAEDC0 /* BLCameraViewController.xib */,
 				9148ADE01577E6F600985CA0 /* BLCropViewController.xib */,
+				9148AE0515792E9700985CA0 /* BLFixItemsViewController.xib */,
 				91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */,
 				91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */,
 			);
@@ -302,6 +323,7 @@
 				9148ADEA1578147300985CA0 /* iconCheck.png in Resources */,
 				9148ADEB1578147300985CA0 /* iconCheck@2x.png in Resources */,
 				9148ADF1157913FA00985CA0 /* tessdata in Resources */,
+				9148AE0615792E9700985CA0 /* BLFixItemsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -318,6 +340,8 @@
 				91EC8CCF15772291000E7DE8 /* BLNamesViewController.m in Sources */,
 				91B9CCAE1577D0DE00AAEDC0 /* BLCameraViewController.m in Sources */,
 				9148ADDE1577E6DD00985CA0 /* BLCropViewController.m in Sources */,
+				9148AE0315792E7500985CA0 /* BLFixItemsViewController.m in Sources */,
+				9148AE0A1579473700985CA0 /* BLTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

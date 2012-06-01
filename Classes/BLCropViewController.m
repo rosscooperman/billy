@@ -10,6 +10,7 @@
 #import <ImageIO/CGImageProperties.h>
 #import <AVFoundation/AVFoundation.h>
 #import "BLCropViewController.h"
+#import "BLFixItemsViewController.h"
 #import "Tesseract.h"
 
 
@@ -435,13 +436,11 @@
   UIImage *reoriented = [self reorientImage:self.previewView.image];
   UIImage *cropped = [self cropImage:reoriented];
   UIImage *gray = [self grayscaleizeImage:cropped];
-  NSString *text = [self ocrImage:gray];
-  TFLog(@"%@", text);
   
-  // this is just some stub code to visualize the change
-  self.previewView.image = gray;
-  self.cropBoundary.alpha = 0.0;
-  self.processImageButton.hidden = YES;
+  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
+  fixItemsController.rawText = [self ocrImage:gray];
+  TFLog(@"%@", fixItemsController.rawText);
+  [self.navigationController pushViewController:fixItemsController animated:YES];
 }
 
 @end
