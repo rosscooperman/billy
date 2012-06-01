@@ -28,6 +28,9 @@
 - (CAShapeLayer *)initializeMaskLayer;
 - (void)initializeCropRectangle;
 - (void)adjustCropRectangle;
+- (UIImage *)cropImage:(UIImage *)image;
+- (UIImage *)reorientImage:(UIImage *)image;
+- (UIImage *)grayscaleizeImage:(UIImage *)image;
 
 @end
 
@@ -158,6 +161,145 @@
 }
 
 
+- (UIImage *)cropImage:(UIImage *)image
+{
+  CGFloat topAdjustment = 0.0;
+  CGFloat leftAdjustment = 0.0;
+  
+  CGFloat realAspectRatio = image.size.width / image.size.height;
+  CGFloat previewAspectRatio = self.cropBoundary.frame.size.width / self.cropBoundary.frame.size.height;
+  
+  if (realAspectRatio > previewAspectRatio) {
+    topAdjustment = (realAspectRatio - previewAspectRatio) * self.cropBoundary.frame.size.height;
+  }
+  else {
+    leftAdjustment = (previewAspectRatio - realAspectRatio) * self.cropBoundary.frame.size.width;
+  }
+  
+  CGFloat widthFactor = (image.size.width / self.cropBoundary.frame.size.width);
+  CGFloat heightFactor = (image.size.height / self.cropBoundary.frame.size.height);
+  
+  CGFloat realX = (self.cropLeft - (leftAdjustment / 4.0)) * widthFactor;
+  CGFloat realY = (self.cropTop - (topAdjustment / 4.0)) * heightFactor;
+  CGFloat realWidth = ((self.cropRight - self.cropLeft) + (leftAdjustment / 2.0)) * widthFactor;
+  CGFloat realHeight = ((self.cropBottom - self.cropTop) + (topAdjustment / 2.0)) * heightFactor;
+  
+  CGRect croppingBox = CGRectMake(realX, realY, realWidth, realHeight);
+  CGImageRef croppedImageRef = CGImageCreateWithImageInRect(image.CGImage, croppingBox);
+  UIImage *croppedImage = [UIImage imageWithCGImage:croppedImageRef]; 
+  CGImageRelease(croppedImageRef);
+  return croppedImage;
+}
+
+
+- (UIImage *)reorientImage:(UIImage *)image
+{
+  CGAffineTransform transform = CGAffineTransformIdentity;
+  switch (image.imageOrientation) {
+    case UIImageOrientationDown:
+      transform = CGAffineTransformTranslate(transform, image.size.width, image.size.height);
+      transform = CGAffineTransformRotate(transform, M_PI);;
+      break;
+      
+    case UIImageOrientationLeft:
+      transform = CGAffineTransformTranslate(transform, image.size.width, 0);
+      transform = CGAffineTransformRotate(transform, M_PI_2);
+      break;
+    
+    case UIImageOrientationRight:
+      transform = CGAffineTransformTranslate(transform, 0, image.size.height);
+      transform = CGAffineTransformRotate(transform, -M_PI_2);
+      break;
+
+    default:
+      // no need to handle any other cases
+      return image;
+  }
+  
+  CGContextRef context = CGBitmapContextCreate(NULL, image.size.width, image.size.height,
+                                               CGImageGetBitsPerComponent(image.CGImage), 0,
+                                               CGImageGetColorSpace(image.CGImage),
+                                               CGImageGetBitmapInfo(image.CGImage));
+  
+  CGContextConcatCTM(context, transform);
+  if (image.imageOrientation == UIImageOrientationLeft || image.imageOrientation == UIImageOrientationRight) {
+    CGContextDrawImage(context, CGRectMake(0, 0, image.size.height, image.size.width), image.CGImage);
+  }
+  else {
+    CGContextDrawImage(context, CGRectMake(0, 0, image.size.width, image.size.height), image.CGImage);
+  }
+  
+  CGImageRef rotatedImageRef = CGBitmapContextCreateImage(context);
+  UIImage *rotatedImage = [UIImage imageWithCGImage:rotatedImageRef];
+  CGContextRelease(context);
+  CGImageRelease(rotatedImageRef);
+  return rotatedImage;  
+}
+
+
+- (UIImage *)grayscaleizeImage:(UIImage *)image
+{
+  
+  int kRed = 1;
+  int kGreen = 2;
+  int kBlue = 4;
+  
+  int colors = kGreen;
+  int width = image.size.width;
+  int height = image.size.height;
+  
+  uint32_t *rgbImage = (uint32_t *)malloc(width * height * sizeof(uint32_t));
+  CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+  int flags = kCGBitmapByteOrder32Little | kCGImageAlphaNoneSkipLast;
+  CGContextRef context = CGBitmapContextCreate(rgbImage, width, height, 8, width * 4, colorSpace, flags);
+  CGContextSetInterpolationQuality(context, kCGInterpolationHigh);
+  CGContextSetShouldAntialias(context, NO);
+  CGContextDrawImage(context, CGRectMake(0, 0, width, height), [image CGImage]);
+  CGContextRelease(context);
+  CGColorSpaceRelease(colorSpace);
+  
+  // now convert to grayscale
+  uint8_t *imageData = (uint8_t *)malloc(width * height);
+  for(int y = 0; y < height; y++) {
+    for(int x = 0; x < width; x++) {
+			uint32_t rgbPixel = rgbImage[y * width + x];
+			uint32_t sum = 0, count = 0;
+			if (colors & kRed)   { sum += (rgbPixel >> 24) & 255; count++; }
+			if (colors & kGreen) { sum += (rgbPixel >> 16) & 255; count++; }
+			if (colors & kBlue)  { sum += (rgbPixel >> 8)  & 255; count++; }
+			imageData[y * width + x] = sum / count;
+    }
+  }
+  free(rgbImage);
+  
+  // convert from a gray scale image back into a UIImage
+  uint8_t *result = (uint8_t *)calloc(width * height * sizeof(uint32_t), 1);
+  
+  // process the image back to rgb
+  for(int i = 0; i < height * width; i++) {
+    result[i * 4] = 0;
+    int val = imageData[i];
+    result[i * 4 + 1] = val;
+    result[i * 4 + 2] = val;
+    result[i * 4 + 3] = val;
+  }
+  
+  // create a UIImage
+  colorSpace = CGColorSpaceCreateDeviceRGB();
+  context = CGBitmapContextCreate(result, width, height, 8, width * sizeof(uint32_t), colorSpace, flags);
+  CGImageRef grayImageRef = CGBitmapContextCreateImage(context);
+  CGContextRelease(context);
+  CGColorSpaceRelease(colorSpace);
+  UIImage *grayImage = [UIImage imageWithCGImage:grayImageRef];
+  CGImageRelease(grayImageRef);
+  
+  // make sure the data will be released by giving it to an autoreleased NSData
+  [NSData dataWithBytesNoCopy:result length:width * height];
+  
+  return grayImage;
+}
+
+
 #pragma mark - IBAction Methods
 
 - (void)previousScreen:(id)sender
@@ -217,6 +359,13 @@
 {
   [self.processImageButton setImage:nil forState:UIControlStateNormal];
   [self.processingImageIndicator startAnimating];
+  [CATransaction commit];
+  
+  UIImage *reoriented = [self reorientImage:self.previewView.image];
+  UIImage *cropped = [self cropImage:reoriented];
+  UIImage *gray = [self grayscaleizeImage:cropped];
+  self.previewView.image = gray;
+  self.cropBoundary.alpha = 0.0;
 }
 
 @end
