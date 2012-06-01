@@ -42,15 +42,8 @@
   // initialize application data
   self.splitCount = 2;
   
-  
-  //FUDGED!!!!
-  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
-  fixItemsController.rawText = @"1 Bacon Almsnds 5.00\n2 Fira Pspcvcrs 0.00\n1 southamptsm ips 8.00\n1 Pickiss 4.00\n1 ZZZZZZZZZZZZZZZZZZZZIZ G '  \n1 Ribs 12.00\n1 market fish 26.00\nSUB 101AL; 55.00\n1ax 1: 4.88";
-  self.viewController = [[UINavigationController alloc] initWithRootViewController:fixItemsController];
-  
-  
   // construct the only navigation controller we'll ever need
-  //self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLSplitCountViewController alloc] init]];
+  self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLSplitCountViewController alloc] init]];
   self.viewController.navigationBarHidden = YES;
   self.window.rootViewController = self.viewController;
   [self.window makeKeyAndVisible];

@@ -16,5 +16,8 @@
 
 
 - (IBAction)contentAreaTapped:(UITapGestureRecognizer *)recognizer;
+- (IBAction)previousScreen:(id)sender;
+- (IBAction)acceptChanges:(id)sender;
+- (IBAction)addRow:(id)sender;
 
 @end

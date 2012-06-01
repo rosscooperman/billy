@@ -29,6 +29,8 @@
 - (UIView *)generateViewForIndex:(NSInteger)index;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
+- (void)swipeToDelete:(UIPanGestureRecognizer *)recognizer;
+- (void)deleteItemAtIndex:(NSInteger)index;
 
 @end
 
@@ -108,7 +110,7 @@
   quantity.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:20];
   quantity.text = [line objectForKey:@"quantity"];
   quantity.textAlignment = UITextAlignmentCenter;
-  quantity.keyboardType = UIKeyboardTypeNumberPad;
+  quantity.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
   quantity.tag = 0;
   [wrapper addSubview:quantity];
   
@@ -133,6 +135,12 @@
   NSDictionary *fields = [NSDictionary dictionaryWithObjectsAndKeys:quantity, @"quantity", name, @"name", price, @"price", nil];
   [self.dataFields addObject:fields];
   
+  // add a pan gesture recognizer to the wrapper
+  UIPanGestureRecognizer *swipeToDelete = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToDelete:)];
+  swipeToDelete.maximumNumberOfTouches = 1;
+  swipeToDelete.minimumNumberOfTouches = 1;
+  [wrapper addGestureRecognizer:swipeToDelete];
+  
   return wrapper;
 }
 
@@ -146,7 +154,7 @@
   textField.font = [UIFont fontWithName:@"Futura-Medium" size:16];
   textField.autocorrectionType = UITextAutocorrectionTypeNo;
   textField.keyboardAppearance = UIKeyboardAppearanceAlert;
-  textField.returnKeyType = UIReturnKeyNext;
+  textField.returnKeyType = UIReturnKeyDone;
   textField.delegate = self;
   textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
   return textField;
@@ -158,16 +166,16 @@
   NSDictionary *info = [notification userInfo];
   CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
   
-  UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height - 65, 0.0);
+  UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + 30, 0.0);
   self.contentArea.contentInset = contentInsets;
   self.contentArea.scrollIndicatorInsets = contentInsets;
   
-  CGRect frame = self.view.frame;
+  CGRect frame = self.contentArea.frame;
   frame.size.height -= keyboardSize.height;
   CGPoint translatedOrigin = [self.view convertPoint:activeField.superview.frame.origin fromView:self.contentArea];
   translatedOrigin.y += TEXT_BOX_HEIGHT + 10;
   if (!CGRectContainsPoint(frame, translatedOrigin) ) {
-    CGPoint scrollPoint = CGPointMake(0.0, self.activeField.frame.origin.y + keyboardSize.height - 75);
+    CGPoint scrollPoint = CGPointMake(0.0, self.activeField.superview.frame.origin.y - keyboardSize.height);
     [self.contentArea setContentOffset:scrollPoint animated:YES];
   }
 }
@@ -182,11 +190,69 @@
 }
 
 
+- (void)swipeToDelete:(UIPanGestureRecognizer *)recognizer
+{
+  if (recognizer.state == UIGestureRecognizerStateRecognized && [recognizer velocityInView:recognizer.view].x > 0) {
+    BLTextField *quantity = [recognizer.view.subviews objectAtIndex:0];
+    __block NSInteger index = -1;
+    [self.dataFields enumerateObjectsUsingBlock:^(NSDictionary *fields, NSUInteger idx, BOOL *stop) {
+      if ([fields objectForKey:@"quantity"] == quantity) {
+        index = idx;
+        *stop = YES;
+      }
+    }];
+    
+    if (index >= 0) [self deleteItemAtIndex:index];
+  }
+}
+
+
+- (void)deleteItemAtIndex:(NSInteger)index
+{
+  NSDictionary *fields = [self.dataFields objectAtIndex:index];
+  
+  BLTextField *quantity = [fields objectForKey:@"quantity"];
+  BLTextField *name = [fields objectForKey:@"name"];
+  BLTextField *price = [fields objectForKey:@"price"];
+  if (quantity.enabled) {
+    if (quantity.text.length <= 0 && name.text.length <= 0 && price.text.length <= 0) {
+      [self.dataFields removeObjectAtIndex:index];
+      [self.lineItems removeObjectAtIndex:index];
+      [quantity.superview removeFromSuperview];
+      self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.dataFields.count) + 8);   
+    }
+    else {
+      quantity.enabled = NO;
+      name.enabled = NO;
+      price.enabled = NO;
+      quantity.textColor = [UIColor lightGrayColor];
+      name.textColor = [UIColor lightGrayColor];
+      price.textColor = [UIColor lightGrayColor];
+    }
+  }
+  else {
+    quantity.enabled = YES;
+    name.enabled = YES;
+    price.enabled = YES;
+    quantity.textColor = [UIColor blackColor];
+    name.textColor = [UIColor blackColor];
+    price.textColor = [UIColor blackColor];
+  }
+}
+
+
 #pragma mark - UITextFieldDelegate Methods
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
   self.activeField = textField;
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+  [textField resignFirstResponder];
+  return NO;
 }
 
 
@@ -215,6 +281,34 @@
 - (void)contentAreaTapped:(UITapGestureRecognizer *)recognizer
 {
   [self.activeField resignFirstResponder];
+}
+
+
+- (void)previousScreen:(id)sender
+{
+  [self.navigationController popViewControllerAnimated:YES];
+}
+
+
+- (void)acceptChanges:(id)sender
+{
+  
+}
+
+
+- (void)addRow:(id)sender
+{
+  NSDictionary *line = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"quantity", @"", @"name", @"", @"price", nil];
+  [self.lineItems addObject:line];
+  
+  NSInteger index = self.lineItems.count - 1;
+  UIView *newRow = [self generateViewForIndex:index];
+  [self.contentArea addSubview:newRow];
+  self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
+
+  NSDictionary *fields = [self.dataFields objectAtIndex:index];
+  BLTextField *field = [fields objectForKey:@"quantity"];
+  [field becomeFirstResponder];
 }
 
 @end
