@@ -9,6 +9,7 @@
 #define CAMERA_BUTTON_COLOR [UIColor colorWithRed:0.443137255 green:0.921568627 blue:0.541176471 alpha:1.0]
 
 
+#import <ImageIO/CGImageProperties.h>
 #import "BLCameraViewController.h"
 #import "BLCropViewController.h"
 

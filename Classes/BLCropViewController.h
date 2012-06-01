@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Tesseract.h"
 
 
-@interface BLCropViewController : UIViewController
+@interface BLCropViewController : UIViewController {
+  TessBaseAPI *_tesseract;
+}
 
 @property (nonatomic, strong) NSData *photoData;
 @property (nonatomic, strong) IBOutlet UIImageView *previewView;

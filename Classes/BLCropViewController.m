@@ -7,7 +7,10 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <ImageIO/CGImageProperties.h>
+#import <AVFoundation/AVFoundation.h>
 #import "BLCropViewController.h"
+#import "Tesseract.h"
 
 
 @interface BLCropViewController ()
@@ -31,6 +34,7 @@
 - (UIImage *)cropImage:(UIImage *)image;
 - (UIImage *)reorientImage:(UIImage *)image;
 - (UIImage *)grayscaleizeImage:(UIImage *)image;
+- (NSString *)ocrImage:(UIImage *)image;
 
 @end
 
@@ -320,6 +324,53 @@
 }
 
 
+- (NSString *)ocrImage:(UIImage *)image
+{
+  // generate the path to the 'tessdata' directory in the app's documents directory
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); 
+  NSString *dataPath = [[paths objectAtIndex:0] stringByAppendingPathComponent:@"tessdata"];
+  
+  // if the 'tessdata' path doesn't exist, copy it from the main bundle
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  if (![fileManager fileExistsAtPath:dataPath]) {
+    NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
+    NSString *tessdataPath = [bundlePath stringByAppendingPathComponent:@"tessdata"];
+    if (tessdataPath) {
+			[fileManager copyItemAtPath:tessdataPath toPath:dataPath error:NULL];
+		}
+  }
+  
+  // now that the 'tessdata' directory definitely exists set up the environment for Tesseract
+  NSString *dataPathWithSlash = [[paths objectAtIndex:0] stringByAppendingString:@"/"];
+  setenv("TESSDATA_PREFIX", [dataPathWithSlash UTF8String], 1);
+  
+  // initialize a new Tesseract instance (if necessary)
+  if (!_tesseract) {
+    _tesseract = new TessBaseAPI();
+    _tesseract->SimpleInit([dataPath cStringUsingEncoding:NSUTF8StringEncoding], "eng", false);
+  }
+
+  // get metrics about the image to be processed
+  double bytesPerLine = CGImageGetBytesPerRow(image.CGImage);
+  double bytesPerPixel = CGImageGetBitsPerPixel(image.CGImage) / 8.0;
+  
+  CFDataRef cfData = CGDataProviderCopyData(CGImageGetDataProvider(image.CGImage));
+  
+  // set the DPI of the image to 300
+  CFMutableDictionaryRef metadata = CFDictionaryCreateMutable(NULL, 2, NULL, NULL);
+  CFDictionarySetValue(metadata, kCGImagePropertyDPIWidth, (__bridge const void *)[NSNumber numberWithInt:300]);
+  CFDictionarySetValue(metadata, kCGImagePropertyDPIHeight, (__bridge const void *)[NSNumber numberWithInt:300]);
+  CMSetAttachments(cfData, metadata, kCMAttachmentMode_ShouldPropagate);
+  CFRelease(metadata);
+  
+  const UInt8 *cData = CFDataGetBytePtr(cfData);
+  char *cText = _tesseract->TesseractRect(cData, bytesPerPixel, bytesPerLine, 0, 0, (int)image.size.width, (int)image.size.height);
+  CFRelease(cfData);
+  
+  return [NSString stringWithCString:cText encoding:NSUTF8StringEncoding];;
+}
+
+
 #pragma mark - IBAction Methods
 
 - (void)previousScreen:(id)sender
@@ -384,6 +435,8 @@
   UIImage *reoriented = [self reorientImage:self.previewView.image];
   UIImage *cropped = [self cropImage:reoriented];
   UIImage *gray = [self grayscaleizeImage:cropped];
+  NSString *text = [self ocrImage:gray];
+  TFLog(@"%@", text);
   
   // this is just some stub code to visualize the change
   self.previewView.image = gray;
