@@ -118,7 +118,7 @@
   
   // generate the quantity text field
   BLTextField *quantity = [self generateTextField];
-  quantity.frame = CGRectMake(5, 0, QUANTITY_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  quantity.frame = CGRectMake(0, 0, QUANTITY_BOX_WIDTH, TEXT_BOX_HEIGHT);
   quantity.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:20];
   quantity.text = [line objectForKey:@"quantity"];
   quantity.textAlignment = UITextAlignmentCenter;
@@ -128,14 +128,14 @@
   
   // generate the name text field
   BLTextField *name = [self generateTextField];
-  name.frame = CGRectMake(7 + QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  name.frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
   name.text = [[line objectForKey:@"name"] uppercaseString];
   name.tag = 1;
   [wrapper addSubview:name];
   
   // generate the price field
   BLTextField *price = [self generateTextField];
-  price.frame = CGRectMake(9 + QUANTITY_BOX_WIDTH + NAME_BOX_WIDTH, 0, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  price.frame = CGRectMake(4 + QUANTITY_BOX_WIDTH + NAME_BOX_WIDTH, 0, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
   price.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:16];
   price.text = [line objectForKey:@"price"];
   price.textAlignment = UITextAlignmentCenter;
@@ -230,7 +230,7 @@
       [self.dataFields removeObjectAtIndex:index];
       [self.lineItems removeObjectAtIndex:index];
       
-      CGRect frame = CGRectInset(quantity.superview.frame, -5, 0);
+      CGRect frame = quantity.superview.frame;
       frame.origin.y += frame.size.height;
       frame.size.height = 0.0;
       UIView *blindView = [[UIView alloc] initWithFrame:frame];
@@ -238,7 +238,7 @@
       [quantity.superview.superview insertSubview:blindView aboveSubview:quantity.superview];
       
       [UIView animateWithDuration:0.3 animations:^{
-        blindView.frame = CGRectInset(quantity.superview.frame, -5, 0);
+        blindView.frame = quantity.superview.frame;
         [quantity.superview.superview.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
           if (idx > index + 1 && view != blindView) {
             view.frame = CGRectOffset(view.frame, 0, -(TEXT_BOX_HEIGHT + 2));
