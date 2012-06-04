@@ -12,7 +12,9 @@
 #define PRICE_BOX_WIDTH 72
 
 
+#import <QuartzCore/QuartzCore.h>
 #import "BLFixItemsViewController.h"
+#import "BLSplitBillViewController.h"
 #import "BLTextField.h"
 
 
@@ -29,8 +31,10 @@
 - (UIView *)generateViewForIndex:(NSInteger)index;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
-- (void)swipeToDelete:(UIPanGestureRecognizer *)recognizer;
+- (void)swipeToDelete:(UISwipeGestureRecognizer *)recognizer;
 - (void)deleteItemAtIndex:(NSInteger)index;
+- (void)updateStoredItems;
+- (BOOL)validateLineItems;
 
 @end
 
@@ -39,25 +43,32 @@
 
 @synthesize contentArea;
 @synthesize rawText;
-@synthesize lineItems;
+@synthesize lineItems = _lineItems;
 @synthesize dataFields;
 @synthesize activeField;
 
 
 #pragma mark - View Lifecycle
 
+- (void)viewDidLoad
+{
+  [self findLineItems];
+  [self generateTextFields]; 
+  [self updateStoredItems];
+}
+
+
 - (void)viewWillAppear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
-  [self findLineItems];
-  [self generateTextFields];
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [self updateStoredItems];
 }
 
 
@@ -92,7 +103,8 @@
   for (NSInteger i = 0; i < count; i++) {
     [self.contentArea addSubview:[self generateViewForIndex:i]];
   }
-  self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * count) + 8);   
+  self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * count) + 8);
+  self.contentArea.contentInset = UIEdgeInsetsMake(0.0, 0.0, 75.0, 0.0);
 }
 
 
@@ -136,9 +148,8 @@
   [self.dataFields addObject:fields];
   
   // add a pan gesture recognizer to the wrapper
-  UIPanGestureRecognizer *swipeToDelete = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToDelete:)];
-  swipeToDelete.maximumNumberOfTouches = 1;
-  swipeToDelete.minimumNumberOfTouches = 1;
+  UISwipeGestureRecognizer *swipeToDelete = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToDelete:)];
+  swipeToDelete.numberOfTouchesRequired = 1;
   [wrapper addGestureRecognizer:swipeToDelete];
   
   return wrapper;
@@ -184,15 +195,15 @@
 - (void)keyboardHidden:(NSNotification *)notification
 {
   [UIView animateWithDuration:0.3 animations:^{
-    self.contentArea.contentInset = UIEdgeInsetsZero;
+    self.contentArea.contentInset = UIEdgeInsetsMake(0.0, 0.0, 75.0, 0.0);
     self.contentArea.scrollIndicatorInsets = UIEdgeInsetsZero;
   }];
 }
 
 
-- (void)swipeToDelete:(UIPanGestureRecognizer *)recognizer
+- (void)swipeToDelete:(UISwipeGestureRecognizer *)recognizer
 {
-  if (recognizer.state == UIGestureRecognizerStateRecognized && [recognizer velocityInView:recognizer.view].x > 0) {
+  if (recognizer.state == UIGestureRecognizerStateRecognized) {
     BLTextField *quantity = [recognizer.view.subviews objectAtIndex:0];
     __block NSInteger index = -1;
     [self.dataFields enumerateObjectsUsingBlock:^(NSDictionary *fields, NSUInteger idx, BOOL *stop) {
@@ -218,13 +229,32 @@
     if (quantity.text.length <= 0 && name.text.length <= 0 && price.text.length <= 0) {
       [self.dataFields removeObjectAtIndex:index];
       [self.lineItems removeObjectAtIndex:index];
-      [quantity.superview removeFromSuperview];
+      
+      CGRect frame = CGRectInset(quantity.superview.frame, -5, 0);
+      frame.origin.y += frame.size.height;
+      frame.size.height = 0.0;
+      UIView *blindView = [[UIView alloc] initWithFrame:frame];
+      blindView.backgroundColor = [UIColor blackColor];
+      [quantity.superview.superview insertSubview:blindView aboveSubview:quantity.superview];
+      
+      [UIView animateWithDuration:0.3 animations:^{
+        blindView.frame = CGRectInset(quantity.superview.frame, -5, 0);
+        [quantity.superview.superview.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger idx, BOOL *stop) {
+          if (idx > index + 1 && view != blindView) {
+            view.frame = CGRectOffset(view.frame, 0, -(TEXT_BOX_HEIGHT + 2));
+          }
+        }];
+      } completion:^(BOOL finished) {
+        [quantity.superview removeFromSuperview];
+        [blindView removeFromSuperview];
+      }];
       self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.dataFields.count) + 8);   
     }
     else {
       quantity.enabled = NO;
       name.enabled = NO;
       price.enabled = NO;
+      
       quantity.textColor = [UIColor lightGrayColor];
       name.textColor = [UIColor lightGrayColor];
       price.textColor = [UIColor lightGrayColor];
@@ -234,10 +264,28 @@
     quantity.enabled = YES;
     name.enabled = YES;
     price.enabled = YES;
+    
     quantity.textColor = [UIColor blackColor];
     name.textColor = [UIColor blackColor];
     price.textColor = [UIColor blackColor];
   }
+}
+
+
+- (void)updateStoredItems
+{
+  NSMutableArray *lineItems = [[NSMutableArray alloc] initWithCapacity:self.dataFields.count];
+  [self.dataFields enumerateObjectsUsingBlock:^(NSDictionary *fields, NSUInteger idx, BOOL *stop) {
+    if ([[fields objectForKey:@"quantity"] isEnabled]) {
+      NSNumber *quantity = [NSNumber numberWithInt:[[[fields objectForKey:@"quantity"] text] intValue]];
+      NSString *name = [[fields objectForKey:@"name"] text];
+      NSNumber *price = [NSNumber numberWithFloat:[[[fields objectForKey:@"price"] text] floatValue]];
+      
+      NSDictionary *lineItem = [NSDictionary dictionaryWithObjectsAndKeys:quantity, @"quantity", name, @"name", price, @"price", nil];
+      [lineItems addObject:lineItem];      
+    }
+  }];
+  [[BLAppDelegate appDelegate] setLineItems:lineItems];
 }
 
 
@@ -276,6 +324,24 @@
 }
 
 
+- (BOOL)validateLineItems
+{
+  __block BOOL valid = YES;
+  [self.dataFields enumerateObjectsUsingBlock:^(NSDictionary *fields, NSUInteger idx, BOOL *stop) {
+    [fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, UITextView *field, BOOL *stop) {
+      if (field.text.length <= 0) {
+        field.backgroundColor = [UIColor redColor];
+        valid = NO;
+      }
+      else {
+        field.backgroundColor = [UIColor colorWithWhite:0.88627451 alpha:1.0];
+      }
+    }];    
+  }];
+  return valid;
+}
+
+
 #pragma mark - IBAction Methods
 
 - (void)contentAreaTapped:(UITapGestureRecognizer *)recognizer
@@ -292,7 +358,10 @@
 
 - (void)acceptChanges:(id)sender
 {
-  
+  if ([self validateLineItems]) {
+    BLSplitBillViewController *splitBillController = [[BLSplitBillViewController alloc] init];
+    [self.navigationController pushViewController:splitBillController animated:YES];
+  }
 }
 
 

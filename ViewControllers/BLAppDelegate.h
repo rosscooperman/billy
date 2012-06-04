@@ -25,5 +25,7 @@
 - (UIColor *)colorAtIndex:(NSInteger)index;
 - (NSString *)nameAtIndex:(NSInteger)index;
 - (void)setName:(NSString *)name atIndex:(NSInteger)index;
+- (NSArray *)lineItems;
+- (void)setLineItems:(NSArray *)lineItems;
 
 @end
