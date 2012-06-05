@@ -64,17 +64,17 @@
 - (UIColor *)colorAtIndex:(NSInteger)index
 {
   if (!self.colors) {
-    self.colors = [NSArray arrayWithObjects:
-                    [UIColor darkGrayColor],
-                    [UIColor colorWithRed:1.0 green:0.0 blue:0.321568627 alpha:1.0],
-                    [UIColor colorWithRed:1.0 green:0.125490196 blue:0.0 alpha:1.0],
-                    [UIColor colorWithRed:1.0 green:0.462745098 blue:0.0 alpha:1.0],
-                    [UIColor colorWithRed:1.0 green:0.662745098 blue:0.0 alpha:1.0],
-                    [UIColor colorWithRed:1.0 green:0.901960784 blue:0.0 alpha:1.0],
-                    [UIColor colorWithRed:0.0 green:0.803921569 blue:0.294117647 alpha:1.0],
-                    [UIColor colorWithRed:0.0 green:0.517647059 blue:0.803921569 alpha:1.0],
-                    [UIColor colorWithRed:0.792156863 green:0.0 blue:0.850980392 alpha:1.0],
-                  nil];
+    NSMutableArray *_colors = [[NSMutableArray alloc] initWithCapacity:9];
+    [_colors addObject:[UIColor darkGrayColor]];
+    [_colors addObject:[UIColor colorWithRed:1.0 green:0.0 blue:0.321568627 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:1.0 green:0.125490196 blue:0.0 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:1.0 green:0.462745098 blue:0.0 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:1.0 green:0.662745098 blue:0.0 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:1.0 green:0.901960784 blue:0.0 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.0 green:0.803921569 blue:0.294117647 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.0 green:0.517647059 blue:0.803921569 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.792156863 green:0.0 blue:0.850980392 alpha:1.0]];
+    self.colors = [NSArray arrayWithArray:_colors];
   }
   
   return (index < self.colors.count) ? [self.colors objectAtIndex:index] : [self.colors objectAtIndex:0];

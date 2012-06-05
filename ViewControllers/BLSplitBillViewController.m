@@ -23,6 +23,7 @@
 @property (nonatomic, assign) NSInteger assignedQuantity;
 @property (nonatomic, readonly) UIView *assignmentView;
 @property (nonatomic, assign) NSInteger currentAssignmentIndex;
+@property (nonatomic, strong) NSMutableArray *lineItems;
 
 
 - (void)generateLineItems;
@@ -30,6 +31,10 @@
 - (UILabel *)generateLineItemLabel;
 - (void)lineItemTapped:(UITapGestureRecognizer *)recognizer;
 - (void)showAssignmentViewAtIndex:(NSInteger)index;
+- (void)updateAssignmentView;
+- (void)minusButtonPressed:(id)sender;
+- (void)plusButtonPressed:(id)sender;
+- (void)add:(NSInteger)amount toAssignmentAtIndex:(NSInteger)index;
 
 @end
 
@@ -42,14 +47,38 @@
 @synthesize assignedQuantity;
 @synthesize assignmentView = _assignmentView;
 @synthesize currentAssignmentIndex;
+@synthesize lineItems;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  NSArray *_lineItems = [BLAppDelegate appDelegate].lineItems;
+  
+  // if the first line item already has a splits key, no need to continue
+  self.lineItems = [NSMutableArray arrayWithCapacity:_lineItems.count];
+  [_lineItems enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
+    NSMutableDictionary *_lineItem = [NSMutableDictionary dictionaryWithDictionary:lineItem];
+    NSMutableArray *splits = [NSMutableArray arrayWithCapacity:[BLAppDelegate appDelegate].splitCount];
+    for (NSInteger i = 0; i < [BLAppDelegate appDelegate].splitCount; i++) {
+      NSMutableDictionary *split = [NSMutableDictionary dictionaryWithCapacity:2];
+      [split setValue:[[BLAppDelegate appDelegate] nameAtIndex:i] forKey:@"name"];
+      [split setValue:[NSNumber numberWithInt:0] forKey:@"quantity"];
+      [splits addObject:split];
+    }
+    [_lineItem setValue:splits forKey:@"splits"];
+    [self.lineItems insertObject:_lineItem atIndex:idx];
+  }];
+  
   [self generateLineItems];
   self.currentAssignmentIndex = -1;
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [[BLAppDelegate appDelegate] setLineItems:self.lineItems];
 }
 
 
@@ -61,13 +90,12 @@
     [subview removeFromSuperview];
   }];
   
-  NSArray *lineItems = [BLAppDelegate appDelegate].lineItems;
-  [lineItems enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
+  [self.lineItems enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
     [self.contentArea addSubview:[self generateViewForLineItem:lineItem atIndex:idx]];
     self.totalQuantity += [[lineItem objectForKey:@"quantity"] integerValue];
   }];
   
-  self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * lineItems.count) + 8);
+  self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
   self.contentArea.contentInset = UIEdgeInsetsMake(0.0, 0.0, 75.0, 0.0);
 }
 
@@ -122,7 +150,10 @@
 
 
 - (void)showAssignmentViewAtIndex:(NSInteger)index
-{  
+{
+  self.currentAssignmentIndex = index;
+  [self updateAssignmentView];
+  
   CGRect newFrame = self.assignmentView.frame;
   newFrame.origin = [[self.contentArea.subviews objectAtIndex:index] frame].origin;
   newFrame.origin.y += (TEXT_BOX_HEIGHT + 2) - newFrame.size.height;
@@ -141,7 +172,6 @@
       [[self.contentArea.subviews objectAtIndex:i] setFrame:CGRectOffset(frame, 0, self.assignmentView.frame.size.height + 2)];
     }
   } completion:^(BOOL finished) {
-    self.currentAssignmentIndex = index;
     self.contentArea.contentSize = CGSizeMake(320, self.contentArea.contentSize.height + self.assignmentView.frame.size.height + 2);
     
     // make sure the whole assignment view is visible    
@@ -159,9 +189,6 @@
 - (void)lineItemTapped:(UITapGestureRecognizer *)recognizer
 {
   if (currentAssignmentIndex >= 0) {
-    // the upcoming adjustment 
-    
-    
     [UIView animateWithDuration:0.3 animations:^{
       self.assignmentView.frame = CGRectOffset(self.assignmentView.frame, 0, -self.assignmentView.frame.size.height);
       for (NSInteger i = self.currentAssignmentIndex + 3; i < self.contentArea.subviews.count; i++) {
@@ -188,6 +215,38 @@
 }
 
 
+- (void)updateAssignmentView
+{
+  NSMutableDictionary *lineItem = [self.lineItems objectAtIndex:currentAssignmentIndex];
+  NSMutableArray *splits = [lineItem objectForKey:@"splits"];
+  float perItemPrice = [[lineItem objectForKey:@"price"] floatValue] / [[lineItem objectForKey:@"quantity"] floatValue];
+  __block NSInteger lineQuantity = 0;
+  
+  // update each person's quantity, price, and enabled state of the minus button
+  // also calculate how much total quantity has been allocated
+  [splits enumerateObjectsUsingBlock:^(NSMutableDictionary *split, NSUInteger idx, BOOL *stop) {
+    UIView *individual = [self.assignmentView.subviews objectAtIndex:idx];
+
+    UILabel *quantityLabel = [individual.subviews objectAtIndex:0];
+    quantityLabel.text = [[split objectForKey:@"quantity"] stringValue];
+
+    UIButton *minusButton = [individual.subviews objectAtIndex:1];
+    minusButton.enabled = ([[split objectForKey:@"quantity"] integerValue] > 0);
+
+    UILabel *priceLabel = [individual.subviews objectAtIndex:4];
+    priceLabel.text = [NSString stringWithFormat:@"$%.2f", [[split objectForKey:@"quantity"] floatValue] * perItemPrice];
+    
+    lineQuantity += [[split objectForKey:@"quantity"] integerValue];
+  }];
+  
+  // enable/disable the + button as needed (is there any more left to allocate)
+  [self.assignmentView.subviews enumerateObjectsUsingBlock:^(UIView *wrapper, NSUInteger idx, BOOL *stop) {
+    UIButton *plusButton = [wrapper.subviews objectAtIndex:2];
+    plusButton.enabled = (lineQuantity < [[lineItem objectForKey:@"quantity"] integerValue]);
+  }];
+}
+
+
 #pragma mark - Property Implementations
 
 - (UIView *)assignmentView
@@ -207,17 +266,7 @@
       quantityLabel.text = @"0";
       [wrapper addSubview:quantityLabel];
       
-      UIView *nameWrapper = [[UIView alloc] initWithFrame:CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, SPLIT_NAME_BOX_WIDTH, TEXT_BOX_HEIGHT)];
-      nameWrapper.backgroundColor = quantityLabel.backgroundColor;
-      UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectInset(nameWrapper.bounds, 10, 0)];
-      nameLabel.backgroundColor = [UIColor clearColor];
-      nameLabel.textColor = [UIColor blackColor];
-      nameLabel.font = [UIFont fontWithName:@"Futura-Medium" size:16];
-      nameLabel.text = [[BLAppDelegate appDelegate] nameAtIndex:i];
-      [nameWrapper addSubview:nameLabel];
-      [wrapper addSubview:nameWrapper];
-      
-      CGRect frame = CGRectMake(4 + QUANTITY_BOX_WIDTH + SPLIT_NAME_BOX_WIDTH, 0, BUTTON_WIDTH, BUTTON_WIDTH);
+      CGRect frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, BUTTON_WIDTH, BUTTON_WIDTH);
       UIButton *minusButton = [[UIButton alloc] initWithFrame:frame];
       minusButton.backgroundColor = quantityLabel.backgroundColor;
       minusButton.titleLabel.font = [UIFont fontWithName:@"Futura-Medium" size:49];
@@ -225,9 +274,10 @@
       [minusButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
       [minusButton setTitle:@"-" forState:UIControlStateNormal];
       minusButton.titleEdgeInsets = UIEdgeInsetsMake(0, 1, 10, 0);
+      [minusButton addTarget:self action:@selector(minusButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
       [wrapper addSubview:minusButton];
       
-      frame = CGRectMake(6 + QUANTITY_BOX_WIDTH + SPLIT_NAME_BOX_WIDTH + BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_WIDTH);
+      frame = CGRectMake(4 + QUANTITY_BOX_WIDTH + BUTTON_WIDTH, 0, BUTTON_WIDTH, BUTTON_WIDTH);
       UIButton *plusButton = [[UIButton alloc] initWithFrame:frame];
       plusButton.backgroundColor = quantityLabel.backgroundColor;
       plusButton.titleLabel.font = [UIFont fontWithName:@"Futura-Medium" size:30];
@@ -235,7 +285,20 @@
       [plusButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
       [plusButton setTitle:@"+" forState:UIControlStateNormal];
       plusButton.titleEdgeInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+      [plusButton addTarget:self action:@selector(plusButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
       [wrapper addSubview:plusButton];
+      
+      frame = CGRectMake(6 + QUANTITY_BOX_WIDTH + (BUTTON_WIDTH * 2), 0, SPLIT_NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
+      UIView *nameWrapper = [[UIView alloc] initWithFrame:frame];
+      nameWrapper.backgroundColor = quantityLabel.backgroundColor;
+      UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectInset(nameWrapper.bounds, 10, 0)];
+      nameLabel.backgroundColor = [UIColor clearColor];
+      nameLabel.textColor = [UIColor blackColor];
+      nameLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
+      nameLabel.minimumFontSize = 12;
+      nameLabel.text = [[BLAppDelegate appDelegate] nameAtIndex:i];
+      [nameWrapper addSubview:nameLabel];
+      [wrapper addSubview:nameWrapper];
       
       frame = CGRectMake(8 + QUANTITY_BOX_WIDTH + SPLIT_NAME_BOX_WIDTH + (BUTTON_WIDTH * 2), 0, PRICE_BOX_WIDTH - 4, TEXT_BOX_HEIGHT);
       UILabel *priceLabel = [[UILabel alloc] initWithFrame:frame];
@@ -253,6 +316,25 @@
 }
 
 
+- (void)add:(NSInteger)amount toAssignmentAtIndex:(NSInteger)index
+{
+  NSMutableDictionary *lineItem = [self.lineItems objectAtIndex:self.currentAssignmentIndex];
+  NSMutableArray *splits = [lineItem objectForKey:@"splits"];
+  NSMutableDictionary *split = [splits objectAtIndex:index];
+  NSInteger newValue = [[split objectForKey:@"quantity"] integerValue] + amount;
+  [split setValue:[NSNumber numberWithInteger:newValue] forKey:@"quantity"];
+  [self updateAssignmentView];
+  
+  self.assignedQuantity += amount;
+  if (self.assignedQuantity >= self.totalQuantity) {
+    self.nextScreenButton.enabled = YES;
+  }
+  else {
+    self.nextScreenButton.enabled = NO;
+  }
+}
+
+
 #pragma mark - IBAction Methods
 
 - (void)previousScreen:(id)sender
@@ -264,6 +346,20 @@
 - (void)nextScreen:(id)sender
 {
 
+}
+
+
+- (void)minusButtonPressed:(id)sender
+{
+  NSInteger index = [self.assignmentView.subviews indexOfObject:[sender superview]];
+  [self add:-1 toAssignmentAtIndex:index];
+}
+
+
+- (void)plusButtonPressed:(id)sender
+{
+  NSInteger index = [self.assignmentView.subviews indexOfObject:[sender superview]];
+  [self add:1 toAssignmentAtIndex:index];
 }
 
 @end
