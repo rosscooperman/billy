@@ -23,7 +23,6 @@
 		9148ADFF157926DF00985CA0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9148ADFE157926DF00985CA0 /* CoreMedia.framework */; };
 		9148AE0615792E9700985CA0 /* BLFixItemsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9148AE0515792E9700985CA0 /* BLFixItemsViewController.xib */; };
 		9148AE0A1579473700985CA0 /* BLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9148AE091579473700985CA0 /* BLTextField.m */; };
-		9198BF12157AEB25001B74A9 /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF05157AEB25001B74A9 /* BLAppDelegate.m */; };
 		9198BF13157AEB25001B74A9 /* BLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF07157AEB25001B74A9 /* BLCameraViewController.m */; };
 		9198BF14157AEB25001B74A9 /* BLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF09157AEB25001B74A9 /* BLCropViewController.m */; };
 		9198BF15157AEB25001B74A9 /* BLFixItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF0B157AEB25001B74A9 /* BLFixItemsViewController.m */; };
@@ -46,6 +45,7 @@
 		91B9CCCD1577D72500AAEDC0 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCC71577D72500AAEDC0 /* Icon@2x.png */; };
 		91B9CCD21577DA4100AAEDC0 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCD01577DA4100AAEDC0 /* iTunesArtwork */; };
 		91B9CCD31577DA4100AAEDC0 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCD11577DA4100AAEDC0 /* iTunesArtwork@2x */; };
+		91CAC83F157E6704001B500F /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAC83E157E6704001B500F /* BLAppDelegate.m */; };
 		91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */; };
 /* End PBXBuildFile section */
 
@@ -68,8 +68,6 @@
 		9148AE0515792E9700985CA0 /* BLFixItemsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLFixItemsViewController.xib; path = NIBs/BLFixItemsViewController.xib; sourceTree = "<group>"; };
 		9148AE081579473700985CA0 /* BLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTextField.h; path = CustomUI/BLTextField.h; sourceTree = "<group>"; };
 		9148AE091579473700985CA0 /* BLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTextField.m; path = CustomUI/BLTextField.m; sourceTree = "<group>"; };
-		9198BF04157AEB25001B74A9 /* BLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAppDelegate.h; path = ViewControllers/BLAppDelegate.h; sourceTree = "<group>"; };
-		9198BF05157AEB25001B74A9 /* BLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAppDelegate.m; path = ViewControllers/BLAppDelegate.m; sourceTree = "<group>"; };
 		9198BF06157AEB25001B74A9 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = ViewControllers/BLCameraViewController.h; sourceTree = "<group>"; };
 		9198BF07157AEB25001B74A9 /* BLCameraViewController.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BLCameraViewController.m; path = ViewControllers/BLCameraViewController.m; sourceTree = "<group>"; };
 		9198BF08157AEB25001B74A9 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = ViewControllers/BLCropViewController.h; sourceTree = "<group>"; };
@@ -102,6 +100,8 @@
 		91B9CCC71577D72500AAEDC0 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = SOURCE_ROOT; };
 		91B9CCD01577DA4100AAEDC0 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = SOURCE_ROOT; };
 		91B9CCD11577DA4100AAEDC0 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = SOURCE_ROOT; };
+		91CAC83D157E6704001B500F /* BLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAppDelegate.h; path = OtherClasses/BLAppDelegate.h; sourceTree = "<group>"; };
+		91CAC83E157E6704001B500F /* BLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAppDelegate.m; path = OtherClasses/BLAppDelegate.m; sourceTree = "<group>"; };
 		91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLNamesViewController.xib; path = NIBs/BLNamesViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,6 +152,7 @@
 				91B9CC731576C4EC00AAEDC0 /* View Controllers */,
 				91B9CC7A1576C53600AAEDC0 /* NIBs */,
 				9148AE071579471600985CA0 /* Custom UI */,
+				91CAC83B157E66D4001B500F /* Other Classes */,
 				91B9CC5D1576C3ED00AAEDC0 /* Supporting Files */,
 				91B9CCB31577D50800AAEDC0 /* Images */,
 				91B9CC551576C3ED00AAEDC0 /* Frameworks */,
@@ -201,8 +202,6 @@
 		91B9CC731576C4EC00AAEDC0 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				9198BF04157AEB25001B74A9 /* BLAppDelegate.h */,
-				9198BF05157AEB25001B74A9 /* BLAppDelegate.m */,
 				9198BF06157AEB25001B74A9 /* BLCameraViewController.h */,
 				9198BF07157AEB25001B74A9 /* BLCameraViewController.m */,
 				9198BF08157AEB25001B74A9 /* BLCropViewController.h */,
@@ -259,6 +258,15 @@
 				9148ADE91578147300985CA0 /* iconCheck@2x.png */,
 			);
 			path = Images;
+			sourceTree = "<group>";
+		};
+		91CAC83B157E66D4001B500F /* Other Classes */ = {
+			isa = PBXGroup;
+			children = (
+				91CAC83D157E6704001B500F /* BLAppDelegate.h */,
+				91CAC83E157E6704001B500F /* BLAppDelegate.m */,
+			);
+			name = "Other Classes";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,13 +353,13 @@
 			files = (
 				91B9CC811576C5D200AAEDC0 /* main.m in Sources */,
 				9148AE0A1579473700985CA0 /* BLTextField.m in Sources */,
-				9198BF12157AEB25001B74A9 /* BLAppDelegate.m in Sources */,
 				9198BF13157AEB25001B74A9 /* BLCameraViewController.m in Sources */,
 				9198BF14157AEB25001B74A9 /* BLCropViewController.m in Sources */,
 				9198BF15157AEB25001B74A9 /* BLFixItemsViewController.m in Sources */,
 				9198BF16157AEB25001B74A9 /* BLNamesViewController.m in Sources */,
 				9198BF17157AEB25001B74A9 /* BLSplitBillViewController.m in Sources */,
 				9198BF18157AEB25001B74A9 /* BLSplitCountViewController.m in Sources */,
+				91CAC83F157E6704001B500F /* BLAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
