@@ -50,7 +50,7 @@
   CGRect frame = CGRectMake(0, innerTop, TEXT_BOX_WIDTH, innerHeight);
   
   self.innerContainer = [[UIView alloc] initWithFrame:frame];
-  self.contentArea.contentSize = CGSizeMake(320, frame.size.height);
+  self.contentArea.contentSize = CGSizeMake(320, MAX(self.contentArea.frame.size.height, frame.size.height));
   
   for (NSInteger i = 0; i < count; i++) {
     [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
@@ -103,19 +103,16 @@
 
 - (void)keyboardShown:(NSNotification *)notification
 {
-  NSDictionary *info = [notification userInfo];
-  CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+  CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+  self.contentArea.contentInset = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height, 0.0);
+  self.contentArea.scrollIndicatorInsets = UIEdgeInsetsMake(20.0, 0.0, keyboardSize.height, 0.0);
   
-  UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height - 65, 0.0);
-  self.contentArea.contentInset = contentInsets;
-  self.contentArea.scrollIndicatorInsets = contentInsets;
-  
-  CGRect frame = self.view.frame;
+  CGRect frame = self.contentArea.frame;
   frame.size.height -= keyboardSize.height;
-  CGPoint translatedOrigin = [self.view convertPoint:activeField.superview.frame.origin fromView:self.innerContainer];
+  CGPoint translatedOrigin = [self.view convertPoint:self.activeField.superview.frame.origin fromView:self.innerContainer];
   translatedOrigin.y += TEXT_BOX_HEIGHT + 10;
   if (!CGRectContainsPoint(frame, translatedOrigin) ) {
-    CGPoint scrollPoint = CGPointMake(0.0, self.activeField.frame.origin.y + keyboardSize.height - 75);
+    CGPoint scrollPoint = CGPointMake(0.0, translatedOrigin.y - (self.view.frame.size.height - keyboardSize.height));
     [self.contentArea setContentOffset:scrollPoint animated:YES];
   }
 }
@@ -125,7 +122,7 @@
 {
   [UIView animateWithDuration:0.3 animations:^{
     self.contentArea.contentInset = UIEdgeInsetsZero;
-    self.contentArea.scrollIndicatorInsets = UIEdgeInsetsZero;
+    self.contentArea.scrollIndicatorInsets = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
   }];
 }
 
