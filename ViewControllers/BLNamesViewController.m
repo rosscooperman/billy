@@ -26,7 +26,6 @@
 - (UIView *)generateTextFieldForIndex:(NSInteger)index;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
-- (void)setFinalTextFieldReturnButton;
 
 @end
 
@@ -56,6 +55,7 @@
   for (NSInteger i = 0; i < count; i++) {
     [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
   }
+  [self.textFields.lastObject setReturnKeyType:UIReturnKeyDone];
   
   [self.contentArea addSubview:self.innerContainer];
 }
@@ -78,16 +78,11 @@
 
 - (UIView *)generateTextFieldForIndex:(NSInteger)index
 {
-  // set up the wrapper view
-  CGRect frame = CGRectMake(0.0, (TEXT_BOX_HEIGHT + 2) * index, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT);
-  UIView *wrapper = [[UIView alloc] initWithFrame:frame];
-  wrapper.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
-  
   // set up the text field
-  UITextField *textField = [[UITextField alloc] initWithFrame:CGRectInset(wrapper.bounds, 10, 0)];
+  BLTextField *textField = [[BLTextField alloc] initWithFrame:CGRectMake(0.0, (TEXT_BOX_HEIGHT + 2) * index, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT)];
   textField.borderStyle = UITextBorderStyleNone;
   textField.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:26];
-  textField.backgroundColor = [UIColor clearColor];
+  textField.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];;
   textField.textColor = [UIColor blackColor];
   textField.autocorrectionType = UITextAutocorrectionTypeNo;
   textField.keyboardAppearance = UIKeyboardAppearanceAlert;
@@ -96,9 +91,8 @@
   textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
   textField.text = [[[BLAppDelegate appDelegate] nameAtIndex:index] uppercaseString];
   [self.textFields insertObject:textField atIndex:index];
-  [wrapper addSubview:textField];
   
-  return wrapper;
+  return textField;
 }
 
 
@@ -110,7 +104,7 @@
   
   CGRect frame = self.contentArea.frame;
   frame.size.height -= keyboardSize.height;
-  CGPoint translatedOrigin = [self.view convertPoint:self.activeField.superview.frame.origin fromView:self.innerContainer];
+  CGPoint translatedOrigin = [self.view convertPoint:self.activeField.frame.origin fromView:self.innerContainer];
   translatedOrigin.y += TEXT_BOX_HEIGHT + 10;
   if (!CGRectContainsPoint(frame, translatedOrigin) ) {
     CGPoint scrollPoint = CGPointMake(0.0, translatedOrigin.y - (self.view.frame.size.height - keyboardSize.height));
@@ -128,27 +122,11 @@
 }
 
 
-- (void)setFinalTextFieldReturnButton
-{
-  __block BOOL isBlank = NO;
-  [self.textFields enumerateObjectsUsingBlock:^(UITextField *textField, NSUInteger idx, BOOL *stop) {
-    if (textField.text.length <= 0) {
-      isBlank = YES;
-      *stop = YES;
-    }
-  }];
-  
-  UITextField *lastField = self.textFields.lastObject;
-  lastField.returnKeyType = (isBlank) ? UIReturnKeyNext : UIReturnKeyDone;
-}
-
-
 #pragma mark - UITextFieldDelegate Methods
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
   self.activeField = textField;
-  [self setFinalTextFieldReturnButton];
 }
 
 
@@ -176,7 +154,6 @@
 {
   NSString *newText = [[textField.text stringByReplacingCharactersInRange:range withString:string] uppercaseString];
   textField.text = newText;
-  [self setFinalTextFieldReturnButton];
   return NO;
 }
 
