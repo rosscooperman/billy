@@ -13,6 +13,7 @@
 #import "BLNamesViewController.h"
 #import "BLCameraViewController.h"
 #import "BLFixItemsViewController.h"
+#import "BLTextField.h"
 
 
 @interface BLNamesViewController ()
@@ -47,7 +48,7 @@
   
   CGFloat innerHeight = ((TEXT_BOX_HEIGHT + 2) * count) + 2;
   CGFloat innerTop = ((self.contentArea.frame.size.height - innerHeight) / 2) + 15;
-  CGRect frame = CGRectMake(0, innerTop, TEXT_BOX_WIDTH, innerHeight);
+  CGRect frame = CGRectMake((320.0 - TEXT_BOX_WIDTH) / 2.0, innerTop, TEXT_BOX_WIDTH, innerHeight);
   
   self.innerContainer = [[UIView alloc] initWithFrame:frame];
   self.contentArea.contentSize = CGSizeMake(320, MAX(self.contentArea.frame.size.height, frame.size.height));
@@ -78,7 +79,7 @@
 - (UIView *)generateTextFieldForIndex:(NSInteger)index
 {
   // set up the wrapper view
-  CGRect frame = CGRectMake((320 - TEXT_BOX_WIDTH) / 2, (TEXT_BOX_HEIGHT + 2) * index, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  CGRect frame = CGRectMake(0.0, (TEXT_BOX_HEIGHT + 2) * index, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT);
   UIView *wrapper = [[UIView alloc] initWithFrame:frame];
   wrapper.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
   
@@ -187,6 +188,14 @@
 }
 
 
+#pragma mark - UIGestureRecognizerDelegate Methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+  return !CGRectContainsPoint(self.innerContainer.frame, [touch locationInView:self.contentArea]);
+}
+
+
 #pragma mark - IBAction Methods
 
 - (void)nextScreen:(id)sender
@@ -210,11 +219,9 @@
 
 - (void)contentAreaTapped:(UITapGestureRecognizer *)recognizer
 {
-  if (!CGRectContainsPoint(self.innerContainer.frame, [recognizer locationInView:self.contentArea])) {
-    [self.textFields enumerateObjectsUsingBlock:^(UITextField *textField, NSUInteger idx, BOOL *stop) {
-      [textField resignFirstResponder];
-    }];
-  }  
+  [self.textFields enumerateObjectsUsingBlock:^(UITextField *textField, NSUInteger idx, BOOL *stop) {
+    [textField resignFirstResponder];
+  }];
 }
 
 @end

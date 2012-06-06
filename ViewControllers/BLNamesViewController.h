@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BLNamesViewController : UIViewController <UITextFieldDelegate>
+@interface BLNamesViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
 
