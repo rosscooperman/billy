@@ -8,8 +8,8 @@
 
 #define TEXT_BOX_HEIGHT 45
 #define QUANTITY_BOX_WIDTH 45
-#define NAME_BOX_WIDTH 193
-#define SPLIT_NAME_BOX_WIDTH 99
+#define NAME_BOX_WIDTH 189
+#define SPLIT_NAME_BOX_WIDTH 95
 #define PRICE_BOX_WIDTH 72
 #define BUTTON_WIDTH 45
 
@@ -23,6 +23,7 @@
 @property (nonatomic, assign) NSInteger assignedQuantity;
 @property (nonatomic, readonly) UIView *assignmentView;
 @property (nonatomic, assign) NSInteger currentAssignmentIndex;
+@property (nonatomic, strong) UIView *currentLineItem;
 @property (nonatomic, strong) NSMutableArray *lineItems;
 
 
@@ -43,10 +44,11 @@
 
 @synthesize contentArea;
 @synthesize nextScreenButton;
-@synthesize totalQuantity;
+@synthesize totalQuantity = _totalQuantity;
 @synthesize assignedQuantity;
 @synthesize assignmentView = _assignmentView;
 @synthesize currentAssignmentIndex;
+@synthesize currentLineItem;
 @synthesize lineItems;
 
 
@@ -73,6 +75,7 @@
   
   [self generateLineItems];
   self.currentAssignmentIndex = -1;
+  self.currentLineItem = nil;
 }
 
 
@@ -116,14 +119,18 @@
   
   // generate the name text field
   UILabel *name = [self generateLineItemLabel];
-  name.frame = CGRectMake(QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
-  name.text = [[lineItem objectForKey:@"name"] uppercaseString];
+  name.frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  name.text = [NSString stringWithFormat:@"  %@", [[lineItem objectForKey:@"name"] uppercaseString]];
   name.textAlignment = UITextAlignmentLeft;
   [wrapper addSubview:name];
   
+  // generate the progress view
+  UIView *progress = [[UIView alloc] initWithFrame:CGRectMake(0, 0, NAME_BOX_WIDTH, 8)];
+  [name addSubview:progress];
+  
   // generate the price field
   UILabel *price = [self generateLineItemLabel];
-  price.frame = CGRectMake(QUANTITY_BOX_WIDTH + NAME_BOX_WIDTH, 0, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  price.frame = CGRectMake(4 + QUANTITY_BOX_WIDTH + NAME_BOX_WIDTH, 0, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
   price.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:16];
   price.text = [NSString stringWithFormat:@"$%.2f", [[lineItem objectForKey:@"price"] floatValue]];
   [wrapper addSubview:price];
@@ -152,6 +159,7 @@
 - (void)showAssignmentViewAtIndex:(NSInteger)index
 {
   self.currentAssignmentIndex = index;
+  self.currentLineItem = [self.contentArea.subviews objectAtIndex:index];
   [self updateAssignmentView];
   
   CGRect newFrame = self.assignmentView.frame;
@@ -206,6 +214,7 @@
       }
       else {
         self.currentAssignmentIndex = -1;
+        self.currentLineItem = nil;
       }
     }];
   }
@@ -243,6 +252,32 @@
   [self.assignmentView.subviews enumerateObjectsUsingBlock:^(UIView *wrapper, NSUInteger idx, BOOL *stop) {
     UIButton *plusButton = [wrapper.subviews objectAtIndex:2];
     plusButton.enabled = (lineQuantity < [[lineItem objectForKey:@"quantity"] integerValue]);
+  }];
+  
+  // update the 'progress' view showing what portion each user is responsible for
+  UILabel *nameLabel = [self.currentLineItem.subviews objectAtIndex:1];
+  UIView *progressView = [nameLabel.subviews objectAtIndex:0];
+  
+  [progressView.subviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
+    [subview removeFromSuperview];
+  }];
+  
+  __block NSInteger allocated = 0;
+  __block CGFloat x = 0;
+  [splits enumerateObjectsUsingBlock:^(NSMutableDictionary *split, NSUInteger idx, BOOL *stop) {
+    CGFloat quantity = [[split objectForKey:@"quantity"] floatValue];
+    CGFloat totalQuantity = [[lineItem objectForKey:@"quantity"] floatValue];
+    if (quantity <= 0.0) return;
+    
+    allocated += quantity;
+    CGFloat percentage = quantity / totalQuantity;
+    CGFloat width = (allocated >= totalQuantity) ? progressView.frame.size.width - x : progressView.frame.size.width * percentage;
+    
+    CGRect frame = CGRectMake(x, 0, width, progressView.frame.size.height);
+    UIView *progressSegment = [[UIView alloc] initWithFrame:CGRectIntegral(frame)];
+    progressSegment.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:idx + 1];
+    [progressView addSubview:progressSegment];
+    x += progressSegment.frame.size.width;
   }];
 }
 
@@ -300,7 +335,7 @@
       [nameWrapper addSubview:nameLabel];
       [wrapper addSubview:nameWrapper];
       
-      frame = CGRectMake(8 + QUANTITY_BOX_WIDTH + SPLIT_NAME_BOX_WIDTH + (BUTTON_WIDTH * 2), 0, PRICE_BOX_WIDTH - 4, TEXT_BOX_HEIGHT);
+      frame = CGRectMake(8 + QUANTITY_BOX_WIDTH + SPLIT_NAME_BOX_WIDTH + (BUTTON_WIDTH * 2), 0, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
       UILabel *priceLabel = [[UILabel alloc] initWithFrame:frame];
       priceLabel.backgroundColor = quantityLabel.backgroundColor;
       priceLabel.font = [UIFont fontWithName:@"Futura-Medium" size:14];
