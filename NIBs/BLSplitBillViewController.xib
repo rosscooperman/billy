@@ -99,7 +99,6 @@
 						<string key="NSFrame">{{270, 410}, {45, 45}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -117,10 +116,7 @@
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
 						<string key="IBUINormalTitle">&gt;</string>
 						<reference key="IBUIHighlightedTitleColor" ref="919025019"/>
-						<object class="NSColor" key="IBUIDisabledTitleColor">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
-						</object>
+						<reference key="IBUIDisabledTitleColor" ref="919025019"/>
 						<reference key="IBUINormalTitleColor" ref="919025019"/>
 						<reference key="IBUINormalTitleShadowColor" ref="99873930"/>
 						<reference key="IBUIFontDescription" ref="62447926"/>
