@@ -52,6 +52,8 @@
 
 - (void)viewDidLoad
 {
+  if (!self.rawText) self.rawText = [[BLAppDelegate appDelegate] rawText];
+  
   [self findLineItems];
   [self generateTextFields]; 
   [self updateStoredItems];

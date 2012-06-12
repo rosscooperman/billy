@@ -137,4 +137,17 @@
   if (splitCount >= 2 && splitCount <= 8) _splitCount = splitCount;
 }
 
+
+- (NSString *)rawText
+{
+  return [[NSUserDefaults standardUserDefaults] stringForKey:@"rawText"];
+}
+
+
+- (void)setRawText:(NSString *)rawText
+{
+  [[NSUserDefaults standardUserDefaults] setValue:rawText forKey:@"rawText"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 @end

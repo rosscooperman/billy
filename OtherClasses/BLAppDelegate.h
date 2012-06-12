@@ -16,6 +16,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *viewController;
 @property (assign, nonatomic) NSInteger splitCount;
+@property (strong, nonatomic) NSString *rawText;
 
 
 // class methods

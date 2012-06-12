@@ -15,6 +15,7 @@
 
 
 #import "BLSplitBillViewController.h"
+#import "BLTaxViewController.h"
 
 
 @interface BLSplitBillViewController ()
@@ -382,7 +383,8 @@
 
 - (void)nextScreen:(id)sender
 {
-
+  BLTaxViewController *taxController = [[BLTaxViewController alloc] init];
+  [self.navigationController pushViewController:taxController animated:YES];
 }
 
 
