@@ -7,6 +7,7 @@
 //
 
 #import "BLTaxViewController.h"
+#import "BLTipViewController.h"
 
 
 @interface BLTaxViewController ()
@@ -78,6 +79,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[BLAppDelegate appDelegate] setTaxAmount:self.taxAmount];
 }
 
 
@@ -205,7 +207,9 @@
 
 - (void)nextScreen:(id)sender
 {
-  // tip screen is next...
+  [[BLAppDelegate appDelegate] setTaxAmount:self.taxAmount];
+  BLTipViewController *tipController = [[BLTipViewController alloc] init];
+  [self.navigationController pushViewController:tipController animated:YES];
 }
 
 

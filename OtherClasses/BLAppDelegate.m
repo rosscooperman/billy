@@ -27,6 +27,7 @@
 @synthesize viewController = _viewController;
 @synthesize splitCount = _splitCount;
 @synthesize colors;
+@synthesize taxAmount;
 
 
 #pragma mark - Application Lifecycle

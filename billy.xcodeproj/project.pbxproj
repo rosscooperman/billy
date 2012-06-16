@@ -30,6 +30,8 @@
 		9198BF17157AEB25001B74A9 /* BLSplitBillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF0F157AEB25001B74A9 /* BLSplitBillViewController.m */; };
 		9198BF18157AEB25001B74A9 /* BLSplitCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF11157AEB25001B74A9 /* BLSplitCountViewController.m */; };
 		9198BF1A157AEB34001B74A9 /* BLSplitBillViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9198BF19157AEB34001B74A9 /* BLSplitBillViewController.xib */; };
+		91AAE666158D3A6C00C609C4 /* BLTipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91AAE665158D3A6C00C609C4 /* BLTipViewController.xib */; };
+		91AAE66A158D3A8400C609C4 /* BLTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AAE669158D3A8400C609C4 /* BLTipViewController.m */; };
 		91B9CC571576C3ED00AAEDC0 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC561576C3ED00AAEDC0 /* UIKit.framework */; };
 		91B9CC591576C3ED00AAEDC0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC581576C3ED00AAEDC0 /* Foundation.framework */; };
 		91B9CC5B1576C3ED00AAEDC0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC5A1576C3ED00AAEDC0 /* CoreGraphics.framework */; };
@@ -83,6 +85,9 @@
 		9198BF10157AEB25001B74A9 /* BLSplitCountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLSplitCountViewController.h; path = ViewControllers/BLSplitCountViewController.h; sourceTree = "<group>"; };
 		9198BF11157AEB25001B74A9 /* BLSplitCountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSplitCountViewController.m; path = ViewControllers/BLSplitCountViewController.m; sourceTree = "<group>"; };
 		9198BF19157AEB34001B74A9 /* BLSplitBillViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLSplitBillViewController.xib; path = NIBs/BLSplitBillViewController.xib; sourceTree = "<group>"; };
+		91AAE665158D3A6C00C609C4 /* BLTipViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTipViewController.xib; path = NIBs/BLTipViewController.xib; sourceTree = "<group>"; };
+		91AAE668158D3A8400C609C4 /* BLTipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTipViewController.h; path = ViewControllers/BLTipViewController.h; sourceTree = "<group>"; };
+		91AAE669158D3A8400C609C4 /* BLTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTipViewController.m; path = ViewControllers/BLTipViewController.m; sourceTree = "<group>"; };
 		91B9CC521576C3ED00AAEDC0 /* billy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = billy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B9CC561576C3ED00AAEDC0 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		91B9CC581576C3ED00AAEDC0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -221,6 +226,8 @@
 				9198BF11157AEB25001B74A9 /* BLSplitCountViewController.m */,
 				91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */,
 				91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */,
+				91AAE668158D3A8400C609C4 /* BLTipViewController.h */,
+				91AAE669158D3A8400C609C4 /* BLTipViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -235,6 +242,7 @@
 				9198BF19157AEB34001B74A9 /* BLSplitBillViewController.xib */,
 				91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */,
 				91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */,
+				91AAE665158D3A6C00C609C4 /* BLTipViewController.xib */,
 			);
 			name = NIBs;
 			sourceTree = "<group>";
@@ -350,6 +358,7 @@
 				9148AE0615792E9700985CA0 /* BLFixItemsViewController.xib in Resources */,
 				9198BF1A157AEB34001B74A9 /* BLSplitBillViewController.xib in Resources */,
 				91EB2BC01586E56F007FD18B /* BLTaxViewController.xib in Resources */,
+				91AAE666158D3A6C00C609C4 /* BLTipViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,6 +379,7 @@
 				9198BF18157AEB25001B74A9 /* BLSplitCountViewController.m in Sources */,
 				91CAC83F157E6704001B500F /* BLAppDelegate.m in Sources */,
 				91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */,
+				91AAE66A158D3A8400C609C4 /* BLTipViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

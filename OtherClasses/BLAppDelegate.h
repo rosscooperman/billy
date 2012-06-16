@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UINavigationController *viewController;
 @property (assign, nonatomic) NSInteger splitCount;
 @property (strong, nonatomic) NSString *rawText;
+@property (assign, nonatomic) float taxAmount;
 
 
 // class methods
