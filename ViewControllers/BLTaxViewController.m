@@ -14,9 +14,13 @@
 @property (nonatomic, assign) float totalAmount;
 @property (nonatomic, assign) float taxPercentage;
 @property (nonatomic, assign) float taxAmount;
+@property (nonatomic, readonly) NSNumberFormatter *percentFormatter;
+@property (nonatomic, strong) NSTimer *longPressTimer;
 
 
 - (void)updateLabels;
+- (void)keyboardShown:(NSNotification *)notification;
+- (void)keyboardHidden:(NSNotification *)notification;
 
 @end
 
@@ -27,9 +31,13 @@
 @synthesize amountField;
 @synthesize minusButton;
 @synthesize plusButton;
+@synthesize closeKeyboardRecognizer;
 @synthesize totalAmount;
 @synthesize taxPercentage = _taxPercentage;
 @synthesize taxAmount = _taxAmount;
+@synthesize percentFormatter = _percentFormatter;
+@synthesize longPressTimer;
+@synthesize contentWrapper;
 
 
 #pragma mark - View Lifecycle
@@ -53,14 +61,23 @@
   
   if (result.range.length > 0) {
     self.taxAmount = [[rawText substringWithRange:[result rangeAtIndex:1]] floatValue];
-    self.taxPercentage = self.taxAmount / self.totalAmount;
   }
   else {
     self.taxPercentage = 0.07;
-    self.taxAmount = self.taxPercentage * self.totalAmount;
   }
-  
-  [self updateLabels];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -68,27 +85,115 @@
 
 - (void)updateLabels
 {
-  self.amountField.text = [NSString stringWithFormat:@"%.2f", self.taxAmount];
-  NSString *percentString = [NSString stringWithFormat:@"%.3f", self.taxPercentage * 100.0];
-  NSCharacterSet *zeroSet = [NSCharacterSet characterSetWithCharactersInString:@"0"];
-  self.percentLabel.text = [NSString stringWithFormat:@"%@%%", [percentString stringByTrimmingCharactersInSet:zeroSet]];
+  // roundabout way of testing whether the keyboard is currently shown (and so the amount label should not be touched)
+  if (CGAffineTransformIsIdentity(self.contentWrapper.transform)) {
+    self.amountField.text = [NSString stringWithFormat:@"%.2f", self.taxAmount];
+    if (self.taxAmount <= 0.0) {
+      self.minusButton.enabled = NO;
+    }
+    else {
+      self.minusButton.enabled = YES;    
+    }
+  }
+  self.percentLabel.text = [self.percentFormatter stringFromNumber:[NSNumber numberWithFloat:self.taxPercentage]];
+}
+
+
+- (void)setTaxAmount:(float)taxAmount
+{
+  _taxAmount = taxAmount;
+  _taxPercentage = (self.taxAmount == 0.0) ? 0.0 : self.taxAmount / self.totalAmount;
+  [self updateLabels];
+}
+
+
+- (void)setTaxPercentage:(float)taxPercentage
+{
+  _taxPercentage = taxPercentage;
+  _taxAmount = self.taxPercentage * self.totalAmount;
+  [self updateLabels];
+}
+
+
+- (void)keyboardShown:(NSNotification *)notification
+{
+  self.closeKeyboardRecognizer.enabled = YES;
+  
+  NSDictionary *info = [notification userInfo];
+  CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
+  CGFloat duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+  [UIView animateWithDuration:duration animations:^{
+    self.contentWrapper.transform = CGAffineTransformMakeTranslation(0.0, -(keyboardSize.height / 2.0));
+  }];  
+}
+
+
+- (void)keyboardHidden:(NSNotification *)notification
+{
+  self.closeKeyboardRecognizer.enabled = NO;
+  
+  NSDictionary *info = [notification userInfo];
+  CGFloat duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
+  [UIView animateWithDuration:duration animations:^{
+    self.contentWrapper.transform = CGAffineTransformIdentity;
+  } completion:^(BOOL finished) {
+    [self updateLabels];
+  }];
 }
 
 
 #pragma mark - Property Implementations
 
-
-#pragma mark - IBAction Methods
-
-- (void)incrementPercentage:(id)sender
+- (NSNumberFormatter *)percentFormatter
 {
-  
+  if (!_percentFormatter) {
+    _percentFormatter = [[NSNumberFormatter alloc] init];
+    _percentFormatter.roundingMode = NSNumberFormatterRoundHalfUp;
+    _percentFormatter.roundingIncrement = [NSNumber numberWithFloat:0.005];
+    _percentFormatter.numberStyle = NSNumberFormatterPercentStyle;
+    _percentFormatter.maximumFractionDigits = 3;
+  }
+  return _percentFormatter;
 }
 
 
-- (void)decrementPercentage:(id)sender
+#pragma mark - IBAction Methods
+
+- (void)incrementAmount:(id)sender
 {
-  
+  self.taxAmount += 0.01;
+}
+
+
+- (void)decrementAmount:(id)sender
+{
+  if (self.taxAmount >= 0.01) {
+    self.taxAmount -= 0.01;
+  }
+}
+
+
+- (void)handleIncrementLongPress:(UILongPressGestureRecognizer *)recognizer
+{
+  if (recognizer.state == UIGestureRecognizerStateBegan) {
+    self.longPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(incrementAmount:) userInfo:nil repeats:YES];
+  }
+  else if (recognizer.state == UIGestureRecognizerStateEnded) {
+    [self.longPressTimer invalidate];
+    self.longPressTimer = nil;
+  }  
+}
+
+
+- (void)handleDecrementLongPress:(UILongPressGestureRecognizer *)recognizer
+{
+  if (recognizer.state == UIGestureRecognizerStateBegan) {
+    self.longPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(decrementAmount:) userInfo:nil repeats:YES];
+  }
+  else if (recognizer.state == UIGestureRecognizerStateEnded) {
+    [self.longPressTimer invalidate];
+    self.longPressTimer = nil;
+  }
 }
 
 
@@ -100,10 +205,47 @@
 
 - (void)nextScreen:(id)sender
 {
-  
+  // tip screen is next...
+}
+
+
+- (void)closeKeyboard:(id)sender
+{
+  [self.amountField resignFirstResponder];
 }
 
 
 #pragma mark - UITextFieldDelegate Methods
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+  self.plusButton.enabled = NO;
+  self.minusButton.enabled = NO;
+}
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+  self.plusButton.enabled = YES;
+  self.minusButton.enabled = YES;
+}
+
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+  NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+  NSCharacterSet *nonDigitsSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
+  textField.text = [newString stringByTrimmingCharactersInSet:nonDigitsSet];
+  
+  self.taxAmount = [textField.text floatValue];
+  return NO;
+}
+
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+  [textField resignFirstResponder];
+  return NO;
+}
 
 @end

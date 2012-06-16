@@ -55,7 +55,7 @@
 
 #pragma mark - View Lifecycle
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
   NSArray *_lineItems = [BLAppDelegate appDelegate].lineItems;
   

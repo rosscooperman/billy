@@ -16,11 +16,16 @@
 @property (nonatomic, strong) IBOutlet BLTextField *amountField;
 @property (nonatomic, strong) IBOutlet UIButton *minusButton;
 @property (nonatomic, strong) IBOutlet UIButton *plusButton;
+@property (nonatomic, strong) IBOutlet UIView *contentWrapper;
+@property (nonatomic, strong) IBOutlet UITapGestureRecognizer *closeKeyboardRecognizer;
 
 
-- (IBAction)incrementPercentage:(id)sender;
-- (IBAction)decrementPercentage:(id)sender;
+- (IBAction)incrementAmount:(id)sender;
+- (IBAction)decrementAmount:(id)sender;
 - (IBAction)nextScreen:(id)sender;
 - (IBAction)previousScreen:(id)sender;
+- (IBAction)closeKeyboard:(id)sender;
+- (IBAction)handleIncrementLongPress:(UILongPressGestureRecognizer *)recognizer;
+- (IBAction)handleDecrementLongPress:(UILongPressGestureRecognizer *)recognizer;
 
 @end
