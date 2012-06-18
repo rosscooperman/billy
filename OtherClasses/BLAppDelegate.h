@@ -18,6 +18,7 @@
 @property (assign, nonatomic) NSInteger splitCount;
 @property (strong, nonatomic) NSString *rawText;
 @property (assign, nonatomic) float taxAmount;
+@property (assign, nonatomic) float tipAmount;
 
 
 // class methods

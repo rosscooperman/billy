@@ -7,6 +7,7 @@
 //
 
 #import "BLTipViewController.h"
+#import "BLSummaryViewController.h"
 
 
 @interface BLTipViewController ()
@@ -38,7 +39,7 @@
 {
   self.totalAmount = 0.0;
   [[[BLAppDelegate appDelegate] lineItems] enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
-    self.totalAmount += [[lineItem valueForKey:@"price"] floatValue] * [[lineItem valueForKey:@"quantity"] floatValue];
+    self.totalAmount += [[lineItem valueForKey:@"price"] floatValue];
   }];
   self.totalAmount += [[BLAppDelegate appDelegate] taxAmount];
   self.tipPercentage = 0.2;
@@ -101,7 +102,9 @@
 
 - (void)nextScreen:(id)sender
 {
-  
+  [[BLAppDelegate appDelegate] setTipAmount:(self.tipPercentage * self.totalAmount)];
+  BLSummaryViewController *summaryController = [[BLSummaryViewController alloc] init];
+  [self.navigationController pushViewController:summaryController animated:YES];
 }
 
 

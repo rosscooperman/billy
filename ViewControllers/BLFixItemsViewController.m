@@ -70,7 +70,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [self updateStoredItems];
 }
 
 
@@ -361,6 +360,7 @@
 - (void)acceptChanges:(id)sender
 {
   if ([self validateLineItems]) {
+    [self updateStoredItems];
     BLSplitBillViewController *splitBillController = [[BLSplitBillViewController alloc] init];
     [self.navigationController pushViewController:splitBillController animated:YES];
   }

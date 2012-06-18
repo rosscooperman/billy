@@ -28,6 +28,7 @@
 @synthesize splitCount = _splitCount;
 @synthesize colors;
 @synthesize taxAmount;
+@synthesize tipAmount;
 
 
 #pragma mark - Application Lifecycle

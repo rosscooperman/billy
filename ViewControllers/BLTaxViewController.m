@@ -56,7 +56,7 @@
   
   self.totalAmount = 0.0;
   [[[BLAppDelegate appDelegate] lineItems] enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
-    self.totalAmount += [[lineItem valueForKey:@"price"] floatValue] * [[lineItem valueForKey:@"quantity"] floatValue];
+    self.totalAmount += [[lineItem valueForKey:@"price"] floatValue];
   }];
   if (self.totalAmount <= 0.0) self.totalAmount = 0.0001; // avoid divide by zero errors
   
@@ -79,7 +79,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [[BLAppDelegate appDelegate] setTaxAmount:self.taxAmount];
 }
 
 
