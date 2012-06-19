@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1296</int>
+		<int key="IBDocument.SystemTarget">1280</int>
 		<string key="IBDocument.SystemVersion">11E53</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.47</string>
@@ -91,7 +91,7 @@
 						<double key="IBUITitleEdgeInsets.bottom">10</double>
 						<double key="IBUITitleEdgeInsets.left">1</double>
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
-						<string key="IBUINormalTitle">-</string>
+						<string key="IBUINormalTitle">–</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="22772324">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MAA</bytes>
@@ -106,11 +106,11 @@
 							<string key="name">Futura-Medium</string>
 							<string key="family">Futura</string>
 							<int key="traits">0</int>
-							<double key="pointSize">49</double>
+							<double key="pointSize">40</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Futura-Medium</string>
-							<double key="NSSize">49</double>
+							<double key="NSSize">40</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -143,11 +143,11 @@
 							<string key="name">Futura-Medium</string>
 							<string key="family">Futura</string>
 							<int key="traits">0</int>
-							<double key="pointSize">38</double>
+							<double key="pointSize">39</double>
 						</object>
 						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Futura-Medium</string>
-							<double key="NSSize">38</double>
+							<double key="NSSize">39</double>
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
@@ -310,11 +310,11 @@
 						<int key="objectID">1</int>
 						<reference key="object" ref="191373211"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="649259784"/>
 							<reference ref="121927741"/>
 							<reference ref="959852004"/>
 							<reference ref="22227018"/>
 							<reference ref="705671391"/>
+							<reference ref="649259784"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -437,10 +437,6 @@
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaTouchPlugin.iPhoneOS</string>
-			<real value="1296" key="NS.object.0"/>
-		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<string key="IBCocoaTouchPluginVersion">1179</string>
