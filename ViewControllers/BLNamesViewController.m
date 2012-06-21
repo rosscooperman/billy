@@ -177,15 +177,8 @@
 
 - (void)nextScreen:(id)sender
 {
-//  BLCameraViewController *cameraController = [[BLCameraViewController alloc] init];
-//  [self.navigationController pushViewController:cameraController animated:YES];
-  
-  //FUDGED!!!!
-  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
-  //[[BLAppDelegate appDelegate] setRawText:@"1 Bacon Almsnds 5.00\n2 Fira Pspcvcrs 0.00\n1 southamptsm ips 8.00\n1 Pickiss 4.00\n1 ZZZZZZZZZZZZZZZZZZZZIZ G '  \n1 Ribs 12.00\n1 market fish 26.00\nSUB 101AL; 55.00\n1ax 1: 4.88"];
-  [[BLAppDelegate appDelegate] setRawText:@"1 Bacon Almsnds 55.00\n\nSUB 101AL; 55.00\n1ax 1: 4.88"];
-  [self.navigationController pushViewController:fixItemsController animated:YES];
-
+  BLCameraViewController *cameraController = [[BLCameraViewController alloc] init];
+  [self.navigationController pushViewController:cameraController animated:YES];
 }
 
 
