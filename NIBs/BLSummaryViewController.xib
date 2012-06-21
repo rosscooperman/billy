@@ -106,6 +106,7 @@
 							<bytes key="NSRGB">MCAwLjggMC4yOTQxMTc2NDcxAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
+						<float key="IBUIAlpha">0.75</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
@@ -248,6 +249,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="previousScreen:">id</string>
 						<string key="startOver:">id</string>
+						<string key="toggleLineItems:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
 						<object class="IBActionInfo" key="previousScreen:">
@@ -256,6 +258,10 @@
 						</object>
 						<object class="IBActionInfo" key="startOver:">
 							<string key="name">startOver:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleLineItems:">
+							<string key="name">toggleLineItems:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 					</dictionary>
