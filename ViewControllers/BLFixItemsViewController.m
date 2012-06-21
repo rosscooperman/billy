@@ -81,14 +81,22 @@
   
   NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
   
-  NSString *pattern = @"^\\s*([\\dI])\\s+(.*)?\\s+\\$?(\\d+\\.\\d{2})\\s*$";
+  NSString *pattern = @"^\\s*([\\dIOS]+)\\s+(.*)?\\s+\\$?([\\dIOS]+\\.[\\dIOS]{2})\\s*$";
   NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
   NSRange range = [self.rawText rangeOfString:self.rawText];
   
   [regex enumerateMatchesInString:self.rawText options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-    NSString *quantity = [self.rawText substringWithRange:[result rangeAtIndex:1]];
+    NSString *quantity = [[self.rawText substringWithRange:[result rangeAtIndex:1]] uppercaseString];
+    quantity = [quantity stringByReplacingOccurrencesOfString:@"I" withString:@"1"];
+    quantity = [quantity stringByReplacingOccurrencesOfString:@"O" withString:@"0"];
+    quantity = [quantity stringByReplacingOccurrencesOfString:@"S" withString:@"5"];
+    
     NSString *text = [self.rawText substringWithRange:[result rangeAtIndex:2]];
-    NSString *price = [self.rawText substringWithRange:[result rangeAtIndex:3]];
+    
+    NSString *price = [[self.rawText substringWithRange:[result rangeAtIndex:3]] uppercaseString];
+    price = [price stringByReplacingOccurrencesOfString:@"I" withString:@"1"];
+    price = [price stringByReplacingOccurrencesOfString:@"O" withString:@"0"];
+    price = [price stringByReplacingOccurrencesOfString:@"S" withString:@"5"];
     
     NSDictionary *line = [NSDictionary dictionaryWithObjectsAndKeys:quantity, @"quantity", text, @"name", price, @"price", nil];
     [self.lineItems addObject:line];
