@@ -88,6 +88,13 @@
 }
 
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [self.processingImageIndicator stopAnimating];
+  [self.processImageButton setImage:[UIImage imageNamed:@"iconCheck"] forState:UIControlStateNormal];
+}
+
+
 #pragma mark - Instance Methods
 
 - (CAShapeLayer *)initializeMaskLayer
@@ -420,7 +427,11 @@
       break;      
     }
                   
-    default: {
+    // do nothing for all other states
+    case UIGestureRecognizerStateCancelled:
+    case UIGestureRecognizerStateEnded:
+    case UIGestureRecognizerStateFailed:
+    case UIGestureRecognizerStatePossible: {
       
     }
   }
@@ -438,8 +449,8 @@
   UIImage *gray = [self grayscaleizeImage:cropped];
   
   BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
-  fixItemsController.rawText = [self ocrImage:gray];
-  TFLog(@"%@", fixItemsController.rawText);
+  [BLAppDelegate appDelegate].rawText = [self ocrImage:gray];
+  TFLog(@"%@", [BLAppDelegate appDelegate].rawText);
   [self.navigationController pushViewController:fixItemsController animated:YES];
 }
 

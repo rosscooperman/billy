@@ -206,8 +206,6 @@
       self.contentArea.contentSize = newSize;
       
       CGFloat bottomPoint = detailView.frame.origin.y + detailView.frame.size.height;
-      TFLog(@"%f | %f", bottomPoint, self.contentArea.contentOffset.y + self.contentArea.frame.size.height - 55);
-
       if (self.contentArea.contentOffset.y + self.contentArea.frame.size.height - 55.0 < bottomPoint) {
         CGPoint newOffset = CGPointMake(0.0, bottomPoint - self.contentArea.bounds.size.height + 55.0);
         self.contentArea.contentOffset = newOffset;
