@@ -303,8 +303,10 @@
       NSString *name = [[fields objectForKey:@"name"] text];
       NSNumber *price = [NSNumber numberWithFloat:[[[fields objectForKey:@"price"] text] floatValue]];
       
-      NSDictionary *lineItem = [NSDictionary dictionaryWithObjectsAndKeys:quantity, @"quantity", name, @"name", price, @"price", nil];
-      [lineItems addObject:lineItem];      
+      if ([quantity integerValue] > 0 && [price floatValue] > 0.0) {
+        NSDictionary *lineItem = [NSDictionary dictionaryWithObjectsAndKeys:quantity, @"quantity", name, @"name", price, @"price", nil];
+        [lineItems addObject:lineItem];
+      }
     }
   }];
   [[BLAppDelegate appDelegate] setLineItems:lineItems];
