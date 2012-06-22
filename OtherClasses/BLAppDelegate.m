@@ -7,7 +7,7 @@
 //
 
 #import "BLAppDelegate.h"
-#import "BLSplitCountViewController.h"
+#import "BLStartViewController.h"
 #import "BLFixItemsViewController.h"
 
 
@@ -45,7 +45,7 @@
   self.splitCount = 2;
     
   // construct the only navigation controller we'll ever need
-  self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLSplitCountViewController alloc] init]];
+  self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLStartViewController alloc] init]];
   self.viewController.navigationBarHidden = YES;
   self.window.rootViewController = self.viewController;
   [self.window makeKeyAndVisible];
