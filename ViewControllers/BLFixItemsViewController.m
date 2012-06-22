@@ -276,20 +276,22 @@
       quantity.enabled = NO;
       name.enabled = NO;
       price.enabled = NO;
-      
-      quantity.textColor = [UIColor lightGrayColor];
-      name.textColor = [UIColor lightGrayColor];
-      price.textColor = [UIColor lightGrayColor];
+
+      UIColor *newBackground = [UIColor colorWithWhite:0.88627451 alpha:0.2];
+      quantity.backgroundColor = newBackground;
+      name.backgroundColor = newBackground;
+      price.backgroundColor = newBackground;
     }
   }
   else {
     quantity.enabled = YES;
     name.enabled = YES;
     price.enabled = YES;
-    
-    quantity.textColor = [UIColor blackColor];
-    name.textColor = [UIColor blackColor];
-    price.textColor = [UIColor blackColor];
+
+    UIColor *newBackground = [UIColor colorWithWhite:0.88627451 alpha:1.0];
+    quantity.backgroundColor = newBackground;
+    name.backgroundColor = newBackground;
+    price.backgroundColor = newBackground;
   }
 }
 
@@ -352,8 +354,11 @@
 {
   __block BOOL valid = YES;
   [self.dataFields enumerateObjectsUsingBlock:^(NSDictionary *fields, NSUInteger idx, BOOL *stop) {
-    [fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, UITextView *field, BOOL *stop) {
-      if (field.text.length <= 0) {
+    [fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, UITextField *field, BOOL *stop) {
+      if (!field.enabled) {
+        return;
+      }
+      else if (field.text.length <= 0) {
         field.backgroundColor = [UIColor redColor];
         valid = NO;
       }
