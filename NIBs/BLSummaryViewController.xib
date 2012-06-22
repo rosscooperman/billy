@@ -57,8 +57,8 @@
 						<reference key="NSNextKeyView" ref="71134837"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjEyNTQ5MDE5NjEgMAA</bytes>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC45OTYwNzg0OTEyIDAuMjcwNTg4MjQ5IDAuMjYyNzQ1MTEyMgA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<float key="IBUIAlpha">0.75</float>

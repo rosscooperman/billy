@@ -70,7 +70,7 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUILabel" id="664613202">
+					<object class="IBUILabel" id="227062961">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{5, 5}, {310, 50}}</string>
@@ -94,13 +94,13 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
 						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="783460921">
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="240405365">
 							<string key="name">Futura-CondensedMedium</string>
 							<string key="family">Futura</string>
 							<int key="traits">0</int>
 							<double key="pointSize">28</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="791184817">
+						<object class="NSFont" key="IBUIFont" id="741390127">
 							<string key="NSName">Futura-Medium</string>
 							<double key="NSSize">28</double>
 							<int key="NSfFlags">16</int>
@@ -173,8 +173,8 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
 						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="783460921"/>
-						<reference key="IBUIFont" ref="791184817"/>
+						<reference key="IBUIFontDescription" ref="240405365"/>
+						<reference key="IBUIFont" ref="741390127"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 					<object class="IBUIButton" id="59532470">
@@ -213,8 +213,8 @@
 						<reference key="NSNextKeyView" ref="778107777"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MSAwLjEyNTQ5MDE5NjEgMAA</bytes>
+							<int key="NSColorSpace">2</int>
+							<bytes key="NSRGB">MC45OTYwNzg0OTEyIDAuMjcwNTg4MjQ5IDAuMjYyNzQ1MTEyMgA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -412,7 +412,7 @@
 							<reference ref="1041428994"/>
 							<reference ref="300586571"/>
 							<reference ref="318437187"/>
-							<reference ref="664613202"/>
+							<reference ref="227062961"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -477,7 +477,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">53</int>
-						<reference key="object" ref="664613202"/>
+						<reference key="object" ref="227062961"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>
