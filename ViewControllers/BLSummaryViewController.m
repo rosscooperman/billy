@@ -174,10 +174,15 @@
   
   if (detailView.subviews.count > 0) {
     float tax = [[self.ratios objectAtIndex:index] floatValue] * [BLAppDelegate appDelegate].taxAmount;
+    float tip = [[self.ratios objectAtIndex:index] floatValue] * [BLAppDelegate appDelegate].tipAmount;
+    float subtotal = ([[self.ratios objectAtIndex:index] floatValue] * self.totalAmount) + tax;
+
     UIView *taxView = [self generateViewForIndex:detailView.subviews.count name:@"TAX" total:0 quantity:0 price:tax];
     [detailView addSubview:taxView];
+
+    UIView *subtotalView = [self generateViewForIndex:detailView.subviews.count name:@"SUBTOTAL" total:0 quantity:0 price:subtotal];
+    [detailView addSubview:subtotalView];
     
-    float tip = [[self.ratios objectAtIndex:index] floatValue] * [BLAppDelegate appDelegate].tipAmount;
     UIView *tipView = [self generateViewForIndex:detailView.subviews.count name:@"TIP" total:0 quantity:0 price:tip];
     [detailView addSubview:tipView];
     
