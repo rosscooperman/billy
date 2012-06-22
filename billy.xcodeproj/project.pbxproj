@@ -52,6 +52,8 @@
 		91B9CCD21577DA4100AAEDC0 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCD01577DA4100AAEDC0 /* iTunesArtwork */; };
 		91B9CCD31577DA4100AAEDC0 /* iTunesArtwork@2x in Resources */ = {isa = PBXBuildFile; fileRef = 91B9CCD11577DA4100AAEDC0 /* iTunesArtwork@2x */; };
 		91CAC83F157E6704001B500F /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAC83E157E6704001B500F /* BLAppDelegate.m */; };
+		91D0953C1595310C00E22EEC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D0953A1595310C00E22EEC /* Default.png */; };
+		91D0953D1595310C00E22EEC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D0953B1595310C00E22EEC /* Default@2x.png */; };
 		91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */; };
 		91EB2BC01586E56F007FD18B /* BLTaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */; };
 		91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */; };
@@ -118,6 +120,8 @@
 		91B9CCD11577DA4100AAEDC0 /* iTunesArtwork@2x */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iTunesArtwork@2x"; sourceTree = SOURCE_ROOT; };
 		91CAC83D157E6704001B500F /* BLAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLAppDelegate.h; path = OtherClasses/BLAppDelegate.h; sourceTree = "<group>"; };
 		91CAC83E157E6704001B500F /* BLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAppDelegate.m; path = OtherClasses/BLAppDelegate.m; sourceTree = "<group>"; };
+		91D0953A1595310C00E22EEC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		91D0953B1595310C00E22EEC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
 		91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTaxViewController.h; path = ViewControllers/BLTaxViewController.h; sourceTree = "<group>"; };
 		91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTaxViewController.m; path = ViewControllers/BLTaxViewController.m; sourceTree = "<group>"; };
 		91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTaxViewController.xib; path = NIBs/BLTaxViewController.xib; sourceTree = "<group>"; };
@@ -272,6 +276,8 @@
 		91B9CCB31577D50800AAEDC0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				91D0953A1595310C00E22EEC /* Default.png */,
+				91D0953B1595310C00E22EEC /* Default@2x.png */,
 				91B9CCD01577DA4100AAEDC0 /* iTunesArtwork */,
 				91B9CCD11577DA4100AAEDC0 /* iTunesArtwork@2x */,
 				91B9CCC41577D72500AAEDC0 /* Icon-72.png */,
@@ -376,6 +382,8 @@
 				91AAE671158E551F00C609C4 /* BLSummaryViewController.xib in Resources */,
 				91AAE674158E584B00C609C4 /* iconStartOver.png in Resources */,
 				91AAE675158E584B00C609C4 /* iconStartOver@2x.png in Resources */,
+				91D0953C1595310C00E22EEC /* Default.png in Resources */,
+				91D0953D1595310C00E22EEC /* Default@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
