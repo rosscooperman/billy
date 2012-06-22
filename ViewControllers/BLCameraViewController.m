@@ -12,6 +12,7 @@
 #import <ImageIO/CGImageProperties.h>
 #import "BLCameraViewController.h"
 #import "BLCropViewController.h"
+#import "BLFixItemsViewController.h"
 
 
 @interface BLCameraViewController ()
@@ -31,7 +32,9 @@
 
 @synthesize previewView;
 @synthesize mask;
+@synthesize previousScreenButton;
 @synthesize cameraButton;
+@synthesize skipCameraButton;
 @synthesize captureSession;
 @synthesize videoCaptureDevice;
 @synthesize stillCapturer;
@@ -62,6 +65,9 @@
   }];
 
   self.cameraButton.enabled = YES;
+  self.skipCameraButton.enabled = YES;
+  self.previousScreenButton.enabled = YES;
+  
   self.cameraButton.backgroundColor = CAMERA_BUTTON_COLOR;
 }
 
@@ -69,6 +75,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
   self.mask.alpha = 1.0;
+  self.cameraButton.backgroundColor = [UIColor lightGrayColor];
   [self.captureSession stopRunning];
 }
 
@@ -128,7 +135,10 @@
 
 - (void)takePicture:(id)sender
 {
-  self.cameraButton.enabled = YES;
+  self.cameraButton.enabled = NO;
+  self.skipCameraButton.enabled = NO;
+  self.previousScreenButton.enabled = NO;
+  
   self.cameraButton.backgroundColor = [UIColor lightGrayColor];
   [UIView animateWithDuration:0.3 animations:^{
     self.mask.alpha = 1.0;
@@ -148,6 +158,14 @@
       }
     }
   ];
+}
+
+
+- (void)skipCamera:(id)sender
+{
+  [BLAppDelegate appDelegate].rawText = @"";
+  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
+  [self.navigationController pushViewController:fixItemsController animated:YES];
 }
 
 @end

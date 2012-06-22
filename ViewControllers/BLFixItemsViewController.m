@@ -55,8 +55,17 @@
   if (!self.rawText) self.rawText = [[BLAppDelegate appDelegate] rawText];
   
   [self findLineItems];
+  
+  BOOL selectFirstField = NO;
+  if (self.lineItems.count <= 0) {
+    [self.lineItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"quantity", @"", @"name", @"", @"price", nil]];
+    selectFirstField = YES;
+  }
+  
   [self generateTextFields]; 
   [self updateStoredItems];
+  
+  if (selectFirstField) [[[self.dataFields objectAtIndex:0] objectForKey:@"quantity"] becomeFirstResponder];
 }
 
 
@@ -78,6 +87,7 @@
 - (void)findLineItems
 {
   if (!self.lineItems) self.lineItems = [NSMutableArray array];
+  if (!self.rawText || self.rawText.length <= 0) return;
   
   NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
   
@@ -133,6 +143,7 @@
   quantity.textAlignment = UITextAlignmentCenter;
   quantity.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
   quantity.tag = 0;
+  quantity.placeholder = @"#";
   [wrapper addSubview:quantity];
   
   // generate the name text field
@@ -140,6 +151,7 @@
   name.frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
   name.text = [[line objectForKey:@"name"] uppercaseString];
   name.tag = 1;
+  name.placeholder = @"DESCRIPTION";
   [wrapper addSubview:name];
   
   // generate the price field
@@ -150,6 +162,7 @@
   price.textAlignment = UITextAlignmentCenter;
   price.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
   price.tag = 2;
+  price.placeholder = @"0.00";
   [wrapper addSubview:price];
   
   // add this collection of fields to the dataFields array
