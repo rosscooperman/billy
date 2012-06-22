@@ -150,6 +150,7 @@
   BLTextField *name = [self generateTextField];
   name.frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
   name.text = [[line objectForKey:@"name"] uppercaseString];
+  name.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
   name.tag = 1;
   name.placeholder = @"DESCRIPTION";
   [wrapper addSubview:name];
@@ -335,18 +336,26 @@
   if (textField.tag == 0) {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSCharacterSet *nonDigitsSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
-    textField.text = [newString stringByTrimmingCharactersInSet:nonDigitsSet];
+    NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
+    return nonDigitRange.location == NSNotFound;
+  }
+  else if (textField.tag == 1) {
+    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSCharacterSet *lowercaseSet = [NSCharacterSet lowercaseLetterCharacterSet];
+    NSRange lowercaseRange = [newString rangeOfCharacterFromSet:lowercaseSet];
+    if (lowercaseRange.location != NSNotFound) {
+      textField.text = [newString uppercaseString];
+      return NO;
+    }
   }
   else if (textField.tag == 2) {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSCharacterSet *nonDigitsSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
-    textField.text = [newString stringByTrimmingCharactersInSet:nonDigitsSet];    
-  }
-  else {
-    textField.text = [[textField.text stringByReplacingCharactersInRange:range withString:string] uppercaseString];
+    NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
+    return nonDigitRange.location == NSNotFound;
   }
 
-  return NO;
+  return YES;
 }
 
 

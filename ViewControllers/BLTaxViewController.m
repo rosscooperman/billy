@@ -240,11 +240,15 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
   NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
+
   NSCharacterSet *nonDigitsSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
-  textField.text = [newString stringByTrimmingCharactersInSet:nonDigitsSet];
+  NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
+  if (nonDigitRange.location != NSNotFound) {
+    return NO;
+  }
   
-  self.taxAmount = [textField.text floatValue];
-  return NO;
+  self.taxAmount = [newString floatValue];
+  return YES;
 }
 
 

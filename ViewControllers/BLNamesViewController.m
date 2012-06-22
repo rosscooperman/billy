@@ -86,6 +86,7 @@
   textField.textColor = [UIColor blackColor];
   textField.autocorrectionType = UITextAutocorrectionTypeNo;
   textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+  textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
   textField.returnKeyType = UIReturnKeyNext;
   textField.delegate = self;
   textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -153,8 +154,14 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
   NSString *newText = [[textField.text stringByReplacingCharactersInRange:range withString:string] uppercaseString];
-  textField.text = newText;
-  return NO;
+  NSCharacterSet *lowercaseSet = [NSCharacterSet lowercaseLetterCharacterSet];
+  NSRange lowercaseRange = [newText rangeOfCharacterFromSet:lowercaseSet];
+  if (lowercaseRange.location != NSNotFound) {
+    textField.text = [newText uppercaseString];
+    return NO;
+  }
+
+  return YES;
 }
 
 
