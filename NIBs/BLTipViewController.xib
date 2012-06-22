@@ -42,7 +42,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{-20, 0}, {360, 460}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
-						<reference key="NSNextKeyView" ref="300586571"/>
+						<reference key="NSNextKeyView" ref="395574662"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -70,11 +70,12 @@
 							<int key="NSfFlags">16</int>
 						</object>
 					</object>
-					<object class="IBUILabel" id="227062961">
+					<object class="IBUILabel" id="395574662">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{5, 5}, {310, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSNextKeyView" ref="300586571"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -94,13 +95,13 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
 						<int key="IBUITextAlignment">1</int>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="240405365">
+						<object class="IBUIFontDescription" key="IBUIFontDescription" id="106017306">
 							<string key="name">Futura-CondensedMedium</string>
 							<string key="family">Futura</string>
 							<int key="traits">0</int>
 							<double key="pointSize">28</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="741390127">
+						<object class="NSFont" key="IBUIFont" id="973716926">
 							<string key="NSName">Futura-Medium</string>
 							<double key="NSSize">28</double>
 							<int key="NSfFlags">16</int>
@@ -173,8 +174,8 @@
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
 						<int key="IBUITextAlignment">1</int>
-						<reference key="IBUIFontDescription" ref="240405365"/>
-						<reference key="IBUIFont" ref="741390127"/>
+						<reference key="IBUIFontDescription" ref="106017306"/>
+						<reference key="IBUIFont" ref="973716926"/>
 						<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 					</object>
 					<object class="IBUIButton" id="59532470">
@@ -217,6 +218,7 @@
 							<bytes key="NSRGB">MC45OTYwNzg0OTEyIDAuMjcwNTg4MjQ5IDAuMjYyNzQ1MTEyMgA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
+						<float key="IBUIAlpha">0.80000001192092896</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
@@ -245,12 +247,14 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{265, 405}, {50, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">2</int>
 							<bytes key="NSRGB">MCAwLjgwMDAwMDA3MTUgMC4yOTQxMTc2NTkzAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
+						<float key="IBUIAlpha">0.80000001192092896</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
@@ -412,7 +416,7 @@
 							<reference ref="1041428994"/>
 							<reference ref="300586571"/>
 							<reference ref="318437187"/>
-							<reference ref="227062961"/>
+							<reference ref="395574662"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -477,7 +481,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">53</int>
-						<reference key="object" ref="227062961"/>
+						<reference key="object" ref="395574662"/>
 						<reference key="parent" ref="191373211"/>
 					</object>
 				</array>

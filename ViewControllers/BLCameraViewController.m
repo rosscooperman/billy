@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#define CAMERA_BUTTON_COLOR [UIColor colorWithRed:0.443137255 green:0.921568627 blue:0.541176471 alpha:1.0]
+#define CAMERA_BUTTON_COLOR [UIColor colorWithRed:0.0 green:0.8 blue:0.294117647 alpha:0.80]
 
 
 #import <ImageIO/CGImageProperties.h>

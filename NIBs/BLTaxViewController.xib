@@ -48,7 +48,7 @@
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{20, 20}, {360, 460}}</string>
 								<reference key="NSSuperview" ref="838394495"/>
-								<reference key="NSNextKeyView" ref="300586571"/>
+								<reference key="NSNextKeyView" ref="630882712"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
@@ -154,13 +154,13 @@
 									<int key="IBUIReturnKeyType">9</int>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="837616076">
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1042366003">
 									<string key="name">Futura-CondensedMedium</string>
 									<string key="family">Futura</string>
 									<int key="traits">0</int>
 									<double key="pointSize">28</double>
 								</object>
-								<object class="NSFont" key="IBUIFont" id="15489581">
+								<object class="NSFont" key="IBUIFont" id="242097994">
 									<string key="NSName">Futura-Medium</string>
 									<double key="NSSize">28</double>
 									<int key="NSfFlags">16</int>
@@ -194,13 +194,14 @@
 								<reference key="IBUIFontDescription" ref="508945093"/>
 								<reference key="IBUIFont" ref="87211125"/>
 							</object>
-							<object class="IBUILabel" id="314936382">
+							<object class="IBUILabel" id="630882712">
 								<reference key="NSNextResponder" ref="838394495"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{45, 25}, {310, 50}}</string>
 								<reference key="NSSuperview" ref="838394495"/>
+								<reference key="NSNextKeyView" ref="300586571"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor" id="332580275">
+								<object class="NSColor" key="IBUIBackgroundColor" id="454968790">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MCAwAA</bytes>
 								</object>
@@ -218,15 +219,15 @@
 								<int key="IBUIBaselineAdjustment">0</int>
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">1</int>
-								<reference key="IBUIFontDescription" ref="837616076"/>
-								<reference key="IBUIFont" ref="15489581"/>
+								<reference key="IBUIFontDescription" ref="1042366003"/>
+								<reference key="IBUIFont" ref="242097994"/>
 							</object>
 						</array>
 						<string key="NSFrame">{{-40, -20}, {400, 500}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSNextKeyView" ref="318437187"/>
 						<string key="NSReuseIdentifierKey">_NS:10</string>
-						<reference key="IBUIBackgroundColor" ref="332580275"/>
+						<reference key="IBUIBackgroundColor" ref="454968790"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 					<object class="IBUIButton" id="987870027">
@@ -241,6 +242,7 @@
 							<bytes key="NSRGB">MC45OTYwNzg0OTEyIDAuMjcwNTg4MjQ5IDAuMjYyNzQ1MTEyMgA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
+						<float key="IBUIAlpha">0.80000001192092896</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
@@ -275,6 +277,7 @@
 							<bytes key="NSRGB">MCAwLjgwMDAwMDA3MTUgMC4yOTQxMTc2NTkzAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
+						<float key="IBUIAlpha">0.80000001192092896</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
@@ -524,7 +527,7 @@
 							<reference ref="679557370"/>
 							<reference ref="300586571"/>
 							<reference ref="318437187"/>
-							<reference ref="314936382"/>
+							<reference ref="630882712"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Content Wrapper</string>
@@ -561,7 +564,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">41</int>
-						<reference key="object" ref="314936382"/>
+						<reference key="object" ref="630882712"/>
 						<reference key="parent" ref="838394495"/>
 					</object>
 				</array>

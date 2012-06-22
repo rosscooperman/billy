@@ -364,7 +364,7 @@
   self.assignedQuantity += amount;
   if (self.assignedQuantity >= self.totalQuantity) {
     self.nextScreenButton.enabled = YES;
-    self.nextScreenButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.803921569 blue:0.294117647 alpha:1.0];
+    self.nextScreenButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.8 blue:0.294117647 alpha:0.80];
   }
   else {
     self.nextScreenButton.enabled = NO;
