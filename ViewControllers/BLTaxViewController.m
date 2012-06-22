@@ -51,8 +51,11 @@
   NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
   
   NSString *rawText = [[BLAppDelegate appDelegate] rawText];
-  NSRange range = [rawText rangeOfString:rawText];
-  NSTextCheckingResult *result = [regex firstMatchInString:rawText options:options range:range];
+  NSTextCheckingResult *result = nil;
+  if (rawText.length > 0) {
+    NSRange range = [rawText rangeOfString:rawText];
+    result = [regex firstMatchInString:rawText options:options range:range];
+  }
   
   self.totalAmount = 0.0;
   [[[BLAppDelegate appDelegate] lineItems] enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
@@ -60,7 +63,7 @@
   }];
   if (self.totalAmount <= 0.0) self.totalAmount = 0.0001; // avoid divide by zero errors
   
-  if (result.range.length > 0) {
+  if (result && result.range.length > 0) {
     self.taxAmount = [[rawText substringWithRange:[result rangeAtIndex:1]] floatValue];
   }
   else {
