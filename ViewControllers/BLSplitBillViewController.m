@@ -305,11 +305,11 @@
       CGRect frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, BUTTON_WIDTH, BUTTON_WIDTH);
       UIButton *minusButton = [[UIButton alloc] initWithFrame:frame];
       minusButton.backgroundColor = quantityLabel.backgroundColor;
-      minusButton.titleLabel.font = [UIFont fontWithName:@"Futura-Medium" size:49];
+      minusButton.titleLabel.font = [UIFont fontWithName:@"Futura-Medium" size:30];
       [minusButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
       [minusButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
-      [minusButton setTitle:@"-" forState:UIControlStateNormal];
-      minusButton.titleEdgeInsets = UIEdgeInsetsMake(0, 1, 10, 0);
+      [minusButton setTitle:@"–" forState:UIControlStateNormal];
+      minusButton.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 4, 0);
       [minusButton addTarget:self action:@selector(minusButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
       [wrapper addSubview:minusButton];
       
@@ -320,7 +320,7 @@
       [plusButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
       [plusButton setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted];
       [plusButton setTitle:@"+" forState:UIControlStateNormal];
-      plusButton.titleEdgeInsets = UIEdgeInsetsMake(3, 0, 0, 0);
+      plusButton.titleEdgeInsets = UIEdgeInsetsMake(2, 0, 0, 0);
       [plusButton addTarget:self action:@selector(plusButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
       [wrapper addSubview:plusButton];
       

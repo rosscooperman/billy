@@ -95,10 +95,10 @@
 								<int key="IBUIContentHorizontalAlignment">0</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
 								<double key="IBUITitleEdgeInsets.top">0.0</double>
-								<double key="IBUITitleEdgeInsets.bottom">10</double>
-								<double key="IBUITitleEdgeInsets.left">1</double>
+								<double key="IBUITitleEdgeInsets.bottom">6</double>
+								<double key="IBUITitleEdgeInsets.left">0.0</double>
 								<double key="IBUITitleEdgeInsets.right">0.0</double>
-								<string key="IBUINormalTitle">-</string>
+								<string key="IBUINormalTitle">–</string>
 								<object class="NSColor" key="IBUIHighlightedTitleColor" id="627381440">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>
@@ -112,15 +112,15 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription">
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="508945093">
 									<string key="name">Futura-Medium</string>
 									<string key="family">Futura</string>
 									<int key="traits">0</int>
-									<double key="pointSize">49</double>
+									<double key="pointSize">40</double>
 								</object>
-								<object class="NSFont" key="IBUIFont">
+								<object class="NSFont" key="IBUIFont" id="87211125">
 									<string key="NSName">Futura-Medium</string>
-									<double key="NSSize">49</double>
+									<double key="NSSize">40</double>
 									<int key="NSfFlags">16</int>
 								</object>
 							</object>
@@ -195,17 +195,8 @@
 								<reference key="IBUIDisabledTitleColor" ref="299228524"/>
 								<reference key="IBUINormalTitleColor" ref="627381440"/>
 								<reference key="IBUINormalTitleShadowColor" ref="1037206111"/>
-								<object class="IBUIFontDescription" key="IBUIFontDescription">
-									<string key="name">Futura-Medium</string>
-									<string key="family">Futura</string>
-									<int key="traits">0</int>
-									<double key="pointSize">38</double>
-								</object>
-								<object class="NSFont" key="IBUIFont">
-									<string key="NSName">Futura-Medium</string>
-									<double key="NSSize">38</double>
-									<int key="NSfFlags">16</int>
-								</object>
+								<reference key="IBUIFontDescription" ref="508945093"/>
+								<reference key="IBUIFont" ref="87211125"/>
 							</object>
 						</array>
 						<string key="NSFrame">{{-40, -20}, {400, 500}}</string>
@@ -232,13 +223,12 @@
 							<bytes key="NSRGB">MSAwLjEyNTQ5MDE5NjEgMAA</bytes>
 						</object>
 						<bool key="IBUIOpaque">NO</bool>
-						<float key="IBUIAlpha">0.75</float>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<double key="IBUIContentEdgeInsets.top">2</double>
+						<double key="IBUIContentEdgeInsets.top">4</double>
 						<double key="IBUIContentEdgeInsets.bottom">0.0</double>
-						<double key="IBUIContentEdgeInsets.left">2</double>
+						<double key="IBUIContentEdgeInsets.left">0.0</double>
 						<double key="IBUIContentEdgeInsets.right">0.0</double>
 						<string key="IBUINormalTitle">&lt;</string>
 						<reference key="IBUIHighlightedTitleColor" ref="627381440"/>
@@ -272,7 +262,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
-						<double key="IBUITitleEdgeInsets.top">2</double>
+						<double key="IBUITitleEdgeInsets.top">4</double>
 						<double key="IBUITitleEdgeInsets.bottom">0.0</double>
 						<double key="IBUITitleEdgeInsets.left">2</double>
 						<double key="IBUITitleEdgeInsets.right">0.0</double>
@@ -578,7 +568,7 @@
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="8.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
-				<real value="3" key="8.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="8.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
