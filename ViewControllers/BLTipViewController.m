@@ -53,10 +53,10 @@
   if (!_percentFormatter) {
     _percentFormatter = [[NSNumberFormatter alloc] init];
     _percentFormatter.roundingMode = NSNumberFormatterRoundHalfUp;
-    _percentFormatter.roundingIncrement = [NSNumber numberWithFloat:0.005];
+    _percentFormatter.roundingIncrement = [NSNumber numberWithFloat:0.01];
     _percentFormatter.numberStyle = NSNumberFormatterPercentStyle;
-    _percentFormatter.maximumFractionDigits = 1;
-    _percentFormatter.minimumFractionDigits = 1;
+    _percentFormatter.maximumFractionDigits = 0;
+    _percentFormatter.minimumFractionDigits = 0;
   }
   return _percentFormatter;
 }
@@ -74,28 +74,30 @@
 
 - (void)incrementPercentage:(id)sender
 {
-  if (self.tipPercentage > 0.990) {
+  self.tipPercentage += 0.01;
+  self.tipPercentage = MIN(self.tipPercentage, 1.0);
+  if (self.tipPercentage >= 1.0) {
     self.plusButton.enabled = NO;
     if (self.longPressTimer) {
       [self.longPressTimer invalidate];
       self.longPressTimer = nil;
     }
   }
-  self.tipPercentage += 0.005;
   self.minusButton.enabled = YES;
 }
 
 
 - (void)decrementPercentage:(id)sender
 {
-  if (self.tipPercentage < 0.009) {
+  self.tipPercentage -= 0.01;
+  self.tipPercentage = MAX(self.tipPercentage, 0.0);
+  if (self.tipPercentage <= 0.0) {
     self.minusButton.enabled = NO;
     if (self.longPressTimer) {
       [self.longPressTimer invalidate];
       self.longPressTimer = nil;
     }
   }
-  self.tipPercentage -= 0.005;
   self.plusButton.enabled = YES;
 }
 
