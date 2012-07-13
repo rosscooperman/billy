@@ -17,7 +17,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *viewController;
 @property (assign, nonatomic) NSInteger splitCount;
-@property (strong, nonatomic) NSString *rawText;
 @property (assign, nonatomic) float taxAmount;
 @property (assign, nonatomic) float tipAmount;
 @property (readonly, strong, nonatomic) Bill *currentBill;

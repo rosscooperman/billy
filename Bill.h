@@ -19,9 +19,12 @@
 @property (nonatomic) double tip;
 @property (nonatomic) double total;
 @property (nonatomic) int64_t splitCount;
+@property (nonatomic, retain) NSString *rawText;
 @property (nonatomic, retain) NSSet *people;
 @property (nonatomic, retain) NSSet *lineItems;
+
 @end
+
 
 @interface Bill (CoreDataGeneratedAccessors)
 

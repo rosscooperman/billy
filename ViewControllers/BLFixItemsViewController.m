@@ -16,6 +16,8 @@
 #import "BLFixItemsViewController.h"
 #import "BLSplitBillViewController.h"
 #import "BLTextField.h"
+#import "Bill.h"
+#import "LineItem.h"
 
 
 @interface BLFixItemsViewController ()
@@ -23,6 +25,7 @@
 @property (nonatomic, strong) NSMutableArray *lineItems;
 @property (nonatomic, strong) NSMutableArray *dataFields;
 @property (nonatomic, strong) UITextField *activeField;
+@property (nonatomic, strong) Bill *bill;
 
 
 - (void)findLineItems;
@@ -42,23 +45,35 @@
 @implementation BLFixItemsViewController
 
 @synthesize contentArea;
-@synthesize rawText;
 @synthesize lineItems = _lineItems;
 @synthesize dataFields;
 @synthesize activeField;
+@synthesize bill;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
-  if (!self.rawText) self.rawText = [[BLAppDelegate appDelegate] rawText];
+  self.lineItems = [NSMutableArray array];
   
+  // fetch the current bill and clear out any existing line items
+  self.bill = [BLAppDelegate appDelegate].currentBill;
+  [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
+    [[BLAppDelegate appDelegate].managedObjectContext deleteObject:lineItem];
+  }];
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+  
+  // find/detect any line items in raw text (and create a new one if none are found)
   [self findLineItems];
-  
   BOOL selectFirstField = NO;
   if (self.lineItems.count <= 0) {
-    [self.lineItems addObject:[NSDictionary dictionaryWithObjectsAndKeys:@"", @"quantity", @"", @"name", @"", @"price", nil]];
+    NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+    LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
+    
+    [self.bill addLineItemsObject:lineItem];
+    [self.lineItems addObject:lineItem];
+    
     selectFirstField = YES;
   }
   
@@ -86,31 +101,37 @@
 
 - (void)findLineItems
 {
-  if (!self.lineItems) self.lineItems = [NSMutableArray array];
-  if (!self.rawText || self.rawText.length <= 0) return;
+  if (!self.bill.rawText || self.bill.rawText.length <= 0) return;
+  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
   
   NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
-  
   NSString *pattern = @"^\\s*([\\dIOS]+)\\s+(.*)?\\s+\\$?([\\dIOS]+\\.[\\dIOS]{2})\\s*$";
   NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
-  NSRange range = [self.rawText rangeOfString:self.rawText];
-  
-  [regex enumerateMatchesInString:self.rawText options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
-    NSString *quantity = [[self.rawText substringWithRange:[result rangeAtIndex:1]] uppercaseString];
+  NSRange range = [self.bill.rawText rangeOfString:self.bill.rawText];
+
+  [regex enumerateMatchesInString:self.bill.rawText options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags f, BOOL *s) {
+    // create a new line item with a description
+    LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
+    lineItem.desc = [self.bill.rawText substringWithRange:[result rangeAtIndex:2]];
+
+    // tweak and set the new line item's quantity
+    NSString *quantity = [[self.bill.rawText substringWithRange:[result rangeAtIndex:1]] uppercaseString];
     quantity = [quantity stringByReplacingOccurrencesOfString:@"I" withString:@"1"];
     quantity = [quantity stringByReplacingOccurrencesOfString:@"O" withString:@"0"];
     quantity = [quantity stringByReplacingOccurrencesOfString:@"S" withString:@"5"];
+    lineItem.quantity = quantity.longLongValue;
     
-    NSString *text = [self.rawText substringWithRange:[result rangeAtIndex:2]];
-    
-    NSString *price = [[self.rawText substringWithRange:[result rangeAtIndex:3]] uppercaseString];
+    // tweak and set the line item's price
+    NSString *price = [[self.bill.rawText substringWithRange:[result rangeAtIndex:3]] uppercaseString];
     price = [price stringByReplacingOccurrencesOfString:@"I" withString:@"1"];
     price = [price stringByReplacingOccurrencesOfString:@"O" withString:@"0"];
     price = [price stringByReplacingOccurrencesOfString:@"S" withString:@"5"];
+    lineItem.price = price.doubleValue;
     
-    NSDictionary *line = [NSDictionary dictionaryWithObjectsAndKeys:quantity, @"quantity", text, @"name", price, @"price", nil];
-    [self.lineItems addObject:line];
+    [self.bill addLineItemsObject:lineItem];
+    [self.lineItems addObject:lineItem];
   }];
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
 }
 
 
@@ -129,7 +150,7 @@
 
 - (UIView *)generateViewForIndex:(NSInteger)index
 {
-  NSDictionary *line = [self.lineItems objectAtIndex:index];
+  LineItem *lineItem = [self.lineItems objectAtIndex:index];
   
   // create the wrapper that will surround all of the text fields
   CGRect frame = CGRectMake(5, 25 + ((TEXT_BOX_HEIGHT + 2) * index), 310, TEXT_BOX_HEIGHT);
@@ -139,7 +160,7 @@
   BLTextField *quantity = [self generateTextField];
   quantity.frame = CGRectMake(0, 0, QUANTITY_BOX_WIDTH, TEXT_BOX_HEIGHT);
   quantity.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:20];
-  quantity.text = [line objectForKey:@"quantity"];
+  quantity.text = (lineItem.quantity > 0) ? [NSString stringWithFormat:@"%lld", lineItem.quantity] : @"";
   quantity.textAlignment = UITextAlignmentCenter;
   quantity.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
   quantity.tag = 0;
@@ -149,7 +170,7 @@
   // generate the name text field
   BLTextField *name = [self generateTextField];
   name.frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
-  name.text = [[line objectForKey:@"name"] uppercaseString];
+  name.text = [lineItem.desc uppercaseString];
   name.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
   name.tag = 1;
   name.placeholder = @"DESCRIPTION";
@@ -159,7 +180,7 @@
   BLTextField *price = [self generateTextField];
   price.frame = CGRectMake(4 + QUANTITY_BOX_WIDTH + NAME_BOX_WIDTH, 0, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
   price.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:16];
-  price.text = [line objectForKey:@"price"];
+  price.text = (lineItem.price > 0.0) ? [NSString stringWithFormat:@"%.2f", lineItem.price] : @"";
   price.textAlignment = UITextAlignmentCenter;
   price.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
   price.tag = 2;
@@ -188,6 +209,7 @@
   textField.font = [UIFont fontWithName:@"Futura-Medium" size:16];
   textField.autocorrectionType = UITextAutocorrectionTypeNo;
   textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+  textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
   textField.returnKeyType = UIReturnKeyDone;
   textField.delegate = self;
   textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
@@ -244,11 +266,13 @@
 - (void)deleteItemAtIndex:(NSInteger)index
 {
   NSDictionary *fields = [self.dataFields objectAtIndex:index];
+  LineItem *lineItem = [self.lineItems objectAtIndex:index];
   
   BLTextField *quantity = [fields objectForKey:@"quantity"];
   BLTextField *name = [fields objectForKey:@"name"];
   BLTextField *price = [fields objectForKey:@"price"];
   if (quantity.enabled) {
+    lineItem.deleted = YES;
     if (quantity.text.length <= 0 && name.text.length <= 0 && price.text.length <= 0) {
       [self.dataFields removeObjectAtIndex:index];
       [self.lineItems removeObjectAtIndex:index];
@@ -285,6 +309,7 @@
     }
   }
   else {
+    lineItem.deleted = NO;
     quantity.enabled = YES;
     name.enabled = YES;
     price.enabled = YES;
@@ -294,25 +319,20 @@
     name.backgroundColor = newBackground;
     price.backgroundColor = newBackground;
   }
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
 }
 
 
 - (void)updateStoredItems
 {
-  NSMutableArray *lineItems = [[NSMutableArray alloc] initWithCapacity:self.dataFields.count];
   [self.dataFields enumerateObjectsUsingBlock:^(NSDictionary *fields, NSUInteger idx, BOOL *stop) {
-    if ([[fields objectForKey:@"quantity"] isEnabled]) {
-      NSNumber *quantity = [NSNumber numberWithInt:[[[fields objectForKey:@"quantity"] text] intValue]];
-      NSString *name = [[fields objectForKey:@"name"] text];
-      NSNumber *price = [NSNumber numberWithFloat:[[[fields objectForKey:@"price"] text] floatValue]];
-      
-      if ([quantity integerValue] > 0 && [price floatValue] > 0.0) {
-        NSDictionary *lineItem = [NSDictionary dictionaryWithObjectsAndKeys:quantity, @"quantity", name, @"name", price, @"price", nil];
-        [lineItems addObject:lineItem];
-      }
-    }
+    LineItem *lineItem = [self.lineItems objectAtIndex:idx];
+    
+    lineItem.quantity = [[[fields objectForKey:@"quantity"] text] intValue];
+    lineItem.desc = [[fields objectForKey:@"name"] text];
+    lineItem.price = [[[fields objectForKey:@"price"] text] doubleValue];
   }];
-  [[BLAppDelegate appDelegate] setLineItems:lineItems];
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
 }
 
 
@@ -338,15 +358,6 @@
     NSCharacterSet *nonDigitsSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
     return nonDigitRange.location == NSNotFound;
-  }
-  else if (textField.tag == 1) {
-    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSCharacterSet *lowercaseSet = [NSCharacterSet lowercaseLetterCharacterSet];
-    NSRange lowercaseRange = [newString rangeOfCharacterFromSet:lowercaseSet];
-    if (lowercaseRange.location != NSNotFound) {
-      textField.text = [newString uppercaseString];
-      return NO;
-    }
   }
   else if (textField.tag == 2) {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
@@ -406,15 +417,18 @@
 
 - (void)addRow:(id)sender
 {
-  NSDictionary *line = [NSDictionary dictionaryWithObjectsAndKeys:@"", @"quantity", @"", @"name", @"", @"price", nil];
-  [self.lineItems addObject:line];
+  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+  LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
+  lineItem.index = self.lineItems.count;
   
-  NSInteger index = self.lineItems.count - 1;
-  UIView *newRow = [self generateViewForIndex:index];
+  [self.bill addLineItemsObject:lineItem];
+  [self.lineItems addObject:lineItem];
+
+  UIView *newRow = [self generateViewForIndex:lineItem.index];
   [self.contentArea addSubview:newRow];
   self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
 
-  NSDictionary *fields = [self.dataFields objectAtIndex:index];
+  NSDictionary *fields = [self.dataFields objectAtIndex:lineItem.index];
   BLTextField *field = [fields objectForKey:@"quantity"];
   [field becomeFirstResponder];
 }

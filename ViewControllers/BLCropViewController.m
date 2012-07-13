@@ -12,6 +12,7 @@
 #import "BLCropViewController.h"
 #import "BLFixItemsViewController.h"
 #import "Tesseract.h"
+#import "Bill.h"
 
 
 @interface BLCropViewController ()
@@ -449,8 +450,9 @@
   UIImage *gray = [self grayscaleizeImage:cropped];
   
   BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
-  [BLAppDelegate appDelegate].rawText = [self ocrImage:gray];
-  TFLog(@"%@", [BLAppDelegate appDelegate].rawText);
+  [BLAppDelegate appDelegate].currentBill.rawText = [self ocrImage:gray];
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+  TFLog(@"%@", [BLAppDelegate appDelegate].currentBill.rawText);
   [self.navigationController pushViewController:fixItemsController animated:YES];
 }
 

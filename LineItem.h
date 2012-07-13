@@ -19,7 +19,11 @@
 @property (nonatomic) double price;
 @property (nonatomic, retain) Bill *bill;
 @property (nonatomic, retain) NSSet *assignments;
+@property (nonatomic) int64_t index;
+@property (nonatomic) BOOL deleted;
+
 @end
+
 
 @interface LineItem (CoreDataGeneratedAccessors)
 

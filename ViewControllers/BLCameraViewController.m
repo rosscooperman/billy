@@ -13,6 +13,7 @@
 #import "BLCameraViewController.h"
 #import "BLCropViewController.h"
 #import "BLFixItemsViewController.h"
+#import "Bill.h"
 
 
 @interface BLCameraViewController ()
@@ -163,7 +164,8 @@
 
 - (void)skipCamera:(id)sender
 {
-  [BLAppDelegate appDelegate].rawText = @"";
+  [BLAppDelegate appDelegate].currentBill.rawText = @"";
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
   BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
   [self.navigationController pushViewController:fixItemsController animated:YES];
 }

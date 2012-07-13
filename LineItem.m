@@ -18,5 +18,7 @@
 @dynamic price;
 @dynamic bill;
 @dynamic assignments;
+@dynamic index;
+@dynamic deleted;
 
 @end

@@ -97,6 +97,9 @@
 		9155239B15B0949500F2F539 /* Assignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Assignment.h; sourceTree = "<group>"; };
 		9155239C15B0949500F2F539 /* Assignment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Assignment.m; sourceTree = "<group>"; };
 		9155239E15B0986E00F2F539 /* AddSplitterEntity.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddSplitterEntity.xcdatamodel; sourceTree = "<group>"; };
+		9155239F15B0A58900F2F539 /* AddIndexToLineItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddIndexToLineItem.xcdatamodel; sourceTree = "<group>"; };
+		915523A015B0B20900F2F539 /* AddDeletedFlagToLineItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddDeletedFlagToLineItem.xcdatamodel; sourceTree = "<group>"; };
+		915523AB15B0BB0900F2F539 /* FixRawTextIssue.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FixRawTextIssue.xcdatamodel; sourceTree = "<group>"; };
 		9198BF06157AEB25001B74A9 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = ViewControllers/BLCameraViewController.h; sourceTree = "<group>"; };
 		9198BF07157AEB25001B74A9 /* BLCameraViewController.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BLCameraViewController.m; path = ViewControllers/BLCameraViewController.m; sourceTree = "<group>"; };
 		9198BF08157AEB25001B74A9 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = ViewControllers/BLCropViewController.h; sourceTree = "<group>"; };
@@ -621,10 +624,13 @@
 		9155237F15B07A8C00F2F539 /* billy.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				915523AB15B0BB0900F2F539 /* FixRawTextIssue.xcdatamodel */,
+				915523A015B0B20900F2F539 /* AddDeletedFlagToLineItem.xcdatamodel */,
+				9155239F15B0A58900F2F539 /* AddIndexToLineItem.xcdatamodel */,
 				9155239E15B0986E00F2F539 /* AddSplitterEntity.xcdatamodel */,
 				9155238015B07A8C00F2F539 /* billy.xcdatamodel */,
 			);
-			currentVersion = 9155239E15B0986E00F2F539 /* AddSplitterEntity.xcdatamodel */;
+			currentVersion = 915523AB15B0BB0900F2F539 /* FixRawTextIssue.xcdatamodel */;
 			path = billy.xcdatamodeld;
 			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;

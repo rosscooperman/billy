@@ -18,6 +18,7 @@
 @dynamic tip;
 @dynamic total;
 @dynamic splitCount;
+@dynamic rawText;
 @dynamic people;
 @dynamic lineItems;
 

@@ -12,7 +12,6 @@
 @interface BLFixItemsViewController : UIViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
-@property (nonatomic, strong) NSString *rawText;
 
 
 - (IBAction)contentAreaTapped:(UITapGestureRecognizer *)recognizer;

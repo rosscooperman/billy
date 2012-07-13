@@ -8,6 +8,7 @@
 
 #import "BLTaxViewController.h"
 #import "BLTipViewController.h"
+#import "Bill.h"
 
 
 @interface BLTaxViewController ()
@@ -50,7 +51,7 @@
   NSString *pattern = @"[1tl]ax.+\\$?(\\d+\\.\\d{2})";
   NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
   
-  NSString *rawText = [[BLAppDelegate appDelegate] rawText];
+  NSString *rawText = [BLAppDelegate appDelegate].currentBill.rawText;
   NSTextCheckingResult *result = nil;
   if (rawText.length > 0) {
     NSRange range = [rawText rangeOfString:rawText];

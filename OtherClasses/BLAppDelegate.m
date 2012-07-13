@@ -194,19 +194,6 @@
 }
 
 
-- (NSString *)rawText
-{
-  return [[NSUserDefaults standardUserDefaults] stringForKey:@"rawText"];
-}
-
-
-- (void)setRawText:(NSString *)rawText
-{
-  [[NSUserDefaults standardUserDefaults] setValue:rawText forKey:@"rawText"];
-  [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-
 - (Bill *)currentBill
 {
   if (!_currentBill) {
