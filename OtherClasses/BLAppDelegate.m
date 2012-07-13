@@ -26,6 +26,10 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 @synthesize splitCount = _splitCount;
+@synthesize managedObjectContext = _managedObjectContext;
+@synthesize managedObjectModel = _managedObjectModel;
+@synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize currentBill = _currentBill;
 @synthesize colors;
 @synthesize taxAmount;
 @synthesize tipAmount;
@@ -132,6 +136,56 @@
 }
 
 
+#pragma mark - Core Data Property Implementations
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
+  if (_persistentStoreCoordinator == nil) {
+    NSURL *directory = [[[NSFileManager defaultManager] URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] lastObject];
+    NSURL *storeURL = [directory URLByAppendingPathComponent:@"billy.sqlite"];
+    
+    NSError *error = nil;
+    _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
+    
+    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithCapacity:2];
+    [options setValue:[NSNumber numberWithBool:YES] forKey:NSMigratePersistentStoresAutomaticallyOption];
+    [options setValue:[NSNumber numberWithBool:YES] forKey:NSInferMappingModelAutomaticallyOption];
+    
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:options error:&error]) {
+      TFLog(@"Unresolved error %@, %@", error, [error userInfo]);
+      abort();
+    }
+  }
+  
+  return _persistentStoreCoordinator;
+}
+
+
+- (NSManagedObjectModel *)managedObjectModel
+{
+  if (_managedObjectModel == nil) {
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"billy" withExtension:@"momd"];
+    _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+  }
+  
+  return _managedObjectModel;
+}
+
+
+- (NSManagedObjectContext *)managedObjectContext
+{
+  if (_managedObjectContext == nil) {  
+    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    if (coordinator != nil) {
+      _managedObjectContext = [[NSManagedObjectContext alloc] init];
+      [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+    }
+  }
+  
+  return _managedObjectContext;
+}
+
+
 #pragma mark - Property Implementations
 
 - (void)setSplitCount:(NSInteger)splitCount
@@ -150,6 +204,16 @@
 {
   [[NSUserDefaults standardUserDefaults] setValue:rawText forKey:@"rawText"];
   [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+
+- (Bill *)currentBill
+{
+  if (!_currentBill) {
+    _currentBill = [NSEntityDescription insertNewObjectForEntityForName:@"Bill" inManagedObjectContext:self.managedObjectContext];
+    [self.managedObjectContext save:nil];
+  }
+  return _currentBill;
 }
 
 @end

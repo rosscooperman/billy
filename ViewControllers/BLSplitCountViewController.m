@@ -8,9 +8,13 @@
 
 #import "BLSplitCountViewController.h"
 #import "BLNamesViewController.h"
+#import "Bill.h"
 
 
 @interface BLSplitCountViewController ()
+
+@property (nonatomic, strong) Bill *bill;
+
 
 - (void)setCount:(NSInteger)count;
 
@@ -22,6 +26,7 @@
 @synthesize countLabel;
 @synthesize minusButton;
 @synthesize plusButton;
+@synthesize bill;
 
 
 #pragma mark - View Lifecycle
@@ -29,7 +34,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  [self setCount:[BLAppDelegate appDelegate].splitCount];
+  self.bill = [BLAppDelegate appDelegate].currentBill;
+  [self setCount:self.bill.splitCount];
+}
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
 }
 
 
@@ -55,15 +67,13 @@
 
 - (void)incrementCount:(id)sender
 {
-  [BLAppDelegate appDelegate].splitCount++;
-  [self setCount:[BLAppDelegate appDelegate].splitCount];
+  [self setCount:++self.bill.splitCount];
 }
 
 
 - (void)decrementCount:(id)sender
 {
-  [BLAppDelegate appDelegate].splitCount--;
-  [self setCount:[BLAppDelegate appDelegate].splitCount];
+  [self setCount:--self.bill.splitCount];
 }
 
 

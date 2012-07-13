@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
 
-@class BLViewController;
+@class BLViewController, Bill;
 
 @interface BLAppDelegate : UIResponder <UIApplicationDelegate>
 
@@ -19,6 +20,12 @@
 @property (strong, nonatomic) NSString *rawText;
 @property (assign, nonatomic) float taxAmount;
 @property (assign, nonatomic) float tipAmount;
+@property (readonly, strong, nonatomic) Bill *currentBill;
+
+// core data properties
+@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 
 // class methods

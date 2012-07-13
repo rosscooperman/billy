@@ -23,6 +23,12 @@
 		9148ADFF157926DF00985CA0 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9148ADFE157926DF00985CA0 /* CoreMedia.framework */; };
 		9148AE0615792E9700985CA0 /* BLFixItemsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9148AE0515792E9700985CA0 /* BLFixItemsViewController.xib */; };
 		9148AE0A1579473700985CA0 /* BLTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 9148AE091579473700985CA0 /* BLTextField.m */; };
+		9155238115B07A8C00F2F539 /* billy.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9155237F15B07A8C00F2F539 /* billy.xcdatamodeld */; };
+		9155238415B07D4700F2F539 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9155238315B07D4700F2F539 /* CoreData.framework */; };
+		9155239415B0949500F2F539 /* LineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239315B0949500F2F539 /* LineItem.m */; };
+		9155239715B0949500F2F539 /* Bill.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239615B0949500F2F539 /* Bill.m */; };
+		9155239A15B0949500F2F539 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239915B0949500F2F539 /* Person.m */; };
+		9155239D15B0949500F2F539 /* Assignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239C15B0949500F2F539 /* Assignment.m */; };
 		9198BF13157AEB25001B74A9 /* BLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF07157AEB25001B74A9 /* BLCameraViewController.m */; };
 		9198BF14157AEB25001B74A9 /* BLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF09157AEB25001B74A9 /* BLCropViewController.m */; };
 		9198BF15157AEB25001B74A9 /* BLFixItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF0B157AEB25001B74A9 /* BLFixItemsViewController.m */; };
@@ -80,6 +86,16 @@
 		9148AE0515792E9700985CA0 /* BLFixItemsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLFixItemsViewController.xib; path = NIBs/BLFixItemsViewController.xib; sourceTree = "<group>"; };
 		9148AE081579473700985CA0 /* BLTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTextField.h; path = CustomUI/BLTextField.h; sourceTree = "<group>"; };
 		9148AE091579473700985CA0 /* BLTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTextField.m; path = CustomUI/BLTextField.m; sourceTree = "<group>"; };
+		9155238015B07A8C00F2F539 /* billy.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = billy.xcdatamodel; sourceTree = "<group>"; };
+		9155238315B07D4700F2F539 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		9155239215B0949500F2F539 /* LineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineItem.h; sourceTree = "<group>"; };
+		9155239315B0949500F2F539 /* LineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineItem.m; sourceTree = "<group>"; };
+		9155239515B0949500F2F539 /* Bill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bill.h; sourceTree = "<group>"; };
+		9155239615B0949500F2F539 /* Bill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Bill.m; sourceTree = "<group>"; };
+		9155239815B0949500F2F539 /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		9155239915B0949500F2F539 /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
+		9155239B15B0949500F2F539 /* Assignment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Assignment.h; sourceTree = "<group>"; };
+		9155239C15B0949500F2F539 /* Assignment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Assignment.m; sourceTree = "<group>"; };
 		9198BF06157AEB25001B74A9 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = ViewControllers/BLCameraViewController.h; sourceTree = "<group>"; };
 		9198BF07157AEB25001B74A9 /* BLCameraViewController.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BLCameraViewController.m; path = ViewControllers/BLCameraViewController.m; sourceTree = "<group>"; };
 		9198BF08157AEB25001B74A9 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = ViewControllers/BLCropViewController.h; sourceTree = "<group>"; };
@@ -138,6 +154,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9155238415B07D4700F2F539 /* CoreData.framework in Frameworks */,
 				9148ADFF157926DF00985CA0 /* CoreMedia.framework in Frameworks */,
 				9148ADFD157925ED00985CA0 /* ImageIO.framework in Frameworks */,
 				9148ADF915791D1400985CA0 /* OpenGLES.framework in Frameworks */,
@@ -174,6 +191,22 @@
 			name = "Custom UI";
 			sourceTree = "<group>";
 		};
+		9155239115B091FC00F2F539 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				9155239B15B0949500F2F539 /* Assignment.h */,
+				9155239C15B0949500F2F539 /* Assignment.m */,
+				9155239815B0949500F2F539 /* Person.h */,
+				9155239915B0949500F2F539 /* Person.m */,
+				9155239515B0949500F2F539 /* Bill.h */,
+				9155239615B0949500F2F539 /* Bill.m */,
+				9155239215B0949500F2F539 /* LineItem.h */,
+				9155239315B0949500F2F539 /* LineItem.m */,
+				9155237F15B07A8C00F2F539 /* billy.xcdatamodeld */,
+			);
+			name = "Core Data";
+			sourceTree = "<group>";
+		};
 		91B9CC471576C3ED00AAEDC0 = {
 			isa = PBXGroup;
 			children = (
@@ -181,6 +214,7 @@
 				91B9CC7A1576C53600AAEDC0 /* NIBs */,
 				9148AE071579471600985CA0 /* Custom UI */,
 				91CAC83B157E66D4001B500F /* Other Classes */,
+				9155239115B091FC00F2F539 /* Core Data */,
 				91B9CC5D1576C3ED00AAEDC0 /* Supporting Files */,
 				91B9CCB31577D50800AAEDC0 /* Images */,
 				91B9CC551576C3ED00AAEDC0 /* Frameworks */,
@@ -202,6 +236,7 @@
 				91B9CCA01576E53700AAEDC0 /* libz.dylib */,
 				91B9CC9C1576E4A900AAEDC0 /* TestFlight */,
 				9148ADF21579145300985CA0 /* Tesseract */,
+				9155238315B07D4700F2F539 /* CoreData.framework */,
 				9148ADE6157800D600985CA0 /* QuartzCore.framework */,
 				9148ADD91577DDBF00985CA0 /* AVFoundation.framework */,
 				91B9CC561576C3ED00AAEDC0 /* UIKit.framework */,
@@ -416,6 +451,11 @@
 				91AAE66A158D3A8400C609C4 /* BLTipViewController.m in Sources */,
 				91AAE66E158E54BF00C609C4 /* BLSummaryViewController.m in Sources */,
 				91D095411595318600E22EEC /* BLStartViewController.m in Sources */,
+				9155238115B07A8C00F2F539 /* billy.xcdatamodeld in Sources */,
+				9155239415B0949500F2F539 /* LineItem.m in Sources */,
+				9155239715B0949500F2F539 /* Bill.m in Sources */,
+				9155239A15B0949500F2F539 /* Person.m in Sources */,
+				9155239D15B0949500F2F539 /* Assignment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -575,6 +615,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		9155237F15B07A8C00F2F539 /* billy.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				9155238015B07A8C00F2F539 /* billy.xcdatamodel */,
+			);
+			currentVersion = 9155238015B07A8C00F2F539 /* billy.xcdatamodel */;
+			path = billy.xcdatamodeld;
+			sourceTree = SOURCE_ROOT;
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 91B9CC491576C3ED00AAEDC0 /* Project object */;
 }
