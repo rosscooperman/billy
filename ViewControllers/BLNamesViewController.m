@@ -14,6 +14,8 @@
 #import "BLCameraViewController.h"
 #import "BLFixItemsViewController.h"
 #import "BLTextField.h"
+#import "Bill.h"
+#import "Person.h"
 
 
 @interface BLNamesViewController ()
@@ -21,6 +23,8 @@
 @property (nonatomic, strong) NSMutableArray *textFields;
 @property (nonatomic, unsafe_unretained) UITextField *activeField;
 @property (nonatomic, strong) UIView *innerContainer;
+@property (nonatomic, strong) Bill *bill;
+@property (readonly, nonatomic, strong) NSArray *people;
 
 
 - (UIView *)generateTextFieldForIndex:(NSInteger)index;
@@ -36,23 +40,37 @@
 @synthesize textFields;
 @synthesize activeField;
 @synthesize innerContainer;
+@synthesize bill;
+@synthesize people = _people;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
-  NSInteger count = [BLAppDelegate appDelegate].splitCount;
-  self.textFields = [NSMutableArray arrayWithCapacity:count];
+  // fetch the current bill from the app delegate and allocate an array for the name views we're going to create
+  self.bill = [BLAppDelegate appDelegate].currentBill;
+  self.textFields = [NSMutableArray arrayWithCapacity:self.bill.splitCount];
   
-  CGFloat innerHeight = ((TEXT_BOX_HEIGHT + 2) * count) + 2;
+  // make sure the associated bill has enough person objects created
+  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+  NSInteger shortfall = self.bill.splitCount - self.bill.people.count;
+  for (NSInteger i = 0; i < shortfall; i++) {
+    Person *person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:context];
+    person.index = i;
+    [self.bill addPeopleObject:person];
+  }
+  [context save:nil];
+  [context refreshObject:self.bill mergeChanges:NO];
+  
+  CGFloat innerHeight = ((TEXT_BOX_HEIGHT + 2) * self.bill.splitCount) + 2;
   CGFloat innerTop = ((self.contentArea.frame.size.height - innerHeight) / 2) + 15;
   CGRect frame = CGRectMake((320.0 - TEXT_BOX_WIDTH) / 2.0, innerTop, TEXT_BOX_WIDTH, innerHeight);
   
   self.innerContainer = [[UIView alloc] initWithFrame:frame];
   self.contentArea.contentSize = CGSizeMake(320, MAX(self.contentArea.frame.size.height, frame.size.height));
   
-  for (NSInteger i = 0; i < count; i++) {
+  for (NSInteger i = 0; i < self.bill.splitCount; i++) {
     [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
   }
   [self.textFields.lastObject setReturnKeyType:UIReturnKeyDone];
@@ -64,13 +82,26 @@
 - (void)viewWillAppear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];  
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+}
+
+
+#pragma mark - Property Implementations
+
+- (NSArray *)people
+{
+  if (!_people) {
+    NSSortDescriptor *indexDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES];
+    _people = [self.bill.people sortedArrayUsingDescriptors:[NSArray arrayWithObject:indexDescriptor]];
+  }
+  return _people;
 }
 
 
@@ -90,7 +121,7 @@
   textField.returnKeyType = UIReturnKeyNext;
   textField.delegate = self;
   textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-  textField.text = [[[BLAppDelegate appDelegate] nameAtIndex:index] uppercaseString];
+  textField.text = [[self.people objectAtIndex:index] name];
   [self.textFields insertObject:textField atIndex:index];
   
   return textField;
@@ -151,24 +182,10 @@
 }
 
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-  NSString *newText = [[textField.text stringByReplacingCharactersInRange:range withString:string] uppercaseString];
-  NSCharacterSet *lowercaseSet = [NSCharacterSet lowercaseLetterCharacterSet];
-  NSRange lowercaseRange = [newText rangeOfCharacterFromSet:lowercaseSet];
-  if (lowercaseRange.location != NSNotFound) {
-    textField.text = [newText uppercaseString];
-    return NO;
-  }
-
-  return YES;
-}
-
-
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
   NSInteger index = [self.textFields indexOfObject:textField];
-  [[BLAppDelegate appDelegate] setName:textField.text atIndex:index];
+  [[self.people objectAtIndex:index] setName:textField.text];
 }
 
 

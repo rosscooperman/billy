@@ -15,16 +15,14 @@
 @interface Person : NSManagedObject
 
 @property (nonatomic, retain) NSString *name;
-@property (nonatomic, retain) NSSet *bills;
+@property (nonatomic, retain) Bill *bill;
 @property (nonatomic, retain) NSSet *assignments;
+@property (nonatomic) int64_t index;
+
 @end
 
-@interface Person (CoreDataGeneratedAccessors)
 
-- (void)addBillsObject:(Bill *)value;
-- (void)removeBillsObject:(Bill *)value;
-- (void)addBills:(NSSet *)values;
-- (void)removeBills:(NSSet *)values;
+@interface Person (CoreDataGeneratedAccessors)
 
 - (void)addAssignmentsObject:(Assignment *)value;
 - (void)removeAssignmentsObject:(Assignment *)value;

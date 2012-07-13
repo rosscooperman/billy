@@ -14,7 +14,8 @@
 @implementation Person
 
 @dynamic name;
-@dynamic bills;
+@dynamic bill;
 @dynamic assignments;
+@dynamic index;
 
 @end
