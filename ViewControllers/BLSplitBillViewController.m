@@ -40,6 +40,7 @@
 - (void)lineItemTapped:(UITapGestureRecognizer *)recognizer;
 - (void)showAssignmentViewAtIndex:(NSInteger)index;
 - (void)updateAssignmentView;
+- (void)updateNextScreenButton;
 - (void)updateProgressView:(UIView *)progressView lineItem:(LineItem *)lineItem;
 - (void)minusButtonPressed:(id)sender;
 - (void)plusButtonPressed:(id)sender;
@@ -101,6 +102,7 @@
       self.assignedQuantity += assignment.quantity;
     }];
   }];
+  [self updateNextScreenButton];
   
   self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
   self.contentArea.contentInset = UIEdgeInsetsMake(0.0, 0.0, 75.0, 0.0);
@@ -330,6 +332,12 @@
   [self updateAssignmentView];
   
   self.assignedQuantity += amount;
+  [self updateNextScreenButton];
+}
+
+
+- (void)updateNextScreenButton
+{
   if (self.assignedQuantity >= self.totalQuantity) {
     self.nextScreenButton.enabled = YES;
     self.nextScreenButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.8 blue:0.294117647 alpha:0.80];

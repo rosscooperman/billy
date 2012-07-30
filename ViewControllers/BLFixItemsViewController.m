@@ -18,6 +18,7 @@
 #import "BLTextField.h"
 #import "Bill.h"
 #import "LineItem.h"
+#import "Assignment.h"
 
 
 @interface BLFixItemsViewController ()
@@ -62,13 +63,20 @@
   [self findLineItems];
   BOOL selectFirstField = NO;
   if (self.lineItems.count <= 0) {
-    NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
-    LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
-    
-    [self.bill addLineItemsObject:lineItem];
-    [self.lineItems addObject:lineItem];
-    
-    selectFirstField = YES;
+    if (self.bill.lineItems.count > 0) {
+      NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
+      self.lineItems = [[self.bill.lineItems sortedArrayUsingDescriptors:descriptors] mutableCopy];
+    }
+    else {
+      NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+      LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
+      lineItem.index = 0;
+      
+      [self.bill addLineItemsObject:lineItem];
+      [self.lineItems addObject:lineItem];
+      
+      selectFirstField = YES;
+    }
   }
   
   [self generateTextFields]; 
@@ -108,12 +116,12 @@
     [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
       [self.bill.managedObjectContext deleteObject:lineItem];
     }];
-    [self.bill.managedObjectContext save:nil];
   }
 
   [regex enumerateMatchesInString:self.bill.rawText options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags f, BOOL *s) {
     // create a new line item with a description
     LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
+    lineItem.index = self.lineItems.count;
     lineItem.desc = [self.bill.rawText substringWithRange:[result rangeAtIndex:2]];
 
     // tweak and set the new line item's quantity
@@ -321,7 +329,7 @@
     name.backgroundColor = newBackground;
     price.backgroundColor = newBackground;
   }
-  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+  [self.bill.managedObjectContext save:nil];
 }
 
 
@@ -330,11 +338,18 @@
   [self.dataFields enumerateObjectsUsingBlock:^(NSDictionary *fields, NSUInteger idx, BOOL *stop) {
     LineItem *lineItem = [self.lineItems objectAtIndex:idx];
     
-    lineItem.quantity = [[[fields objectForKey:@"quantity"] text] intValue];
-    lineItem.desc = [[fields objectForKey:@"name"] text];
     lineItem.price = [[[fields objectForKey:@"price"] text] doubleValue];
+    lineItem.desc = [[fields objectForKey:@"name"] text];
+    
+    double newQuantity = [[[fields objectForKey:@"quantity"] text] intValue];
+    if (newQuantity != lineItem.quantity) {
+      lineItem.quantity = newQuantity;
+      [lineItem.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, BOOL *stop) {
+        [self.bill.managedObjectContext deleteObject:assignment];
+      }];
+    }
   }];
-  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+  [self.bill.managedObjectContext save:nil];
 }
 
 
