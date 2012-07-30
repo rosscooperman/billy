@@ -172,7 +172,8 @@
     Bill *previousBill = [results objectAtIndex:0];
     NSMutableArray *names = [NSMutableArray arrayWithCapacity:previousBill.people.count];
     [previousBill.people enumerateObjectsUsingBlock:^(Person *person, BOOL *stop) {
-      [names addObject:person.name];
+      NSString *name = (person.name) ? person.name : @"";
+      [names addObject:name];
     }];
     return names;
   }
