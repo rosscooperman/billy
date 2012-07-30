@@ -8,11 +8,12 @@
 
 #import "BLTipViewController.h"
 #import "BLSummaryViewController.h"
+#import "Bill.h"
 
 
 @interface BLTipViewController ()
 
-@property (nonatomic, assign) float totalAmount;
+@property (nonatomic, strong) Bill *bill;
 @property (nonatomic, assign) float tipPercentage;
 @property (nonatomic, strong) NSTimer *longPressTimer;
 @property (nonatomic, readonly) NSNumberFormatter *percentFormatter;
@@ -27,7 +28,7 @@
 @synthesize amountLabel;
 @synthesize minusButton;
 @synthesize plusButton;
-@synthesize totalAmount;
+@synthesize bill;
 @synthesize tipPercentage = _tipPercentage;
 @synthesize longPressTimer;
 @synthesize percentFormatter = _percentFormatter;
@@ -37,11 +38,7 @@
 
 - (void)viewDidLoad
 {
-  self.totalAmount = 0.0;
-  [[[BLAppDelegate appDelegate] lineItems] enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
-    self.totalAmount += [[lineItem valueForKey:@"price"] floatValue];
-  }];
-  self.totalAmount += [[BLAppDelegate appDelegate] taxAmount];
+  self.bill = [BLAppDelegate appDelegate].currentBill;
   self.tipPercentage = 0.2;
 }
 
@@ -66,7 +63,10 @@
 {
   _tipPercentage = tipPercentage;
   self.percentLabel.text = [self.percentFormatter stringFromNumber:[NSNumber numberWithFloat:self.tipPercentage]];
-  self.amountLabel.text = [NSString stringWithFormat:@"$%.2f", self.totalAmount * self.tipPercentage];
+  self.bill.tip = (self.bill.subtotal + self.bill.tax) * self.tipPercentage;
+  self.bill.total = self.bill.subtotal + self.bill.tax + self.bill.tip;
+  self.amountLabel.text = [NSString stringWithFormat:@"$%.2f", self.bill.tip];
+  [self.bill.managedObjectContext save:nil];
 }
 
 
@@ -74,8 +74,7 @@
 
 - (void)incrementPercentage:(id)sender
 {
-  self.tipPercentage += 0.01;
-  self.tipPercentage = MIN(self.tipPercentage, 1.0);
+  self.tipPercentage = MIN(self.tipPercentage + 0.01, 1.0);
   if (self.tipPercentage >= 1.0) {
     self.plusButton.enabled = NO;
     if (self.longPressTimer) {
@@ -89,8 +88,7 @@
 
 - (void)decrementPercentage:(id)sender
 {
-  self.tipPercentage -= 0.01;
-  self.tipPercentage = MAX(self.tipPercentage, 0.0);
+  self.tipPercentage = MAX(self.tipPercentage - 0.01, 0.0);
   if (self.tipPercentage <= 0.0) {
     self.minusButton.enabled = NO;
     if (self.longPressTimer) {
@@ -104,7 +102,6 @@
 
 - (void)nextScreen:(id)sender
 {
-  [[BLAppDelegate appDelegate] setTipAmount:(self.tipPercentage * self.totalAmount)];
   BLSummaryViewController *summaryController = [[BLSummaryViewController alloc] init];
   [self.navigationController pushViewController:summaryController animated:YES];
 }
