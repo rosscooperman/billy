@@ -9,17 +9,19 @@
 #import "BLTaxViewController.h"
 #import "BLTipViewController.h"
 #import "Bill.h"
+#import "LineItem.h"
+#import "Assignment.h"
 
 
 @interface BLTaxViewController ()
 
-@property (nonatomic, assign) float totalAmount;
+@property (nonatomic, strong) Bill *bill;
 @property (nonatomic, assign) float taxPercentage;
-@property (nonatomic, assign) float taxAmount;
 @property (nonatomic, readonly) NSNumberFormatter *percentFormatter;
 @property (nonatomic, strong) NSTimer *longPressTimer;
 
 
+- (void)updateTax:(double)amount;
 - (void)updateLabels;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
@@ -34,9 +36,8 @@
 @synthesize minusButton;
 @synthesize plusButton;
 @synthesize closeKeyboardRecognizer;
-@synthesize totalAmount;
+@synthesize bill;
 @synthesize taxPercentage = _taxPercentage;
-@synthesize taxAmount = _taxAmount;
 @synthesize percentFormatter = _percentFormatter;
 @synthesize longPressTimer;
 @synthesize contentWrapper;
@@ -46,30 +47,39 @@
 
 - (void)viewDidLoad
 {
-  NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
+  self.bill = [BLAppDelegate appDelegate].currentBill;
   
-  NSString *pattern = @"[1tl]ax.+\\$?(\\d+\\.\\d{2})";
-  NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
-  
-  NSString *rawText = [BLAppDelegate appDelegate].currentBill.rawText;
-  NSTextCheckingResult *result = nil;
-  if (rawText.length > 0) {
-    NSRange range = [rawText rangeOfString:rawText];
-    result = [regex firstMatchInString:rawText options:options range:range];
-  }
-  
-  self.totalAmount = 0.0;
-  [[[BLAppDelegate appDelegate] lineItems] enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
-    self.totalAmount += [[lineItem valueForKey:@"price"] floatValue];
+  // calculate the subtotal from the available line items
+  self.bill.subtotal = 0.0;
+  [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
+    self.bill.subtotal += lineItem.price;
   }];
-  if (self.totalAmount <= 0.0) self.totalAmount = 0.0001; // avoid divide by zero errors
   
-  if (result && result.range.length > 0) {
-    self.taxAmount = [[rawText substringWithRange:[result rangeAtIndex:1]] floatValue];
+  // if we don't have an established value for the bill's tax, try to get it from the receipt raw text
+  if (!self.bill.tax && self.bill.rawText.length > 0) {
+    NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
+    
+    NSString *pattern = @"[1tl]ax.+\\$?(\\d+\\.\\d{2})";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
+    
+    NSTextCheckingResult *result = nil;
+    NSRange range = [self.bill.rawText rangeOfString:self.bill.rawText];
+    result = [regex firstMatchInString:self.bill.rawText options:options range:range];
+    
+    if (result && result.range.length > 0) {
+      self.bill.tax = [[self.bill.rawText substringWithRange:[result rangeAtIndex:1]] floatValue];
+      if (self.bill.tax <= 0.0) self.bill.tax = 0.00001;
+      self.taxPercentage = self.bill.tax / self.bill.subtotal;
+    }
   }
-  else {
+  
+  // still no tax value available? assume an average percentage
+  if (!self.bill.tax) {
     self.taxPercentage = 0.07;
+    self.bill.tax = self.bill.subtotal * self.taxPercentage;
   }
+  
+  [self updateLabels];
 }
 
 
@@ -92,8 +102,8 @@
 {
   // roundabout way of testing whether the keyboard is currently shown (and so the amount label should not be touched)
   if (CGAffineTransformIsIdentity(self.contentWrapper.transform)) {
-    self.amountField.text = [NSString stringWithFormat:@"%.2f", self.taxAmount];
-    if (self.taxAmount <= 0.0) {
+    self.amountField.text = [NSString stringWithFormat:@"%.2f", self.bill.tax];
+    if (self.bill.tax <= 0.0) {
       self.minusButton.enabled = NO;
     }
     else {
@@ -101,13 +111,14 @@
     }
   }
   self.percentLabel.text = [self.percentFormatter stringFromNumber:[NSNumber numberWithFloat:self.taxPercentage]];
+  [self.bill.managedObjectContext save:nil];
 }
 
 
-- (void)setTaxAmount:(float)taxAmount
+- (void)updateTax:(double)amount
 {
-  _taxAmount = taxAmount;
-  _taxPercentage = (self.taxAmount == 0.0) ? 0.0 : self.taxAmount / self.totalAmount;
+  self.bill.tax = amount;
+  _taxPercentage = (self.bill.tax == 0.0) ? 0.0 : self.bill.tax / self.bill.subtotal;
   [self updateLabels];
 }
 
@@ -115,7 +126,7 @@
 - (void)setTaxPercentage:(float)taxPercentage
 {
   _taxPercentage = taxPercentage;
-  _taxAmount = self.taxPercentage * self.totalAmount;
+  self.bill.tax = self.taxPercentage * self.bill.subtotal;
   [self updateLabels];
 }
 
@@ -166,14 +177,14 @@
 
 - (void)incrementAmount:(id)sender
 {
-  self.taxAmount += 0.01;
+  [self updateTax:self.bill.tax + 0.01];
 }
 
 
 - (void)decrementAmount:(id)sender
 {
-  if (self.taxAmount >= 0.01) {
-    self.taxAmount -= 0.01;
+  if (self.bill.tax >= 0.01) {
+    [self updateTax:self.bill.tax - 0.01];
   }
 }
 
@@ -210,7 +221,6 @@
 
 - (void)nextScreen:(id)sender
 {
-  [[BLAppDelegate appDelegate] setTaxAmount:self.taxAmount];
   BLTipViewController *tipController = [[BLTipViewController alloc] init];
   [self.navigationController pushViewController:tipController animated:YES];
 }
@@ -248,7 +258,7 @@
     return NO;
   }
   
-  self.taxAmount = [newString floatValue];
+  [self updateTax:[newString floatValue]];
   return YES;
 }
 
