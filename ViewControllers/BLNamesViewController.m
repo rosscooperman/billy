@@ -57,7 +57,7 @@
   NSInteger shortfall = self.bill.splitCount - self.bill.people.count;
   for (NSInteger i = 0; i < shortfall; i++) {
     Person *person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:context];
-    person.index = i;
+    person.index = self.bill.people.count + i;
     [self.bill addPeopleObject:person];
   }
   [context save:nil];
@@ -89,7 +89,6 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
-  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
 }
 
 
@@ -164,9 +163,9 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-  UITextField *nextField;
+  UITextField *nextField = nil;
   NSInteger currentIndex = [self.textFields indexOfObject:textField];
-  if (currentIndex == [BLAppDelegate appDelegate].splitCount - 1) {
+  if (currentIndex == self.bill.splitCount - 1) {
     if (textField.returnKeyType == UIReturnKeyDone) {
       [textField resignFirstResponder];
       return NO;
@@ -185,7 +184,9 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
   NSInteger index = [self.textFields indexOfObject:textField];
-  [[self.people objectAtIndex:index] setName:textField.text];
+  Person *person = [self.people objectAtIndex:index];
+  person.name = textField.text;
+  [person.managedObjectContext save:nil];
 }
 
 
