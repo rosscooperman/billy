@@ -16,6 +16,10 @@
 
 #import "BLSplitBillViewController.h"
 #import "BLTaxViewController.h"
+#import "Bill.h"
+#import "LineItem.h"
+#import "Assignment.h"
+#import "Person.h"
 
 
 @interface BLSplitBillViewController ()
@@ -26,10 +30,12 @@
 @property (nonatomic, assign) NSInteger currentAssignmentIndex;
 @property (nonatomic, strong) UIView *currentLineItem;
 @property (nonatomic, strong) NSMutableArray *lineItems;
+@property (nonatomic, strong) NSArray *people;
+@property (nonatomic, strong) Bill *bill;
 
 
 - (void)generateLineItems;
-- (UIView *)generateViewForLineItem:(NSDictionary *)data atIndex:(NSInteger)index;
+- (UIView *)generateViewForLineItem:(LineItem *)data atIndex:(NSInteger)index;
 - (UILabel *)generateLineItemLabel;
 - (void)lineItemTapped:(UITapGestureRecognizer *)recognizer;
 - (void)showAssignmentViewAtIndex:(NSInteger)index;
@@ -37,6 +43,7 @@
 - (void)minusButtonPressed:(id)sender;
 - (void)plusButtonPressed:(id)sender;
 - (void)add:(NSInteger)amount toAssignmentAtIndex:(NSInteger)index;
+- (Assignment *)assignmentForPerson:(Person *)person lineItem:(LineItem *)lineItem;
 
 @end
 
@@ -51,38 +58,29 @@
 @synthesize currentAssignmentIndex;
 @synthesize currentLineItem;
 @synthesize lineItems;
+@synthesize bill;
+@synthesize people;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
-  NSArray *_lineItems = [BLAppDelegate appDelegate].lineItems;
-  
-  // if the first line item already has a splits key, no need to continue
-  self.lineItems = [NSMutableArray arrayWithCapacity:_lineItems.count];
-  [_lineItems enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
-    NSMutableDictionary *_lineItem = [NSMutableDictionary dictionaryWithDictionary:lineItem];
-    NSMutableArray *splits = [NSMutableArray arrayWithCapacity:[BLAppDelegate appDelegate].splitCount];
-    for (NSInteger i = 0; i < [BLAppDelegate appDelegate].splitCount; i++) {
-      NSMutableDictionary *split = [NSMutableDictionary dictionaryWithCapacity:2];
-      [split setValue:[[BLAppDelegate appDelegate] nameAtIndex:i] forKey:@"name"];
-      [split setValue:[NSNumber numberWithInt:0] forKey:@"quantity"];
-      [splits addObject:split];
+  // generate an array of the line item objects we care about
+  self.bill = [BLAppDelegate appDelegate].currentBill;
+  self.lineItems = [NSMutableArray arrayWithCapacity:self.bill.lineItems.count];
+  [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
+    if (!lineItem.deleted && lineItem.quantity > 0.0 && lineItem.price > 0) {
+      [self.lineItems addObject:lineItem];
     }
-    [_lineItem setValue:splits forKey:@"splits"];
-    [self.lineItems insertObject:_lineItem atIndex:idx];
   }];
-  
   [self generateLineItems];
+  
+  NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
+  self.people = [bill.people sortedArrayUsingDescriptors:descriptors];
+
   self.currentAssignmentIndex = -1;
   self.currentLineItem = nil;
-}
-
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-  [[BLAppDelegate appDelegate] setLineItems:self.lineItems];
 }
 
 
@@ -94,9 +92,9 @@
     [subview removeFromSuperview];
   }];
   
-  [self.lineItems enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
+  [self.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, NSUInteger idx, BOOL *stop) {
     [self.contentArea addSubview:[self generateViewForLineItem:lineItem atIndex:idx]];
-    self.totalQuantity += [[lineItem objectForKey:@"quantity"] integerValue];
+    self.totalQuantity += lineItem.quantity;
   }];
   
   self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
@@ -104,7 +102,7 @@
 }
 
 
-- (UIView *)generateViewForLineItem:(NSDictionary *)lineItem atIndex:(NSInteger)index
+- (UIView *)generateViewForLineItem:(LineItem *)lineItem atIndex:(NSInteger)index
 {
   // create the wrapper that will surround all of the text fields
   CGRect frame = CGRectMake(5, 25 + ((TEXT_BOX_HEIGHT + 2) * index), 310, TEXT_BOX_HEIGHT);
@@ -115,13 +113,13 @@
   UILabel *quantity = [self generateLineItemLabel];
   quantity.frame = CGRectMake(0, 0, QUANTITY_BOX_WIDTH, TEXT_BOX_HEIGHT);
   quantity.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:20];
-  quantity.text = [[lineItem objectForKey:@"quantity"] stringValue];
+  quantity.text = [NSString stringWithFormat:@"%lld", lineItem.quantity];
   [wrapper addSubview:quantity];
   
   // generate the name text field
   UILabel *name = [self generateLineItemLabel];
   name.frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
-  name.text = [NSString stringWithFormat:@"  %@", [[lineItem objectForKey:@"name"] uppercaseString]];
+  name.text = [NSString stringWithFormat:@"  %@", [lineItem.desc uppercaseString]];
   name.textAlignment = UITextAlignmentLeft;
   [wrapper addSubview:name];
   
@@ -133,7 +131,7 @@
   UILabel *price = [self generateLineItemLabel];
   price.frame = CGRectMake(4 + QUANTITY_BOX_WIDTH + NAME_BOX_WIDTH, 0, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
   price.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:16];
-  price.text = [NSString stringWithFormat:@"$%.2f", [[lineItem objectForKey:@"price"] floatValue]];
+  price.text = [NSString stringWithFormat:@"$%.2f", lineItem.price];
   [wrapper addSubview:price];
   
   // create and bind a tap gesture recognizer to the row
@@ -197,7 +195,7 @@
 
 - (void)lineItemTapped:(UITapGestureRecognizer *)recognizer
 {
-  if (currentAssignmentIndex >= 0) {
+  if (self.currentAssignmentIndex >= 0) {
     [UIView animateWithDuration:0.3 animations:^{
       self.assignmentView.frame = CGRectOffset(self.assignmentView.frame, 0, -self.assignmentView.frame.size.height);
       for (NSInteger i = self.currentAssignmentIndex + 3; i < self.contentArea.subviews.count; i++) {
@@ -225,34 +223,50 @@
 }
 
 
+- (Assignment *)assignmentForPerson:(Person *)person lineItem:(LineItem *)lineItem
+{
+  __block Assignment *found = nil;
+  [lineItem.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, BOOL *stop) {
+    if (assignment.person == person) {
+      *stop = YES;
+      found = assignment;
+    }
+  }];
+  return found;
+}
+
+
 - (void)updateAssignmentView
 {
-  NSMutableDictionary *lineItem = [self.lineItems objectAtIndex:currentAssignmentIndex];
-  NSMutableArray *splits = [lineItem objectForKey:@"splits"];
-  float perItemPrice = [[lineItem objectForKey:@"price"] floatValue] / [[lineItem objectForKey:@"quantity"] floatValue];
+  LineItem *lineItem = [self.lineItems objectAtIndex:currentAssignmentIndex];
+  //NSMutableArray *splits = [lineItem objectForKey:@"splits"];
+  double perItemPrice = lineItem.price / (double)lineItem.quantity;
   __block NSInteger lineQuantity = 0;
   
   // update each person's quantity, price, and enabled state of the minus button
   // also calculate how much total quantity has been allocated
-  [splits enumerateObjectsUsingBlock:^(NSMutableDictionary *split, NSUInteger idx, BOOL *stop) {
-    UIView *individual = [self.assignmentView.subviews objectAtIndex:idx];
+  [people enumerateObjectsUsingBlock:^(Person *person, NSUInteger idx, BOOL *stop) {
+    UIView *personView = [self.assignmentView.subviews objectAtIndex:idx];
 
-    UILabel *quantityLabel = [individual.subviews objectAtIndex:0];
-    quantityLabel.text = [[split objectForKey:@"quantity"] stringValue];
-
-    UIButton *minusButton = [individual.subviews objectAtIndex:1];
-    minusButton.enabled = ([[split objectForKey:@"quantity"] integerValue] > 0);
-
-    UILabel *priceLabel = [individual.subviews objectAtIndex:4];
-    priceLabel.text = [NSString stringWithFormat:@"$%.2f", [[split objectForKey:@"quantity"] floatValue] * perItemPrice];
+    Assignment *assignment = [self assignmentForPerson:person lineItem:lineItem];
+    int64_t currentQuantity = (assignment) ? assignment.quantity : 0;
     
-    lineQuantity += [[split objectForKey:@"quantity"] integerValue];
+    UILabel *quantityLabel = [personView.subviews objectAtIndex:0];
+    quantityLabel.text = [NSString stringWithFormat:@"%lld", currentQuantity];
+
+    UIButton *minusButton = [personView.subviews objectAtIndex:1];
+    minusButton.enabled = (currentQuantity > 0);
+
+    UILabel *priceLabel = [personView.subviews objectAtIndex:4];
+    priceLabel.text = [NSString stringWithFormat:@"$%.2f", currentQuantity * perItemPrice];
+
+    lineQuantity += currentQuantity;
   }];
   
   // enable/disable the + button as needed (is there any more left to allocate)
   [self.assignmentView.subviews enumerateObjectsUsingBlock:^(UIView *wrapper, NSUInteger idx, BOOL *stop) {
     UIButton *plusButton = [wrapper.subviews objectAtIndex:2];
-    plusButton.enabled = (lineQuantity < [[lineItem objectForKey:@"quantity"] integerValue]);
+    plusButton.enabled = (lineQuantity < lineItem.quantity);
   }];
   
   // update the 'progress' view showing what portion each user is responsible for
@@ -265,9 +279,12 @@
   
   __block NSInteger allocated = 0;
   __block CGFloat x = 0;
-  [splits enumerateObjectsUsingBlock:^(NSMutableDictionary *split, NSUInteger idx, BOOL *stop) {
-    CGFloat quantity = [[split objectForKey:@"quantity"] floatValue];
-    CGFloat totalQuantity = [[lineItem objectForKey:@"quantity"] floatValue];
+  NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"person.index" ascending:YES]];
+  NSArray *sortedAssignments = [lineItem.assignments sortedArrayUsingDescriptors:descriptors];
+  
+  [sortedAssignments enumerateObjectsUsingBlock:^(Assignment *assignment, NSUInteger idx, BOOL *stop) {
+    CGFloat quantity = assignment.quantity;
+    CGFloat totalQuantity = lineItem.quantity;
     if (quantity <= 0.0) return;
     
     allocated += quantity;
@@ -276,10 +293,40 @@
     
     CGRect frame = CGRectMake(x, 0, width, progressView.frame.size.height);
     UIView *progressSegment = [[UIView alloc] initWithFrame:CGRectIntegral(frame)];
-    progressSegment.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:idx + 1];
+    progressSegment.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:assignment.person.index + 1];
     [progressView addSubview:progressSegment];
     x += progressSegment.frame.size.width;
   }];
+}
+
+
+- (void)add:(NSInteger)amount toAssignmentAtIndex:(NSInteger)index
+{
+  LineItem *lineItem = [self.lineItems objectAtIndex:self.currentAssignmentIndex];
+  Person *person = [self.people objectAtIndex:index];
+  Assignment *assignment = [self assignmentForPerson:person lineItem:lineItem];
+  
+  if (!assignment) {
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Assignment" inManagedObjectContext:lineItem.managedObjectContext];
+    assignment = [[Assignment alloc] initWithEntity:entity insertIntoManagedObjectContext:lineItem.managedObjectContext];
+    assignment.quantity = 0;
+    assignment.person = person;
+    assignment.lineItem = lineItem;
+  }
+  
+  assignment.quantity += amount;
+  [assignment.managedObjectContext save:nil];
+  [self updateAssignmentView];
+  
+  self.assignedQuantity += amount;
+  if (self.assignedQuantity >= self.totalQuantity) {
+    self.nextScreenButton.enabled = YES;
+    self.nextScreenButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.8 blue:0.294117647 alpha:0.80];
+  }
+  else {
+    self.nextScreenButton.enabled = NO;
+    self.nextScreenButton.backgroundColor = [UIColor lightGrayColor];
+  }
 }
 
 
@@ -288,7 +335,7 @@
 - (UIView *)assignmentView
 {
   if (!_assignmentView) {
-    NSInteger splitCount = [BLAppDelegate appDelegate].splitCount;
+    NSInteger splitCount = self.bill.splitCount;
     _assignmentView = [[UIView alloc] initWithFrame:CGRectMake(5, 0, 310, ((TEXT_BOX_HEIGHT + 2) * splitCount) - 2)];
     
     for (NSInteger i = 0; i < splitCount; i++) {
@@ -332,7 +379,7 @@
       nameLabel.textColor = [UIColor blackColor];
       nameLabel.font = [UIFont fontWithName:@"Futura-CondensedMedium" size:16];
       nameLabel.minimumFontSize = 12;
-      nameLabel.text = [[BLAppDelegate appDelegate] nameAtIndex:i];
+      nameLabel.text = [[self.people objectAtIndex:i] name];
       [nameWrapper addSubview:nameLabel];
       [wrapper addSubview:nameWrapper];
       
@@ -349,27 +396,6 @@
     }
   }
   return _assignmentView;
-}
-
-
-- (void)add:(NSInteger)amount toAssignmentAtIndex:(NSInteger)index
-{
-  NSMutableDictionary *lineItem = [self.lineItems objectAtIndex:self.currentAssignmentIndex];
-  NSMutableArray *splits = [lineItem objectForKey:@"splits"];
-  NSMutableDictionary *split = [splits objectAtIndex:index];
-  NSInteger newValue = [[split objectForKey:@"quantity"] integerValue] + amount;
-  [split setValue:[NSNumber numberWithInteger:newValue] forKey:@"quantity"];
-  [self updateAssignmentView];
-  
-  self.assignedQuantity += amount;
-  if (self.assignedQuantity >= self.totalQuantity) {
-    self.nextScreenButton.enabled = YES;
-    self.nextScreenButton.backgroundColor = [UIColor colorWithRed:0.0 green:0.8 blue:0.294117647 alpha:0.80];
-  }
-  else {
-    self.nextScreenButton.enabled = NO;
-    self.nextScreenButton.backgroundColor = [UIColor lightGrayColor];
-  }
 }
 
 
