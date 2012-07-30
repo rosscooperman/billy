@@ -57,7 +57,7 @@
   NSInteger shortfall = self.bill.splitCount - self.bill.people.count;
   for (NSInteger i = 0; i < shortfall; i++) {
     Person *person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:context];
-    person.index = self.bill.people.count + i;
+    person.index = self.bill.people.count;
     [self.bill addPeopleObject:person];
   }
   [context save:nil];
