@@ -40,6 +40,7 @@
 - (void)lineItemTapped:(UITapGestureRecognizer *)recognizer;
 - (void)showAssignmentViewAtIndex:(NSInteger)index;
 - (void)updateAssignmentView;
+- (void)updateProgressView:(UIView *)progressView lineItem:(LineItem *)lineItem;
 - (void)minusButtonPressed:(id)sender;
 - (void)plusButtonPressed:(id)sender;
 - (void)add:(NSInteger)amount toAssignmentAtIndex:(NSInteger)index;
@@ -95,6 +96,10 @@
   [self.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, NSUInteger idx, BOOL *stop) {
     [self.contentArea addSubview:[self generateViewForLineItem:lineItem atIndex:idx]];
     self.totalQuantity += lineItem.quantity;
+    
+    [lineItem.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, BOOL *stop) {
+      self.assignedQuantity += assignment.quantity;
+    }];
   }];
   
   self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
@@ -139,7 +144,8 @@
   tapRecognizer.numberOfTapsRequired = 1;
   tapRecognizer.numberOfTouchesRequired = 1;
   [wrapper addGestureRecognizer:tapRecognizer];
-    
+  
+  [self updateProgressView:progress lineItem:lineItem];
   return wrapper;
 }
 
@@ -272,7 +278,12 @@
   // update the 'progress' view showing what portion each user is responsible for
   UILabel *nameLabel = [self.currentLineItem.subviews objectAtIndex:1];
   UIView *progressView = [nameLabel.subviews objectAtIndex:0];
-  
+  [self updateProgressView:progressView lineItem:lineItem];
+}
+
+
+- (void)updateProgressView:(UIView *)progressView lineItem:(LineItem *)lineItem
+{
   [progressView.subviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
     [subview removeFromSuperview];
   }];
