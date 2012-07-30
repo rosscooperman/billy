@@ -16,9 +16,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *viewController;
-@property (assign, nonatomic) NSInteger splitCount;
-@property (assign, nonatomic) float taxAmount;
-@property (assign, nonatomic) float tipAmount;
 @property (readonly, strong, nonatomic) Bill *currentBill;
 
 // core data properties
@@ -32,10 +29,6 @@
 
 // instance methods
 - (UIColor *)colorAtIndex:(NSInteger)index;
-- (NSString *)nameAtIndex:(NSInteger)index;
-- (void)setName:(NSString *)name atIndex:(NSInteger)index;
-- (NSArray *)lineItems;
-- (void)setLineItems:(NSArray *)lineItems;
 - (void)startOver;
 
 @end

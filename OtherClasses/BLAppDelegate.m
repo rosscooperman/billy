@@ -15,9 +15,6 @@
 
 @property (nonatomic, strong) NSArray *colors;
 
-
-- (void)setDefaultNames;
-
 @end
 
 
@@ -25,14 +22,11 @@
 
 @synthesize window = _window;
 @synthesize viewController = _viewController;
-@synthesize splitCount = _splitCount;
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize currentBill = _currentBill;
 @synthesize colors;
-@synthesize taxAmount;
-@synthesize tipAmount;
 
 
 #pragma mark - Application Lifecycle
@@ -45,9 +39,6 @@
   // every app deserves a window
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   
-  // initialize application data
-  self.splitCount = 2;
-    
   // construct the only navigation controller we'll ever need
   self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLStartViewController alloc] init]];
   self.viewController.navigationBarHidden = YES;
@@ -84,55 +75,6 @@
   }
   
   return (index < self.colors.count) ? [self.colors objectAtIndex:index] : [self.colors objectAtIndex:0];
-}
-
-
-- (void)setDefaultNames
-{
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSArray *names = [defaults arrayForKey:@"names"];
-  if (!names) {
-    [defaults setObject:[NSArray arrayWithObjects:@"", @"", @"", @"", @"", @"", @"", @"", nil] forKey:@"names"];
-    [defaults synchronize];
-  }
-}
-
-
-- (void)setName:(NSString *)name atIndex:(NSInteger)index
-{
-  [self setDefaultNames];
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  NSMutableArray *names = [NSMutableArray arrayWithArray:[defaults arrayForKey:@"names"]];
-  if (names.count > index) {
-    [names replaceObjectAtIndex:index withObject:name];
-    [defaults setObject:[NSArray arrayWithArray:names] forKey:@"names"];
-    [defaults synchronize];
-  }
-}
-
-
-- (NSString *)nameAtIndex:(NSInteger)index
-{
-  [self setDefaultNames];
-  NSArray *names = [[NSUserDefaults standardUserDefaults] arrayForKey:@"names"];
-  if (names.count > index) {
-    return [names objectAtIndex:index];
-  }
-  return @"";
-}
-
-
-- (void)setLineItems:(NSArray *)lineItems
-{
-  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-  [defaults setObject:lineItems forKey:@"lineItems"];
-  [defaults synchronize];
-}
-
-
-- (NSArray *)lineItems
-{
-  return [[NSUserDefaults standardUserDefaults] arrayForKey:@"lineItems"];
 }
 
 
@@ -194,12 +136,6 @@
 
 
 #pragma mark - Property Implementations
-
-- (void)setSplitCount:(NSInteger)splitCount
-{
-  if (splitCount >= 2 && splitCount <= 8) _splitCount = splitCount;
-}
-
 
 - (Bill *)currentBill
 {
