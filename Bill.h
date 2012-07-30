@@ -20,6 +20,7 @@
 @property (nonatomic) double total;
 @property (nonatomic) int64_t splitCount;
 @property (nonatomic, retain) NSString *rawText;
+@property (nonatomic, retain) NSDate *createdAt;
 @property (nonatomic, retain) NSSet *people;
 @property (nonatomic, retain) NSSet *lineItems;
 

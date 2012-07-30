@@ -9,6 +9,7 @@
 #import "BLAppDelegate.h"
 #import "BLStartViewController.h"
 #import "BLFixItemsViewController.h"
+#import "Bill.h"
 
 
 @interface BLAppDelegate ()
@@ -141,6 +142,7 @@
 {
   if (!_currentBill) {
     _currentBill = [NSEntityDescription insertNewObjectForEntityForName:@"Bill" inManagedObjectContext:self.managedObjectContext];
+    _currentBill.createdAt = [NSDate date];
     [self.managedObjectContext save:nil];
   }
   return _currentBill;

@@ -147,6 +147,7 @@
 		91D0953E1595318600E22EEC /* BLStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLStartViewController.h; path = ViewControllers/BLStartViewController.h; sourceTree = "<group>"; };
 		91D0953F1595318600E22EEC /* BLStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLStartViewController.m; path = ViewControllers/BLStartViewController.m; sourceTree = "<group>"; };
 		91D09543159531BB00E22EEC /* BLStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLStartViewController.xib; path = NIBs/BLStartViewController.xib; sourceTree = "<group>"; };
+		91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddCreatedAtForBill.xcdatamodel; sourceTree = "<group>"; };
 		91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTaxViewController.h; path = ViewControllers/BLTaxViewController.h; sourceTree = "<group>"; };
 		91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTaxViewController.m; path = ViewControllers/BLTaxViewController.m; sourceTree = "<group>"; };
 		91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTaxViewController.xib; path = NIBs/BLTaxViewController.xib; sourceTree = "<group>"; };
@@ -624,13 +625,14 @@
 		9155237F15B07A8C00F2F539 /* billy.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */,
 				915523AB15B0BB0900F2F539 /* FixRawTextIssue.xcdatamodel */,
 				915523A015B0B20900F2F539 /* AddDeletedFlagToLineItem.xcdatamodel */,
 				9155239F15B0A58900F2F539 /* AddIndexToLineItem.xcdatamodel */,
 				9155239E15B0986E00F2F539 /* AddSplitterEntity.xcdatamodel */,
 				9155238015B07A8C00F2F539 /* billy.xcdatamodel */,
 			);
-			currentVersion = 915523AB15B0BB0900F2F539 /* FixRawTextIssue.xcdatamodel */;
+			currentVersion = 91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */;
 			path = billy.xcdatamodeld;
 			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;

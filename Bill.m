@@ -19,6 +19,7 @@
 @dynamic total;
 @dynamic splitCount;
 @dynamic rawText;
+@dynamic createdAt;
 @dynamic people;
 @dynamic lineItems;
 

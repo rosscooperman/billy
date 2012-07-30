@@ -30,6 +30,7 @@
 - (UIView *)generateTextFieldForIndex:(NSInteger)index;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
+- (NSArray *)nameDefaults;
 
 @end
 
@@ -52,12 +53,18 @@
   self.bill = [BLAppDelegate appDelegate].currentBill;
   self.textFields = [NSMutableArray arrayWithCapacity:self.bill.splitCount];
   
+  // fetch a list of names from the last bill
+  NSArray *previousNames = [self nameDefaults];
+  
   // make sure the associated bill has enough person objects created
   NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
   NSInteger shortfall = self.bill.splitCount - self.bill.people.count;
   for (NSInteger i = 0; i < shortfall; i++) {
     Person *person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:context];
     person.index = self.bill.people.count;
+    if (previousNames.count > person.index) {
+      person.name = [previousNames objectAtIndex:person.index];
+    }
     [self.bill addPeopleObject:person];
   }
   [context save:nil];
@@ -150,6 +157,27 @@
     self.contentArea.contentInset = UIEdgeInsetsZero;
     self.contentArea.scrollIndicatorInsets = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
   }];
+}
+
+
+- (NSArray *)nameDefaults
+{
+  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
+  request.predicate = [NSPredicate predicateWithFormat:@"createdAt < %@", self.bill.createdAt];
+  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
+  request.fetchLimit = 1;
+  
+  NSArray *results = [self.bill.managedObjectContext executeFetchRequest:request error:nil];
+  if (results && results.count > 0) {
+    Bill *previousBill = [results objectAtIndex:0];
+    NSMutableArray *names = [NSMutableArray arrayWithCapacity:previousBill.people.count];
+    [previousBill.people enumerateObjectsUsingBlock:^(Person *person, BOOL *stop) {
+      [names addObject:person.name];
+    }];
+    return names;
+  }
+  
+  return [NSArray array];
 }
 
 
