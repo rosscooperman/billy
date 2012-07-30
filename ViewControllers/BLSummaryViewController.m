@@ -12,14 +12,19 @@
 
 
 #import "BLSummaryViewController.h"
+#import "Bill.h"
+#import "LineItem.h"
+#import "Assignment.h"
+#import "Person.h"
 
 
 @interface BLSummaryViewController ()
 
-@property (nonatomic, assign) float totalAmount;
+@property (nonatomic, strong) Bill *bill;
 @property (nonatomic, strong) NSMutableArray *ratios;
 @property (nonatomic, strong) NSMutableArray *detailViews;
 @property (nonatomic, strong) NSMutableArray *nameViews;
+@property (nonatomic, strong, readonly) NSArray *people;
 
 
 - (UIView *)generateNameViewForIndex:(NSInteger)index;
@@ -34,38 +39,45 @@
 @implementation BLSummaryViewController
 
 @synthesize contentArea;
-@synthesize totalAmount;
+@synthesize bill;
 @synthesize ratios;
 @synthesize detailViews;
 @synthesize nameViews;
+@synthesize people = _people;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {  
-  BLAppDelegate *appDelegate = [BLAppDelegate appDelegate];
-  
-  self.totalAmount = 0.0;
-  [appDelegate.lineItems enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
-    self.totalAmount += [[lineItem valueForKey:@"price"] floatValue];
-  }];
-  if (self.totalAmount <= 0.0) self.totalAmount = 0.0001; // avoid divide by zero errors
-  
-  self.ratios = [[NSMutableArray alloc] initWithCapacity:appDelegate.splitCount];
-  self.nameViews = [[NSMutableArray alloc] initWithCapacity:appDelegate.splitCount];
-  for (NSInteger i = 0; i < appDelegate.splitCount; i++) {
+  self.bill = [BLAppDelegate appDelegate].currentBill;
+    
+  self.ratios = [[NSMutableArray alloc] initWithCapacity:bill.splitCount];
+  self.nameViews = [[NSMutableArray alloc] initWithCapacity:bill.splitCount];
+  for (NSInteger i = 0; i < bill.splitCount; i++) {
     UIView *view = [self generateNameViewForIndex:i];
     view.frame = CGRectOffset(view.frame, 0.0, 20.0 + ((BOX_HEIGHT + 5.0) * i));
     [self.nameViews addObject:view];
     [self.contentArea addSubview:view];
   }
   
-  self.detailViews = [NSMutableArray arrayWithCapacity:appDelegate.splitCount];
-  for (NSInteger i = 0; i < appDelegate.splitCount; i++) {
+  self.detailViews = [NSMutableArray arrayWithCapacity:bill.splitCount];
+  for (NSInteger i = 0; i < bill.splitCount; i++) {
     [self.detailViews addObject:[NSNull null]];
   }
-  self.contentArea.contentSize = CGSizeMake(320.0, (appDelegate.splitCount * (BOX_HEIGHT + 5.0)) + 75.0);
+  self.contentArea.contentSize = CGSizeMake(320.0, (bill.splitCount * (BOX_HEIGHT + 5.0)) + 75.0);
+}
+
+
+#pragma mark - Property Implementations
+
+- (NSArray *)people
+{
+  if (!_people) {
+    NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
+    _people = [self.bill.people sortedArrayUsingDescriptors:descriptors];
+  }
+  return _people;
 }
 
 
@@ -73,13 +85,13 @@
 
 - (UIView *)generateNameViewForIndex:(NSInteger)index
 {
-  BLAppDelegate *appDelegate = [BLAppDelegate appDelegate];
+  Person *person = [self.people objectAtIndex:index];
   UIView *view = [[UIView alloc] initWithFrame:CGRectMake(5.0, 0.0, 310.0, BOX_HEIGHT)];
   
   // construct and add the name view
   UILabel *name = [[UILabel alloc] initWithFrame:CGRectMake(0.0, 0.0, NAME_BOX_WIDTH, BOX_HEIGHT)];
-  name.backgroundColor = [appDelegate colorAtIndex:index + 1];
-  name.text = [NSString stringWithFormat:@"  %@", [[appDelegate nameAtIndex:index] uppercaseString]];
+  name.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
+  name.text = [NSString stringWithFormat:@"  %@", [person.name uppercaseString]];
   name.textAlignment = UITextAlignmentLeft;
   name.textColor = [UIColor blackColor];
   name.font = [UIFont fontWithName:@"Futura-Medium" size:16];
@@ -87,22 +99,19 @@
   
   // calculate the total cost for the given user
   __block float total = 0.0;
-  [appDelegate.lineItems enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
-    NSArray *splits = [lineItem objectForKey:@"splits"];
-    NSDictionary *split = [splits objectAtIndex:index];
-    float ratio = [[split objectForKey:@"quantity"] floatValue] / [[lineItem objectForKey:@"quantity"] floatValue];
-    total += [[lineItem objectForKey:@"price"] floatValue] * ratio;
+  [person.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, BOOL *stop) {
+    total += ((double)assignment.quantity / (double)assignment.lineItem.quantity) * assignment.lineItem.price;
   }];
   
   // add the person's tax and tip into her total
-  float totalRatio = total / self.totalAmount;
-  total += appDelegate.taxAmount * totalRatio;
-  total += appDelegate.tipAmount * totalRatio;
+  float totalRatio = total / self.bill.subtotal;
+  total += self.bill.tax * totalRatio;
+  total += self.bill.tip * totalRatio;
   [self.ratios addObject:[NSNumber numberWithFloat:totalRatio]];
   
   // construct and add the price view
   UILabel *price = [[UILabel alloc] initWithFrame:CGRectMake(NAME_BOX_WIDTH + 2.0, 0.0, PRICE_BOX_WIDTH, BOX_HEIGHT)];
-  price.backgroundColor = [appDelegate colorAtIndex:index + 1];
+  price.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
   price.text = [NSString stringWithFormat:@"$%.2f", total];
   price.textAlignment = UITextAlignmentCenter;
   price.textColor = [UIColor blackColor];
@@ -155,35 +164,35 @@
 
 - (void)showLineItems:(id)sender
 {
-  UIView *detailView = [[UIView alloc] init];
-  
   UIView *view = [sender superview];
   NSInteger index = [self.nameViews indexOfObject:view];
-  [[BLAppDelegate appDelegate].lineItems enumerateObjectsUsingBlock:^(NSDictionary *lineItem, NSUInteger idx, BOOL *stop) {
-    NSDictionary *split = [[lineItem objectForKey:@"splits"] objectAtIndex:index];
-    NSInteger quantity = [[split objectForKey:@"quantity"] integerValue];
-    if (quantity > 0) {
-      NSString *name = [lineItem objectForKey:@"name"];
-      NSInteger total = [[lineItem objectForKey:@"quantity"] integerValue];
-      float price = [[lineItem objectForKey:@"price"] floatValue];
-      
-      UIView *line = [self generateViewForIndex:detailView.subviews.count name:name total:total quantity:quantity price:price];
-      [detailView addSubview:line];
-    }
+  UIView *detailView = [[UIView alloc] init];
+  Person *person = [self.people objectAtIndex:index];
+  
+  NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"lineItem.index" ascending:YES]];
+  NSArray *sortedAssignments = [person.assignments sortedArrayUsingDescriptors:descriptors];
+  
+  [sortedAssignments enumerateObjectsUsingBlock:^(Assignment *assignment, NSUInteger idx, BOOL *stop) {
+    NSString *name = assignment.lineItem.desc;
+    NSInteger total = assignment.lineItem.quantity;
+    NSInteger quantity = assignment.quantity;
+    float price = assignment.lineItem.price;
+    
+    UIView *line = [self generateViewForIndex:detailView.subviews.count name:name total:total quantity:quantity price:price];
+    [detailView addSubview:line];
   }];
   
   if (detailView.subviews.count > 0) {
-    float tax = [[self.ratios objectAtIndex:index] floatValue] * [BLAppDelegate appDelegate].taxAmount;
-    float tip = [[self.ratios objectAtIndex:index] floatValue] * [BLAppDelegate appDelegate].tipAmount;
-    float subtotal = ([[self.ratios objectAtIndex:index] floatValue] * self.totalAmount) + tax;
+    float ratio = [[self.ratios objectAtIndex:index] floatValue];
+    float subtotal = ratio * (self.bill.subtotal + self.bill.tax);
 
-    UIView *taxView = [self generateViewForIndex:detailView.subviews.count name:@"TAX" total:0 quantity:0 price:tax];
+    UIView *taxView = [self generateViewForIndex:detailView.subviews.count name:@"TAX" total:0 quantity:0 price:ratio * self.bill.tax];
     [detailView addSubview:taxView];
 
     UIView *subtotalView = [self generateViewForIndex:detailView.subviews.count name:@"SUBTOTAL" total:0 quantity:0 price:subtotal];
     [detailView addSubview:subtotalView];
     
-    UIView *tipView = [self generateViewForIndex:detailView.subviews.count name:@"TIP" total:0 quantity:0 price:tip];
+    UIView *tipView = [self generateViewForIndex:detailView.subviews.count name:@"TIP" total:0 quantity:0 price:ratio * self.bill.tip];
     [detailView addSubview:tipView];
     
     detailView.frame = CGRectMake(5.0, view.frame.origin.y + BOX_HEIGHT + 2.0, 310.0, detailView.subviews.count * (BOX_HEIGHT + 2.0));
@@ -289,7 +298,7 @@
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
   if (buttonIndex > 0) {
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    [[BLAppDelegate appDelegate] startOver];
   }
 }
 

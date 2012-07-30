@@ -36,5 +36,6 @@
 - (void)setName:(NSString *)name atIndex:(NSInteger)index;
 - (NSArray *)lineItems;
 - (void)setLineItems:(NSArray *)lineItems;
+- (void)startOver;
 
 @end

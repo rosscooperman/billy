@@ -136,6 +136,13 @@
 }
 
 
+- (void)startOver
+{
+  _currentBill = nil;
+  [self.viewController popToRootViewControllerAnimated:YES];
+}
+
+
 #pragma mark - Core Data Property Implementations
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
