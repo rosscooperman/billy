@@ -79,6 +79,11 @@
     self.bill.tax = self.bill.subtotal * self.taxPercentage;
   }
   
+  // if, at this point, there's on tax percentage, calculate it based on the tax amount
+  if (!self.taxPercentage || self.taxPercentage <= 0.0) {
+    self.taxPercentage = self.bill.tax / self.bill.subtotal;
+  }
+  
   [self updateLabels];
 }
 
