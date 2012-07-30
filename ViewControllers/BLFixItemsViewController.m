@@ -55,15 +55,9 @@
 
 - (void)viewDidLoad
 {
-  self.lineItems = [NSMutableArray array];
-  
-  // fetch the current bill and clear out any existing line items
   self.bill = [BLAppDelegate appDelegate].currentBill;
-  [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
-    [[BLAppDelegate appDelegate].managedObjectContext deleteObject:lineItem];
-  }];
-  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
-  
+  self.lineItems = [NSMutableArray array];
+    
   // find/detect any line items in raw text (and create a new one if none are found)
   [self findLineItems];
   BOOL selectFirstField = NO;
@@ -108,6 +102,14 @@
   NSString *pattern = @"^\\s*([\\dIOS]+)\\s+(.*)?\\s+\\$?([\\dIOS]+\\.[\\dIOS]{2})\\s*$";
   NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
   NSRange range = [self.bill.rawText rangeOfString:self.bill.rawText];
+  
+  // clear out any existing line items if we've found any line items in the raw text
+  if ([regex numberOfMatchesInString:self.bill.rawText options:0 range:range] > 0) {
+    [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
+      [self.bill.managedObjectContext deleteObject:lineItem];
+    }];
+    [self.bill.managedObjectContext save:nil];
+  }
 
   [regex enumerateMatchesInString:self.bill.rawText options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags f, BOOL *s) {
     // create a new line item with a description
@@ -131,7 +133,7 @@
     [self.bill addLineItemsObject:lineItem];
     [self.lineItems addObject:lineItem];
   }];
-  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+  [self.bill.managedObjectContext save:nil];
 }
 
 
