@@ -62,6 +62,8 @@
 		91D0953D1595310C00E22EEC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D0953B1595310C00E22EEC /* Default@2x.png */; };
 		91D095411595318600E22EEC /* BLStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D0953F1595318600E22EEC /* BLStartViewController.m */; };
 		91D09544159531BB00E22EEC /* BLStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91D09543159531BB00E22EEC /* BLStartViewController.xib */; };
+		91E62D1215CC546C00E3AD5D /* autoFocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1015CC546C00E3AD5D /* autoFocus.png */; };
+		91E62D1315CC546C00E3AD5D /* autoFocus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1115CC546C00E3AD5D /* autoFocus@2x.png */; };
 		91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */; };
 		91EB2BC01586E56F007FD18B /* BLTaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */; };
 		91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */; };
@@ -147,7 +149,9 @@
 		91D0953E1595318600E22EEC /* BLStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLStartViewController.h; path = ViewControllers/BLStartViewController.h; sourceTree = "<group>"; };
 		91D0953F1595318600E22EEC /* BLStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLStartViewController.m; path = ViewControllers/BLStartViewController.m; sourceTree = "<group>"; };
 		91D09543159531BB00E22EEC /* BLStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLStartViewController.xib; path = NIBs/BLStartViewController.xib; sourceTree = "<group>"; };
-		91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddCreatedAtForBill.xcdatamodel; sourceTree = "<group>"; };
+		91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddCreatedAtForBill.xcdatamodel; sourceTree = "<group>"; };
+		91E62D1015CC546C00E3AD5D /* autoFocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = autoFocus.png; sourceTree = "<group>"; };
+		91E62D1115CC546C00E3AD5D /* autoFocus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "autoFocus@2x.png"; sourceTree = "<group>"; };
 		91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTaxViewController.h; path = ViewControllers/BLTaxViewController.h; sourceTree = "<group>"; };
 		91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTaxViewController.m; path = ViewControllers/BLTaxViewController.m; sourceTree = "<group>"; };
 		91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTaxViewController.xib; path = NIBs/BLTaxViewController.xib; sourceTree = "<group>"; };
@@ -332,6 +336,8 @@
 				91B9CCC51577D72500AAEDC0 /* Icon-72@2x.png */,
 				91B9CCC61577D72500AAEDC0 /* Icon.png */,
 				91B9CCC71577D72500AAEDC0 /* Icon@2x.png */,
+				91E62D1015CC546C00E3AD5D /* autoFocus.png */,
+				91E62D1115CC546C00E3AD5D /* autoFocus@2x.png */,
 				9148ADE21577FD6B00985CA0 /* cropDot.png */,
 				9148ADE31577FD6B00985CA0 /* cropDot@2x.png */,
 				9148ADD51577DCC200985CA0 /* iconCamera.png */,
@@ -433,6 +439,8 @@
 				91D0953C1595310C00E22EEC /* Default.png in Resources */,
 				91D0953D1595310C00E22EEC /* Default@2x.png in Resources */,
 				91D09544159531BB00E22EEC /* BLStartViewController.xib in Resources */,
+				91E62D1215CC546C00E3AD5D /* autoFocus.png in Resources */,
+				91E62D1315CC546C00E3AD5D /* autoFocus@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

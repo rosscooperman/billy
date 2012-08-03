@@ -21,10 +21,12 @@
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) AVCaptureDevice *videoCaptureDevice;
 @property (nonatomic, strong) AVCaptureStillImageOutput *stillCapturer;
+@property (nonatomic, strong) UIImageView *focusArea;
 
 
 - (void)setupCaptureSession;
 - (void)setupFlash;
+- (void)setFocalPoint:(CGPoint)point;
 
 @end
 
@@ -39,6 +41,7 @@
 @synthesize captureSession;
 @synthesize videoCaptureDevice;
 @synthesize stillCapturer;
+@synthesize focusArea;
 
 
 #pragma mark - View Lifecycle
@@ -126,6 +129,21 @@
 }
 
 
+- (void)setFocalPoint:(CGPoint)point
+{
+  // translate the point that was tapped to the coordinate system 
+  CGPoint translatedPoint;
+  translatedPoint.x = point.y / self.previewView.frame.size.height;
+  translatedPoint.y = 1.0 - (point.x / self.previewView.frame.size.width);
+  
+  if ([self.videoCaptureDevice lockForConfiguration:nil] && [self.videoCaptureDevice isFocusModeSupported:AVCaptureFocusModeContinuousAutoFocus]) {
+    self.videoCaptureDevice.focusPointOfInterest = translatedPoint;
+    self.videoCaptureDevice.focusMode = AVCaptureFocusModeContinuousAutoFocus;
+    [self.videoCaptureDevice unlockForConfiguration];
+  }
+}
+
+
 #pragma mark - IBAction Methods
 
 - (void)previousScreen:(id)sender
@@ -168,6 +186,32 @@
   [[BLAppDelegate appDelegate].managedObjectContext save:nil];
   BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
   [self.navigationController pushViewController:fixItemsController animated:YES];
+}
+
+
+- (void)setFocus:(UITapGestureRecognizer *)sender
+{
+  CGPoint point = [sender locationInView:self.previewView];
+  
+  if (self.focusArea && CGRectContainsPoint(self.focusArea.frame, point)) {
+    [self.focusArea removeFromSuperview];
+    self.focusArea = nil;
+    [self setFocalPoint:self.previewView.center];
+    return;
+  }
+  
+  if (!self.focusArea) {
+    self.focusArea = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"autoFocus"]];
+    [self.previewView addSubview:self.focusArea];
+  }
+
+  self.focusArea.center = point;
+  self.focusArea.transform = CGAffineTransformIdentity;
+  [self setFocalPoint:point];
+  
+  [UIView animateWithDuration:0.3 animations:^{
+    self.focusArea.transform = CGAffineTransformMakeScale(0.6, 0.6);
+  }];
 }
 
 @end

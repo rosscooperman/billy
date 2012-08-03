@@ -22,5 +22,6 @@
 - (IBAction)previousScreen:(id)sender;
 - (IBAction)takePicture:(id)sender;
 - (IBAction)skipCamera:(id)sender;
+- (IBAction)setFocus:(UITapGestureRecognizer *)sender;
 
 @end
