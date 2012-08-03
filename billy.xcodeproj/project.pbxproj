@@ -29,6 +29,12 @@
 		9155239715B0949500F2F539 /* Bill.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239615B0949500F2F539 /* Bill.m */; };
 		9155239A15B0949500F2F539 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239915B0949500F2F539 /* Person.m */; };
 		9155239D15B0949500F2F539 /* Assignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239C15B0949500F2F539 /* Assignment.m */; };
+		9167C83415CC8EE800E25A2F /* flashAuto.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C82E15CC8EE800E25A2F /* flashAuto.png */; };
+		9167C83515CC8EE800E25A2F /* flashAuto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C82F15CC8EE800E25A2F /* flashAuto@2x.png */; };
+		9167C83615CC8EE800E25A2F /* flashOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C83015CC8EE800E25A2F /* flashOff.png */; };
+		9167C83715CC8EE800E25A2F /* flashOff@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C83115CC8EE800E25A2F /* flashOff@2x.png */; };
+		9167C83815CC8EE800E25A2F /* flashOn.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C83215CC8EE800E25A2F /* flashOn.png */; };
+		9167C83915CC8EE800E25A2F /* flashOn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C83315CC8EE800E25A2F /* flashOn@2x.png */; };
 		9198BF13157AEB25001B74A9 /* BLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF07157AEB25001B74A9 /* BLCameraViewController.m */; };
 		9198BF14157AEB25001B74A9 /* BLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF09157AEB25001B74A9 /* BLCropViewController.m */; };
 		9198BF15157AEB25001B74A9 /* BLFixItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF0B157AEB25001B74A9 /* BLFixItemsViewController.m */; };
@@ -102,6 +108,12 @@
 		9155239F15B0A58900F2F539 /* AddIndexToLineItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddIndexToLineItem.xcdatamodel; sourceTree = "<group>"; };
 		915523A015B0B20900F2F539 /* AddDeletedFlagToLineItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddDeletedFlagToLineItem.xcdatamodel; sourceTree = "<group>"; };
 		915523AB15B0BB0900F2F539 /* FixRawTextIssue.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FixRawTextIssue.xcdatamodel; sourceTree = "<group>"; };
+		9167C82E15CC8EE800E25A2F /* flashAuto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flashAuto.png; sourceTree = "<group>"; };
+		9167C82F15CC8EE800E25A2F /* flashAuto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashAuto@2x.png"; sourceTree = "<group>"; };
+		9167C83015CC8EE800E25A2F /* flashOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flashOff.png; sourceTree = "<group>"; };
+		9167C83115CC8EE800E25A2F /* flashOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOff@2x.png"; sourceTree = "<group>"; };
+		9167C83215CC8EE800E25A2F /* flashOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flashOn.png; sourceTree = "<group>"; };
+		9167C83315CC8EE800E25A2F /* flashOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOn@2x.png"; sourceTree = "<group>"; };
 		9198BF06157AEB25001B74A9 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = ViewControllers/BLCameraViewController.h; sourceTree = "<group>"; };
 		9198BF07157AEB25001B74A9 /* BLCameraViewController.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BLCameraViewController.m; path = ViewControllers/BLCameraViewController.m; sourceTree = "<group>"; };
 		9198BF08157AEB25001B74A9 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = ViewControllers/BLCropViewController.h; sourceTree = "<group>"; };
@@ -340,6 +352,12 @@
 				91E62D1115CC546C00E3AD5D /* autoFocus@2x.png */,
 				9148ADE21577FD6B00985CA0 /* cropDot.png */,
 				9148ADE31577FD6B00985CA0 /* cropDot@2x.png */,
+				9167C82E15CC8EE800E25A2F /* flashAuto.png */,
+				9167C82F15CC8EE800E25A2F /* flashAuto@2x.png */,
+				9167C83015CC8EE800E25A2F /* flashOff.png */,
+				9167C83115CC8EE800E25A2F /* flashOff@2x.png */,
+				9167C83215CC8EE800E25A2F /* flashOn.png */,
+				9167C83315CC8EE800E25A2F /* flashOn@2x.png */,
 				9148ADD51577DCC200985CA0 /* iconCamera.png */,
 				9148ADD61577DCC200985CA0 /* iconCamera@2x.png */,
 				9148ADE81578147300985CA0 /* iconCheck.png */,
@@ -441,6 +459,12 @@
 				91D09544159531BB00E22EEC /* BLStartViewController.xib in Resources */,
 				91E62D1215CC546C00E3AD5D /* autoFocus.png in Resources */,
 				91E62D1315CC546C00E3AD5D /* autoFocus@2x.png in Resources */,
+				9167C83415CC8EE800E25A2F /* flashAuto.png in Resources */,
+				9167C83515CC8EE800E25A2F /* flashAuto@2x.png in Resources */,
+				9167C83615CC8EE800E25A2F /* flashOff.png in Resources */,
+				9167C83715CC8EE800E25A2F /* flashOff@2x.png in Resources */,
+				9167C83815CC8EE800E25A2F /* flashOn.png in Resources */,
+				9167C83915CC8EE800E25A2F /* flashOn@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
