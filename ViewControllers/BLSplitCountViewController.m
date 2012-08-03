@@ -9,6 +9,8 @@
 #import "BLSplitCountViewController.h"
 #import "BLNamesViewController.h"
 #import "Bill.h"
+#import "UIViewController+GuidedTour.h"
+#import "UIViewController+ButtonManagement.h"
 
 
 @interface BLSplitCountViewController ()
@@ -17,6 +19,7 @@
 
 
 - (void)setCount:(NSInteger)count;
+- (void)transitionTour;
 
 @end
 
@@ -27,9 +30,19 @@
 @synthesize minusButton;
 @synthesize plusButton;
 @synthesize bill;
+@synthesize nextScreenButton;
 
 
 #pragma mark - View Lifecycle
+
+- (void)viewDidLoad
+{
+  // guided tour related code
+  [self showTourText:@"cycle through the number of splits" atPoint:CGPointMake(5.0, 5.0) animated:NO];
+  [self showTourText:@"by tapping +/-" atPoint:CGPointMake(5.0, 47.0) animated:NO];
+  if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
+}
+
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -42,6 +55,12 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [self hideTourTextAnimated:NO complete:nil];
 }
 
 
@@ -63,17 +82,30 @@
 }
 
 
+-(void)transitionTour
+{
+  if (self.nextScreenButton.enabled) return;
+  
+  [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
+  [self hideTourTextAnimated:YES complete:^{
+    [self showTourText:@"tap the check to continue" atPoint:CGPointMake(315.0, 363.0) animated:YES];
+  }];
+}
+
+
 #pragma mark - IBAction Methods
 
 - (void)incrementCount:(id)sender
 {
   [self setCount:++self.bill.splitCount];
+  [self transitionTour];
 }
 
 
 - (void)decrementCount:(id)sender
 {
   [self setCount:--self.bill.splitCount];
+  [self transitionTour];
 }
 
 

@@ -70,6 +70,8 @@
 		91D09544159531BB00E22EEC /* BLStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91D09543159531BB00E22EEC /* BLStartViewController.xib */; };
 		91E62D1215CC546C00E3AD5D /* autoFocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1015CC546C00E3AD5D /* autoFocus.png */; };
 		91E62D1315CC546C00E3AD5D /* autoFocus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1115CC546C00E3AD5D /* autoFocus@2x.png */; };
+		91E62D1715CC654A00E3AD5D /* UIViewController+GuidedTour.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E62D1615CC654A00E3AD5D /* UIViewController+GuidedTour.m */; };
+		91E62D1A15CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */; };
 		91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */; };
 		91EB2BC01586E56F007FD18B /* BLTaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */; };
 		91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */; };
@@ -164,6 +166,10 @@
 		91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddCreatedAtForBill.xcdatamodel; sourceTree = "<group>"; };
 		91E62D1015CC546C00E3AD5D /* autoFocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = autoFocus.png; sourceTree = "<group>"; };
 		91E62D1115CC546C00E3AD5D /* autoFocus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "autoFocus@2x.png"; sourceTree = "<group>"; };
+		91E62D1515CC654A00E3AD5D /* UIViewController+GuidedTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+GuidedTour.h"; path = "OtherClasses/UIViewController+GuidedTour.h"; sourceTree = "<group>"; };
+		91E62D1615CC654A00E3AD5D /* UIViewController+GuidedTour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+GuidedTour.m"; path = "OtherClasses/UIViewController+GuidedTour.m"; sourceTree = "<group>"; };
+		91E62D1815CC7F2B00E3AD5D /* UIViewController+ButtonManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+ButtonManagement.h"; path = "OtherClasses/UIViewController+ButtonManagement.h"; sourceTree = "<group>"; };
+		91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+ButtonManagement.m"; path = "OtherClasses/UIViewController+ButtonManagement.m"; sourceTree = "<group>"; };
 		91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTaxViewController.h; path = ViewControllers/BLTaxViewController.h; sourceTree = "<group>"; };
 		91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTaxViewController.m; path = ViewControllers/BLTaxViewController.m; sourceTree = "<group>"; };
 		91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTaxViewController.xib; path = NIBs/BLTaxViewController.xib; sourceTree = "<group>"; };
@@ -373,6 +379,10 @@
 			children = (
 				91CAC83D157E6704001B500F /* BLAppDelegate.h */,
 				91CAC83E157E6704001B500F /* BLAppDelegate.m */,
+				91E62D1815CC7F2B00E3AD5D /* UIViewController+ButtonManagement.h */,
+				91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */,
+				91E62D1515CC654A00E3AD5D /* UIViewController+GuidedTour.h */,
+				91E62D1615CC654A00E3AD5D /* UIViewController+GuidedTour.m */,
 			);
 			name = "Other Classes";
 			sourceTree = "<group>";
@@ -493,6 +503,8 @@
 				9155239715B0949500F2F539 /* Bill.m in Sources */,
 				9155239A15B0949500F2F539 /* Person.m in Sources */,
 				9155239D15B0949500F2F539 /* Assignment.m in Sources */,
+				91E62D1715CC654A00E3AD5D /* UIViewController+GuidedTour.m in Sources */,
+				91E62D1A15CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

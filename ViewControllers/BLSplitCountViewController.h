@@ -13,6 +13,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *countLabel;
 @property (nonatomic, strong) IBOutlet UIButton *minusButton;
 @property (nonatomic, strong) IBOutlet UIButton *plusButton;
+@property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
 
 
 - (IBAction)incrementCount:(id)sender;
