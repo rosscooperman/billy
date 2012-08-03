@@ -191,6 +191,9 @@
 
 - (void)setFocus:(UITapGestureRecognizer *)sender
 {
+  // don't do any of this if point of interest focus is not supported
+  if (!self.videoCaptureDevice.focusPointOfInterestSupported) return;
+  
   CGPoint point = [sender locationInView:self.previewView];
   
   if (self.focusArea && CGRectContainsPoint(self.focusArea.frame, point)) {
