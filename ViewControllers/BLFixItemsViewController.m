@@ -13,6 +13,9 @@
 
 
 #import <QuartzCore/QuartzCore.h>
+
+#import "UIViewController+GuidedTour.h"
+#import "UIViewController+ButtonManagement.h"
 #import "BLFixItemsViewController.h"
 #import "BLSplitBillViewController.h"
 #import "BLTextField.h"
@@ -21,12 +24,23 @@
 #import "Assignment.h"
 
 
+typedef enum {
+  BLTourStepStart,
+  BLTourStepOneItem,
+  BLTourStepTwoItems,
+  BLTourStepThreeItems,
+  BLTourStepDone
+} BLTourStep;
+
+
 @interface BLFixItemsViewController ()
 
 @property (nonatomic, strong) NSMutableArray *lineItems;
 @property (nonatomic, strong) NSMutableArray *dataFields;
 @property (nonatomic, strong) UITextField *activeField;
 @property (nonatomic, strong) Bill *bill;
+@property (nonatomic, assign) BLTourStep tourStep;
+@property (readonly) CGPoint tourInsertionPoint;
 
 
 - (void)findLineItems;
@@ -39,6 +53,7 @@
 - (void)deleteItemAtIndex:(NSInteger)index;
 - (void)updateStoredItems;
 - (BOOL)validateLineItems;
+- (void)nextTourStep;
 
 @end
 
@@ -46,16 +61,28 @@
 @implementation BLFixItemsViewController
 
 @synthesize contentArea;
+@synthesize nextScreenButton;
 @synthesize lineItems = _lineItems;
 @synthesize dataFields;
 @synthesize activeField;
 @synthesize bill;
+@synthesize tourStep;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
+  NSString *text = @"start by entering items\nadd a quantity, description & price\ntap 'done' when you're...done";
+  [self showTourText:text atPoint:CGPointMake(5.0, 55.0) animated:NO];
+  if (self.shouldShowTour) {
+    [self disableButton:self.nextScreenButton];
+    self.tourStep = BLTourStepStart;
+  }
+  else {
+    self.tourStep = BLTourStepDone;
+  }
+  
   self.bill = [BLAppDelegate appDelegate].currentBill;
   self.lineItems = [NSMutableArray array];
     
@@ -96,6 +123,25 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+  [self hideTourTextAnimated:NO complete:nil];
+}
+
+
+#pragma mark - Property Implementations
+
+- (CGPoint)tourInsertionPoint
+{
+  if (self.dataFields.count > 0) {
+    NSDictionary *fields = [self.dataFields lastObject];
+    UIView *field = [fields objectForKey:@"quantity"];
+    return CGPointMake(5.0, CGRectGetMaxY(field.superview.frame) - 15.0);
+  }
+  return CGPointMake(5.0, 5.0);
 }
 
 
@@ -268,7 +314,18 @@
       }
     }];
     
-    if (index >= 0) [self deleteItemAtIndex:index];
+    if (index >= 0) {
+      [self deleteItemAtIndex:index];
+      if (self.tourStep == BLTourStepThreeItems) {
+        self.tourStep = BLTourStepDone;
+        [self hideTourTextAnimated:YES complete:^{
+          [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
+          NSString *text = @"professional swiping skills!\nif you want to undelete the item\njust swipe again";
+          [self showTourText:text atPoint:CGPointMake(5.0, 149.0) animated:YES];
+          [self showTourText:@"let's continue" atPoint:CGPointMake(315.0, 400.0) animated:YES];
+        }];
+      }
+    }
   }
 }
 
@@ -353,6 +410,38 @@
 }
 
 
+- (void)nextTourStep
+{
+  switch (self.tourStep) {
+    case BLTourStepStart: {
+      [self hideTourTextAnimated:YES complete:nil];
+      self.tourStep = BLTourStepOneItem;
+      break;
+    }
+    
+    case BLTourStepOneItem: {
+      [self showTourText:@"awesome!\nadd another item with the +" atPoint:self.tourInsertionPoint animated:YES];
+      self.tourStep = BLTourStepTwoItems;
+      break;
+    }
+    
+    case BLTourStepTwoItems: {
+      [self showTourText:@"amazing!\nadd one more item before continuing" atPoint:self.tourInsertionPoint animated:YES];
+      self.tourStep = BLTourStepThreeItems;
+      break;
+    }
+
+    case BLTourStepThreeItems: {
+      [self showTourText:@"whoopsies.\nswipe to delete that third item" atPoint:self.tourInsertionPoint animated:YES];
+      break;
+    }
+      
+    case BLTourStepDone:
+      break;
+  }
+}
+
+
 #pragma mark - UITextFieldDelegate Methods
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -364,26 +453,30 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
   [textField resignFirstResponder];
+  if (self.tourStep >= BLTourStepOneItem && self.tourStep <= BLTourStepThreeItems) [self nextTourStep];
   return NO;
 }
 
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
+  BOOL returnValue = YES;
+  
   if (textField.tag == 0) {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSCharacterSet *nonDigitsSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
-    return nonDigitRange.location == NSNotFound;
+    returnValue = nonDigitRange.location == NSNotFound;
   }
   else if (textField.tag == 2) {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSCharacterSet *nonDigitsSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
     NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
-    return nonDigitRange.location == NSNotFound;
+    returnValue = nonDigitRange.location == NSNotFound;
   }
 
-  return YES;
+  if (returnValue && self.tourStep == BLTourStepStart) [self nextTourStep];
+  return returnValue;
 }
 
 
@@ -412,7 +505,7 @@
 
 - (void)contentAreaTapped:(UITapGestureRecognizer *)recognizer
 {
-  [self.activeField resignFirstResponder];
+  [self textFieldShouldReturn:self.activeField];
 }
 
 
@@ -434,20 +527,29 @@
 
 - (void)addRow:(id)sender
 {
-  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
-  LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
-  lineItem.index = self.lineItems.count;
+  void (^complete)(void) = ^{
+    NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+    LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
+    lineItem.index = self.lineItems.count;
+    
+    [self.bill addLineItemsObject:lineItem];
+    [self.lineItems addObject:lineItem];
+    
+    UIView *newRow = [self generateViewForIndex:lineItem.index];
+    [self.contentArea addSubview:newRow];
+    self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
+    
+    NSDictionary *fields = [self.dataFields objectAtIndex:lineItem.index];
+    BLTextField *field = [fields objectForKey:@"quantity"];
+    [field becomeFirstResponder];
+  };
   
-  [self.bill addLineItemsObject:lineItem];
-  [self.lineItems addObject:lineItem];
-
-  UIView *newRow = [self generateViewForIndex:lineItem.index];
-  [self.contentArea addSubview:newRow];
-  self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
-
-  NSDictionary *fields = [self.dataFields objectAtIndex:lineItem.index];
-  BLTextField *field = [fields objectForKey:@"quantity"];
-  [field becomeFirstResponder];
+  if (self.tourStep == BLTourStepTwoItems || self.tourStep == BLTourStepThreeItems) {
+    [self hideTourTextAnimated:YES complete:complete];
+  }
+  else {
+    complete();
+  }
 }
 
 @end
