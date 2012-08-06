@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
+#import "UIViewController+GuidedTour.h"
+#import "UIViewController+ButtonManagement.h"
 #import "BLSplitCountViewController.h"
 #import "BLNamesViewController.h"
 #import "Bill.h"
-#import "UIViewController+GuidedTour.h"
-#import "UIViewController+ButtonManagement.h"
 
 
 @interface BLSplitCountViewController ()
