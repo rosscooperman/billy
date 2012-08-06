@@ -561,6 +561,7 @@
 			buildSettings = {
 				BUNDLE_DISPLAY_NAME = "Billy ∂";
 				BUNDLE_IDENTIFIER = com.eastmedia.billy.debug;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Support/billy-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -582,6 +583,7 @@
 				BUNDLE_DISPLAY_NAME = Billy;
 				BUNDLE_IDENTIFIER = com.eastmedia.billy;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Support/billy-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -624,6 +626,7 @@
 				BUNDLE_DISPLAY_NAME = "Billy β";
 				BUNDLE_IDENTIFIER = com.eastmedia.billy.beta;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Support/billy-Prefix.pch";
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;

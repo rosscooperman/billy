@@ -38,8 +38,7 @@
 - (void)viewDidLoad
 {
   // guided tour related code
-  [self showTourText:@"cycle through the number of splits" atPoint:CGPointMake(5.0, 5.0) animated:NO];
-  [self showTourText:@"by tapping +/-" atPoint:CGPointMake(5.0, 47.0) animated:NO];
+  [self showTourText:@"cycle through the number of splits\nby tapping +/-" atPoint:CGPointMake(5.0, 5.0) animated:NO];
   if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
 }
 
@@ -88,7 +87,7 @@
   
   [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
   [self hideTourTextAnimated:YES complete:^{
-    [self showTourText:@"tap the check to continue" atPoint:CGPointMake(315.0, 363.0) animated:YES];
+    [self showTourText:@"tap the check to continue" atPoint:CGPointMake(315.0, 400.0) animated:YES];
   }];
 }
 

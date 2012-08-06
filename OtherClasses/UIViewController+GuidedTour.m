@@ -12,8 +12,10 @@
 @interface UIViewController (GuidedTourPrivateMethods)
 
 - (UILabel *)newTourLabelWithText:(NSString *)text;
-- (void)showTourTextLeft:(NSString *)text atPoint:(CGPoint)point animated:(BOOL)animated;
-- (void)showTourTextRight:(NSString *)text atPoint:(CGPoint)point animated:(BOOL)animated;
+- (void)showTourTextLeft:(NSMutableArray *)text atPoint:(CGPoint)point animated:(BOOL)animated;
+- (void)showTourTextRight:(NSMutableArray *)text atPoint:(CGPoint)point animated:(BOOL)animated;
+- (void)animateShowComplete:(void (^)(void))complete;
+- (void)animateHideComplete:(void (^)(void))complete;
 
 @end
 
@@ -45,33 +47,33 @@
 - (void)showTourText:(NSString *)text atPoint:(CGPoint)point animated:(BOOL)animated
 {
   if (![self shouldShowTour]) return;
+  NSMutableArray *splitText = [[text componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] mutableCopy];
   
   if (point.x < 160.0) {
-    [self showTourTextLeft:text atPoint:point animated:animated];
+    [self showTourTextLeft:splitText atPoint:point animated:animated];
   }
   else {
-    [self showTourTextRight:text atPoint:point animated:animated];
+    
+    [self showTourTextRight:splitText atPoint:point animated:animated];
   }  
 }
 
 
 - (void)hideTourTextAnimated:(BOOL)animated complete:(void (^)(void))complete
 {
-  __block NSMutableArray *tourViews = [NSMutableArray arrayWithCapacity:3];
   CGFloat duration = (animated) ? TOUR_ANIMATION_DURATION : 0.0;
+  UIView *nextView = [self.view viewWithTag:TOUR_TAG];
   
   [UIView animateWithDuration:duration animations:^{
-    [self.view.subviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
-      if (subview.tag == TOUR_TAG) {
-        subview.transform = CGAffineTransformMakeTranslation(-(subview.frame.size.width + subview.frame.origin.x), 0.0);
-        [tourViews addObject:subview];
-      }
-    }];
+    nextView.transform = CGAffineTransformMakeTranslation(-(nextView.frame.size.width + nextView.frame.origin.x), 0.0);
   } completion:^(BOOL finished) {
-    [tourViews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
-      [subview removeFromSuperview];
-    }];
-    if (complete) complete();
+    [nextView removeFromSuperview];
+    if ([self.view viewWithTag:TOUR_TAG]) {
+      [self hideTourTextAnimated:animated complete:complete];
+    }
+    else if (complete) {
+      complete();
+    }
   }];
 }
 
@@ -95,32 +97,55 @@
 }
 
 
-- (void)showTourTextLeft:(NSString *)text atPoint:(CGPoint)point animated:(BOOL)animated
+- (void)showTourTextLeft:(NSMutableArray *)text atPoint:(CGPoint)point animated:(BOOL)animated
 {
-  UILabel *tourLabel = [self newTourLabelWithText:text];
+  if (text.count <= 0) return;
+  
+  NSString *nextString = [text objectAtIndex:0];
+  [text removeObjectAtIndex:0];
+  
+  UILabel *tourLabel = [self newTourLabelWithText:nextString];
   tourLabel.frame = (CGRect){point, tourLabel.frame.size};
+  CGPoint nextPoint = CGPointMake(point.x, point.y + tourLabel.bounds.size.height + 2.0);
   [self.view addSubview:tourLabel];
   
   if (animated) {
     tourLabel.transform = CGAffineTransformMakeTranslation(-(tourLabel.frame.size.width + tourLabel.frame.origin.x), 0.0);
     [UIView animateWithDuration:TOUR_ANIMATION_DURATION animations:^{
       tourLabel.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+      [self showTourTextLeft:text atPoint:nextPoint animated:animated];
     }];
+  }
+  else {
+    [self showTourTextLeft:text atPoint:nextPoint animated:animated];
   }
 }
 
 
-- (void)showTourTextRight:(NSString *)text atPoint:(CGPoint)point animated:(BOOL)animated
+- (void)showTourTextRight:(NSMutableArray *)text atPoint:(CGPoint)point animated:(BOOL)animated
 {
-  UILabel *tourLabel = [self newTourLabelWithText:text];
-  tourLabel.frame = (CGRect){CGPointMake(point.x - tourLabel.frame.size.width, point.y), tourLabel.frame.size};
+  if (text.count <= 0) return;
+  
+  NSString *nextString = [text objectAtIndex:text.count - 1];
+  [text removeObjectAtIndex:text.count - 1];
+  
+  UILabel *tourLabel = [self newTourLabelWithText:nextString];
+  tourLabel.frame = (CGRect){CGPointMake(point.x - tourLabel.frame.size.width, point.y - tourLabel.frame.size.height), tourLabel.frame.size};
+  CGPoint nextPoint = CGPointMake(point.x, point.y - tourLabel.bounds.size.height - 2.0);
   [self.view addSubview:tourLabel];
   
   if (animated) {
-    tourLabel.transform = CGAffineTransformMakeTranslation(tourLabel.frame.size.width + (320.0 - point.x), 0.0);
+    tourLabel.transform = CGAffineTransformMakeTranslation(tourLabel.frame.size.width + (320.0 - point.x), 0.0);;
     [UIView animateWithDuration:TOUR_ANIMATION_DURATION animations:^{
       tourLabel.transform = CGAffineTransformIdentity;
+    } completion:^(BOOL finished) {
+      [self showTourTextRight:text atPoint:nextPoint animated:animated];
     }];
-  }}
+  }
+  else {
+    [self showTourTextRight:text atPoint:nextPoint animated:animated];
+  }
+}
 
 @end

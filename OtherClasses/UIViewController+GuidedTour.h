@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #define TOUR_TAG 54321
-#define TOUR_ANIMATION_DURATION 0.5
+#define TOUR_ANIMATION_DURATION 0.25
 
 
 @interface UIViewController (GuidedTour)
