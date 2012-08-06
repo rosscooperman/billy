@@ -10,6 +10,8 @@
 #define TEXT_BOX_WIDTH 206
 
 
+#import "UIViewController+GuidedTour.h"
+#import "UIViewController+ButtonManagement.h"
 #import "BLNamesViewController.h"
 #import "BLCameraViewController.h"
 #import "BLFixItemsViewController.h"
@@ -38,6 +40,7 @@
 @implementation BLNamesViewController
 
 @synthesize contentArea;
+@synthesize nextScreenButton;
 @synthesize textFields;
 @synthesize activeField;
 @synthesize innerContainer;
@@ -49,6 +52,9 @@
 
 - (void)viewDidLoad
 {
+  [self showTourText:@"enter nicknames\ntap on a blank color. type. repeat. done." atPoint:CGPointMake(5.0, 5.0) animated:NO];
+  if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
+  
   // fetch the current bill from the app delegate and allocate an array for the name views we're going to create
   self.bill = [BLAppDelegate appDelegate].currentBill;
   self.textFields = [NSMutableArray arrayWithCapacity:self.bill.splitCount];
@@ -187,6 +193,10 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
   self.activeField = textField;
+  
+  if (self.nextScreenButton.enabled) return;
+  [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
+  [self hideTourTextAnimated:YES complete:nil];
 }
 
 

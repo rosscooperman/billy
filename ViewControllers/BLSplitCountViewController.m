@@ -37,7 +37,6 @@
 
 - (void)viewDidLoad
 {
-  // guided tour related code
   [self showTourText:@"cycle through the number of splits\nby tapping +/-" atPoint:CGPointMake(5.0, 5.0) animated:NO];
   if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
 }

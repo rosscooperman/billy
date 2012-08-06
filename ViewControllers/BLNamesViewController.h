@@ -11,6 +11,7 @@
 @interface BLNamesViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
+@property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
 
 
 - (IBAction)nextScreen:(id)sender;
