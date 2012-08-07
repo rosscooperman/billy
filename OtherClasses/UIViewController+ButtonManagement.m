@@ -30,6 +30,10 @@
     case BLButtonTypeForward:
       button.backgroundColor = [UIColor colorWithRed:0.09804 green:0.77255 blue:0.22745 alpha:1.0];
       break;
+      
+    case BLButtonTypeOther:
+      button.backgroundColor = [UIColor colorWithRed:0.31373 green:0.88627 blue:0.65882 alpha:1.0];
+      break;
   }
 }
 

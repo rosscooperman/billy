@@ -8,7 +8,6 @@
 
 #import "BLAppDelegate.h"
 #import "BLStartViewController.h"
-#import "BLFixItemsViewController.h"
 #import "Bill.h"
 
 
@@ -17,7 +16,6 @@
 @property (nonatomic, strong) NSArray *colors;
 
 @end
-
 
 @implementation BLAppDelegate
 

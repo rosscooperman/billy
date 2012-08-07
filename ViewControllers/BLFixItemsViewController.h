@@ -13,6 +13,9 @@
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
+@property (nonatomic, strong) IBOutlet UIButton *previousScreenButton;
+@property (nonatomic, strong) IBOutlet UIButton *addLineItemButton;
+@property (nonatomic, strong) IBOutlet UITapGestureRecognizer *tapRecognizer;
 
 
 - (IBAction)contentAreaTapped:(UITapGestureRecognizer *)recognizer;

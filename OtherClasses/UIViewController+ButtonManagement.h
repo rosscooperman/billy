@@ -11,7 +11,8 @@
 
 typedef enum {
   BLButtonTypeBack,
-  BLButtonTypeForward
+  BLButtonTypeForward,
+  BLButtonTypeOther
 } BLButtonType;
 
 
