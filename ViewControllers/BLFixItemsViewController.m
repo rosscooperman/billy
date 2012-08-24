@@ -488,8 +488,6 @@ typedef enum {
     }
       
     case BLTourStepFinishSecondItem: {
-      self.tourStep = BLTourStepThirdItem;
-      
       __block BOOL blankField = NO;
       [self.dataFields.lastObject enumerateKeysAndObjectsUsingBlock:^(NSString *key, UITextField *field, BOOL *stop) {
         if (field.text.length == 0) {
@@ -499,6 +497,7 @@ typedef enum {
       }];
       
       if (!blankField) {
+        self.tourStep = BLTourStepThirdItem;
         [self showTourText:@"amazing!\nlet's add one more before continuing" atPoint:self.tourInsertionPoint animated:YES];
         [self enableButton:self.addLineItemButton type:BLButtonTypeOther];
       }
@@ -518,8 +517,6 @@ typedef enum {
     }
       
     case BLTourStepFinishThirdItem: {
-      self.tourStep = BLTourStepDeleteItem;
-      
       __block BOOL blankField = NO;
       [self.dataFields.lastObject enumerateKeysAndObjectsUsingBlock:^(NSString *key, UITextField *field, BOOL *stop) {
         if (field.text.length == 0) {
@@ -529,6 +526,7 @@ typedef enum {
       }];
       
       if (!blankField) {
+        self.tourStep = BLTourStepDeleteItem;
         [self showTourText:@"whoopsies.\nswipe to delete that third item" atPoint:self.tourInsertionPoint animated:YES];
       }
       

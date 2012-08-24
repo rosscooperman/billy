@@ -10,6 +10,8 @@
 #import "BLSplitCountViewController.h"
 
 
+#import "BLFixItemsViewController.h"
+
 @implementation BLStartViewController
 
 
@@ -17,7 +19,8 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-  BLSplitCountViewController *countController = [[BLSplitCountViewController alloc] init];
+  //BLSplitCountViewController *countController = [[BLSplitCountViewController alloc] init];
+  BLFixItemsViewController *countController = [[BLFixItemsViewController alloc] init];
   [self.navigationController pushViewController:countController animated:YES];
 }
 
