@@ -10,7 +10,7 @@
 #import "BLSplitCountViewController.h"
 
 
-#import "BLTaxViewController.h"
+#import "BLTipViewController.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Person.h"
@@ -55,7 +55,7 @@
   [bill addPeople:people];
   [context save:nil];
   
-  BLTaxViewController *countController = [[BLTaxViewController alloc] init];
+  BLTipViewController *countController = [[BLTipViewController alloc] init];
   
   [self.navigationController pushViewController:countController animated:YES];
 }
