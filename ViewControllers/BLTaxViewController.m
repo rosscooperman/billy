@@ -132,6 +132,7 @@
   _taxPercentage = (self.bill.tax == 0.0) ? 0.0 : self.bill.tax / self.bill.subtotal;
   [self updateLabels];
   if (self.tourShowing) [self hideTourTextAnimated:YES complete:^{
+    [self markTourShown];
     self.tourShowing = NO;
   }];
 }

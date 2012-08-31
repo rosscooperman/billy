@@ -49,6 +49,7 @@ typedef enum {
 @property (nonatomic, strong) Bill *bill;
 @property (nonatomic, assign) BLTourStep tourStep;
 @property (readonly) CGPoint tourInsertionPoint;
+@property (nonatomic, assign) BOOL shouldMarkTourShown;
 
 
 - (void)findLineItems;
@@ -139,6 +140,7 @@ typedef enum {
 - (void)viewDidDisappear:(BOOL)animated
 {
   [self hideTourTextAnimated:NO complete:nil];
+  if (self.shouldMarkTourShown) [self markTourShown];
 }
 
 
@@ -537,6 +539,8 @@ typedef enum {
       self.tourStep = BLTourStepDeletedItem;
       
       [self hideTourTextAnimated:YES complete:^{
+        self.shouldMarkTourShown = YES;
+        
         NSString *text = @"professional swiping skills!\nif you want to undelete the item\njust swipe again";
         [self showTourText:text atPoint:self.tourInsertionPoint animated:YES];
         [self showTourText:@"let's continue" atPoint:CGPointMake(315.0, 400.0) animated:YES];
@@ -550,7 +554,6 @@ typedef enum {
     
     case BLTourStepDeletedItem: {
       self.tourStep = BLTourStepDone;
-      
       [self hideTourTextAnimated:YES complete:nil];
       break;
     }

@@ -302,6 +302,7 @@
   if (self.tourTextShowing) {
     [self hideTourTextAnimated:YES complete:complete];
     self.tourTextShowing = NO;
+    [self markTourShown];
   }
   else {
     complete();

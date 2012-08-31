@@ -197,6 +197,7 @@
   if (self.nextScreenButton.enabled) return;
   [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
   [self hideTourTextAnimated:YES complete:nil];
+  [self markTourShown];
 }
 
 

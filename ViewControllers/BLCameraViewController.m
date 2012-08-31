@@ -97,6 +97,7 @@
   self.cameraButton.backgroundColor = [UIColor lightGrayColor];
   [self.captureSession stopRunning];
   [self hideTourTextAnimated:NO complete:nil];
+  [self markTourShown];
 }
 
 

@@ -86,7 +86,10 @@
     }
   }
   self.minusButton.enabled = YES;
-  if (self.shouldShowTour) [self hideTourTextAnimated:YES complete:nil];
+  if (self.shouldShowTour) {
+    [self hideTourTextAnimated:YES complete:nil];
+    [self markTourShown];
+  }
 }
 
 
@@ -101,7 +104,10 @@
     }
   }
   self.plusButton.enabled = YES;
-  if (self.shouldShowTour) [self hideTourTextAnimated:YES complete:nil];
+  if (self.shouldShowTour) {
+    [self hideTourTextAnimated:YES complete:nil];
+    [self markTourShown];
+  }
 }
 
 

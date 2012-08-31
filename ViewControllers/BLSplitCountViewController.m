@@ -87,6 +87,7 @@
   [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
   [self hideTourTextAnimated:YES complete:^{
     [self showTourText:@"tap the check to continue" atPoint:CGPointMake(315.0, 400.0) animated:YES];
+    [self markTourShown];
   }];
 }
 

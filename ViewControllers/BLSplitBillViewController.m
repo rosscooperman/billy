@@ -259,6 +259,7 @@ typedef enum {
   }
   else if (self.tourStep == BLTourStepMiddle) {
     self.tourStep = BLTourStepDone;
+    [self markTourShown];
     [self hideTourTextAnimated:YES complete:complete];
   }
   else {
@@ -373,6 +374,7 @@ typedef enum {
   
   if (self.tourStep == BLTourStepMiddle) {
     self.tourStep = BLTourStepDone;
+    [self markTourShown];
     [self hideTourTextAnimated:YES complete:complete];
   }
   else {
