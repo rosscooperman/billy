@@ -116,6 +116,7 @@
 		9167C83115CC8EE800E25A2F /* flashOff@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOff@2x.png"; sourceTree = "<group>"; };
 		9167C83215CC8EE800E25A2F /* flashOn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flashOn.png; sourceTree = "<group>"; };
 		9167C83315CC8EE800E25A2F /* flashOn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashOn@2x.png"; sourceTree = "<group>"; };
+		9182241515F12F0400A6CDCF /* AddFeedbackSettingsToBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = AddFeedbackSettingsToBill.xcdatamodel; sourceTree = "<group>"; };
 		9198BF06157AEB25001B74A9 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = ViewControllers/BLCameraViewController.h; sourceTree = "<group>"; };
 		9198BF07157AEB25001B74A9 /* BLCameraViewController.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BLCameraViewController.m; path = ViewControllers/BLCameraViewController.m; sourceTree = "<group>"; };
 		9198BF08157AEB25001B74A9 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = ViewControllers/BLCropViewController.h; sourceTree = "<group>"; };
@@ -672,6 +673,7 @@
 		9155237F15B07A8C00F2F539 /* billy.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				9182241515F12F0400A6CDCF /* AddFeedbackSettingsToBill.xcdatamodel */,
 				91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */,
 				915523AB15B0BB0900F2F539 /* FixRawTextIssue.xcdatamodel */,
 				915523A015B0B20900F2F539 /* AddDeletedFlagToLineItem.xcdatamodel */,
@@ -679,7 +681,7 @@
 				9155239E15B0986E00F2F539 /* AddSplitterEntity.xcdatamodel */,
 				9155238015B07A8C00F2F539 /* billy.xcdatamodel */,
 			);
-			currentVersion = 91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */;
+			currentVersion = 9182241515F12F0400A6CDCF /* AddFeedbackSettingsToBill.xcdatamodel */;
 			path = billy.xcdatamodeld;
 			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;

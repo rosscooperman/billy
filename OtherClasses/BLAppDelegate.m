@@ -14,6 +14,7 @@
 @interface BLAppDelegate ()
 
 @property (nonatomic, strong) NSArray *colors;
+@property (readonly) BOOL shouldSendFeedback;
 
 @end
 
@@ -141,9 +142,36 @@
   if (!_currentBill) {
     _currentBill = [NSEntityDescription insertNewObjectForEntityForName:@"Bill" inManagedObjectContext:self.managedObjectContext];
     _currentBill.createdAt = [NSDate date];
+    _currentBill.sendFeedback = self.shouldSendFeedback;
+    _currentBill.feedbackSent = NO;
     [self.managedObjectContext save:nil];
   }
   return _currentBill;
+}
+
+
+- (BOOL)shouldSendFeedback
+{
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+  if ([defaults objectForKey:@"shouldSendFeedback"] == nil) {
+    NSString *message = @"Would you like to send anonymous usage data to help us improve Billy?";
+    [[[UIAlertView alloc] initWithTitle:@"Feedback" message:message delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil] show];
+  }
+  
+  return [defaults boolForKey:@"shouldSendFeedback"];
+}
+
+
+#pragma mark UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+  BOOL value = (buttonIndex > 0);
+  [[NSUserDefaults standardUserDefaults] setBool:value forKey:@"shouldSendFeedback"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
+  
+  self.currentBill.sendFeedback = value;
+  [self.managedObjectContext save:nil];
 }
 
 @end

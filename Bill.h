@@ -23,6 +23,8 @@
 @property (nonatomic, retain) NSDate *createdAt;
 @property (nonatomic, retain) NSSet *people;
 @property (nonatomic, retain) NSSet *lineItems;
+@property (nonatomic) BOOL sendFeedback;
+@property (nonatomic) BOOL feedbackSent;
 
 @end
 

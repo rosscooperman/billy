@@ -22,5 +22,7 @@
 @dynamic createdAt;
 @dynamic people;
 @dynamic lineItems;
+@dynamic sendFeedback;
+@dynamic feedbackSent;
 
 @end
