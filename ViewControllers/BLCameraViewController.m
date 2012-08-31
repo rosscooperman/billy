@@ -30,6 +30,7 @@
 - (void)setupCaptureSession;
 - (void)setupFlash;
 - (void)setFocalPoint:(CGPoint)point;
+- (void)setFlashMode:(AVCaptureFlashMode)mode;
 
 @end
 
@@ -41,6 +42,7 @@
 @synthesize previousScreenButton;
 @synthesize cameraButton;
 @synthesize skipCameraButton;
+@synthesize flashButton;
 @synthesize captureSession;
 @synthesize videoCaptureDevice;
 @synthesize stillCapturer;
@@ -137,12 +139,12 @@
 
 - (void)setupFlash
 {
-  if ([self.videoCaptureDevice lockForConfiguration:nil]) {
-    if ([self.videoCaptureDevice isFlashModeSupported:AVCaptureFlashModeAuto]) {
-      self.videoCaptureDevice.flashMode = AVCaptureFlashModeAuto;
-    }
-    [self.videoCaptureDevice unlockForConfiguration];
+  if (!self.videoCaptureDevice.hasFlash) {
+    self.flashButton.hidden = YES;
+    return;
   }
+  
+  [self setFlashMode:self.videoCaptureDevice.flashMode];
 }
 
 
@@ -158,6 +160,33 @@
     self.videoCaptureDevice.focusMode = AVCaptureFocusModeContinuousAutoFocus;
     [self.videoCaptureDevice unlockForConfiguration];
   }
+}
+
+
+- (void)setFlashMode:(AVCaptureFlashMode)mode
+{
+  if (mode != self.videoCaptureDevice.flashMode && [self.videoCaptureDevice lockForConfiguration:nil]) {
+    if ([self.videoCaptureDevice isFlashModeSupported:mode]) {
+      self.videoCaptureDevice.flashMode = mode;
+    }
+    [self.videoCaptureDevice unlockForConfiguration];
+  }
+  
+  UIImage *buttonImage = nil;
+  switch (self.videoCaptureDevice.flashMode) {
+    case AVCaptureFlashModeAuto:
+      buttonImage = [UIImage imageNamed:@"flashAuto"];
+      break;
+      
+    case AVCaptureFlashModeOff:
+      buttonImage = [UIImage imageNamed:@"flashOff"];
+      break;
+      
+    case AVCaptureFlashModeOn:
+      buttonImage = [UIImage imageNamed:@"flashOn"];
+      break;
+  }
+  [self.flashButton setImage:buttonImage forState:UIControlStateNormal];
 }
 
 
@@ -232,6 +261,21 @@
   [UIView animateWithDuration:0.3 animations:^{
     self.focusArea.transform = CGAffineTransformMakeScale(0.6, 0.6);
   }];
+}
+
+
+- (void)toggleFlash:(id)sender
+{
+  AVCaptureFlashMode currentMode, nextMode;
+  currentMode = nextMode = self.videoCaptureDevice.flashMode;
+  
+  while (self.videoCaptureDevice.flashMode == currentMode) {
+    if (++nextMode > AVCaptureFlashModeAuto) nextMode = AVCaptureFlashModeOff;
+    [self setFlashMode:nextMode];
+    
+    // if we cycle all the way back around avoid an infinite loop
+    if (nextMode == currentMode) return;
+  }
 }
 
 @end

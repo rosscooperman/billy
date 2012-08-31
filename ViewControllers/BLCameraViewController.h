@@ -17,11 +17,13 @@
 @property (nonatomic, strong) IBOutlet UIButton *previousScreenButton;
 @property (nonatomic, strong) IBOutlet UIButton *cameraButton;
 @property (nonatomic, strong) IBOutlet UIButton *skipCameraButton;
+@property (nonatomic, strong) IBOutlet UIButton *flashButton;
 
 
 - (IBAction)previousScreen:(id)sender;
 - (IBAction)takePicture:(id)sender;
 - (IBAction)skipCamera:(id)sender;
 - (IBAction)setFocus:(UITapGestureRecognizer *)sender;
+- (IBAction)toggleFlash:(id)sender;
 
 @end
