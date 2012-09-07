@@ -448,11 +448,21 @@
   UIImage *reoriented = [self reorientImage:self.previewView.image];
   UIImage *cropped = [self cropImage:reoriented];
   UIImage *gray = [self grayscaleizeImage:cropped];
+
+  if ([BLAppDelegate appDelegate].shouldSendFeedback) {
+    [[BLAppDelegate appDelegate].currentBill storeProcessedImage:UIImageJPEGRepresentation(gray, 1.0)];
+  }
   
   BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
   [BLAppDelegate appDelegate].currentBill.rawText = [self ocrImage:gray];
   [[BLAppDelegate appDelegate].managedObjectContext save:nil];
-  TFLog(@"%@", [BLAppDelegate appDelegate].currentBill.rawText);
+  
+  if ([BLAppDelegate appDelegate].shouldSendFeedback) {
+    [BLAppDelegate appDelegate].currentBill.sendFeedback = YES;
+    [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+    [Bill processPendingFeedback];
+  }
+  
   [self.navigationController pushViewController:fixItemsController animated:YES];
 }
 

@@ -14,7 +14,6 @@
 @interface BLAppDelegate ()
 
 @property (nonatomic, strong) NSArray *colors;
-@property (readonly) BOOL shouldSendFeedback;
 
 @end
 
@@ -45,6 +44,12 @@
   self.window.rootViewController = self.viewController;
   [self.window makeKeyAndVisible];
   return YES;
+}
+
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+  [Bill processPendingFeedback];
 }
 
 
@@ -142,7 +147,7 @@
   if (!_currentBill) {
     _currentBill = [NSEntityDescription insertNewObjectForEntityForName:@"Bill" inManagedObjectContext:self.managedObjectContext];
     _currentBill.createdAt = [NSDate date];
-    _currentBill.sendFeedback = self.shouldSendFeedback;
+    _currentBill.sendFeedback = NO;
     _currentBill.feedbackSent = NO;
     [self.managedObjectContext save:nil];
   }

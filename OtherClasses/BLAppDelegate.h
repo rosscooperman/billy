@@ -17,6 +17,7 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) UINavigationController *viewController;
 @property (readonly, strong, nonatomic) Bill *currentBill;
+@property (readonly) BOOL shouldSendFeedback;
 
 // core data properties
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;

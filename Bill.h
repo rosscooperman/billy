@@ -19,12 +19,20 @@
 @property (nonatomic) double tip;
 @property (nonatomic) double total;
 @property (nonatomic) int64_t splitCount;
+@property (nonatomic) BOOL sendFeedback;
+@property (nonatomic) BOOL feedbackSent;
 @property (nonatomic, retain) NSString *rawText;
+@property (nonatomic, retain) NSString *originalImage;
+@property (nonatomic, retain) NSString *processedImage;
 @property (nonatomic, retain) NSDate *createdAt;
 @property (nonatomic, retain) NSSet *people;
 @property (nonatomic, retain) NSSet *lineItems;
-@property (nonatomic) BOOL sendFeedback;
-@property (nonatomic) BOOL feedbackSent;
+
+
++ (void)processPendingFeedback;
+
+- (void)storeOriginalImage:(NSData *)imageData;
+- (void)storeProcessedImage:(NSData *)imageData;
 
 @end
 

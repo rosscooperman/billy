@@ -220,6 +220,10 @@
         BLCropViewController *cropController = [[BLCropViewController alloc] init];
         cropController.photoData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
         [self.navigationController pushViewController:cropController animated:YES];
+        
+        if ([BLAppDelegate appDelegate].shouldSendFeedback) {
+          [[BLAppDelegate appDelegate].currentBill storeOriginalImage:cropController.photoData];
+        }
       }
     }
   ];
