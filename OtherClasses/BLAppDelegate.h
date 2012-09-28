@@ -31,5 +31,6 @@
 // instance methods
 - (UIColor *)colorAtIndex:(NSInteger)index;
 - (void)startOver;
+- (void)askForRating;
 
 @end

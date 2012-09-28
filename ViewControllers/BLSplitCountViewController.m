@@ -56,6 +56,12 @@
 }
 
 
+- (void)viewDidAppear:(BOOL)animated
+{
+  [[BLAppDelegate appDelegate] askForRating];
+}
+
+
 - (void)viewDidDisappear:(BOOL)animated
 {
   [self hideTourTextAnimated:NO complete:nil];

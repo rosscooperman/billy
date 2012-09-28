@@ -92,6 +92,31 @@
 }
 
 
+- (void)askForRating
+{
+  // don't ask if we've already asked
+  if ([[NSUserDefaults standardUserDefaults] boolForKey:@"askedForRating"]) return;
+  
+  // don't ask if the user has fewer than 3 bills with totals
+  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
+  request.predicate = [NSPredicate predicateWithFormat:@"total > 0.0"];
+  request.includesSubentities = NO;
+  NSUInteger completedBills = [context countForFetchRequest:request error:nil];
+  if (completedBills < 3) return;
+  
+  // if we get here, time to ask for a rating
+  NSString *message = @"Hey, seems like you've used Billy a few times. Mind giving it a rating in the App Store?";
+  NSString *title = @"Rate Billy";
+  
+  UIAlertView *alert = nil;
+  alert = [[UIAlertView alloc] initWithTitle:title message:message delegate:self cancelButtonTitle:@"No, Thanks" otherButtonTitles:@"Sure!", nil];
+  alert.tag = 200;
+  
+  [alert show];
+}
+
+
 #pragma mark - Core Data Property Implementations
 
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
@@ -173,12 +198,20 @@
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-  BOOL value = (buttonIndex > 0);
-  [[NSUserDefaults standardUserDefaults] setBool:value forKey:@"shouldSendFeedback"];
+  if (alertView.tag == 200) {
+    if (buttonIndex > 0) {
+      NSString *reviewURL = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=538940070";
+      [[UIApplication sharedApplication] openURL:[NSURL URLWithString:reviewURL]];
+    }
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"askedForRating"];
+  }
+  else {
+    BOOL value = (buttonIndex > 0);
+    [[NSUserDefaults standardUserDefaults] setBool:value forKey:@"shouldSendFeedback"];    
+    self.currentBill.sendFeedback = value;
+    [self.managedObjectContext save:nil];
+  }
   [[NSUserDefaults standardUserDefaults] synchronize];
-  
-  self.currentBill.sendFeedback = value;
-  [self.managedObjectContext save:nil];
 }
 
 @end
