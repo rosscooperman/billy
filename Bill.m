@@ -47,21 +47,28 @@
 
 + (void)processPendingFeedback
 {
-  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+  // A BRIEF NOTE ABOUT WHAT'S GOING ON HERE
+  //
+  // Core Data is not 100% threadsafe so all actual Core Data operations need to happen on the main thread.
+  // The more expensive image processing and uploading code should be on a low priority background thread, though.
+  // The solution is to fetch feedback items that need to be sent, iterate over them in the background, and then
+  // mark them as submitted on the main thread.
   
-  // do all of this in another thread
+  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
+  request.predicate = [NSPredicate predicateWithFormat:@"sendFeedback == YES AND feedbackSent == NO"];
+  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:YES]];
+  NSArray *results = [context executeFetchRequest:request error:nil];
+
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
-    request.predicate = [NSPredicate predicateWithFormat:@"sendFeedback == YES AND feedbackSent == NO"];
-    request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:YES]];
-    
-    NSArray *results = [context executeFetchRequest:request error:nil];
     if (results && results.count > 0) {
       [results enumerateObjectsUsingBlock:^(Bill *bill, NSUInteger idx, BOOL *stop) {
         // shortcut actual upload because this bill has no useful data
         if (!bill.originalImage && !bill.processedImage && !bill.rawText) {
-          bill.feedbackSent = YES;
-          [context save:nil];
+          dispatch_async(dispatch_get_main_queue(), ^{
+            bill.feedbackSent = YES;
+            [context save:nil];
+          });
         }
         else {
           ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://feedback.billyup.com/feedback"]];
@@ -77,8 +84,10 @@
           }
           
           [request setCompletionBlock:^{
-            bill.feedbackSent = YES;
-            [context save:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+              bill.feedbackSent = YES;
+              [context save:nil];
+            });
           }];
                     
           [request startAsynchronous];
