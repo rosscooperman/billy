@@ -29,6 +29,7 @@
 		9155239715B0949500F2F539 /* Bill.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239615B0949500F2F539 /* Bill.m */; };
 		9155239A15B0949500F2F539 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239915B0949500F2F539 /* Person.m */; };
 		9155239D15B0949500F2F539 /* Assignment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9155239C15B0949500F2F539 /* Assignment.m */; };
+		91615811161609C50031FE6B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91615810161609C50031FE6B /* Default-568h@2x.png */; };
 		9167C83415CC8EE800E25A2F /* flashAuto.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C82E15CC8EE800E25A2F /* flashAuto.png */; };
 		9167C83515CC8EE800E25A2F /* flashAuto@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C82F15CC8EE800E25A2F /* flashAuto@2x.png */; };
 		9167C83615CC8EE800E25A2F /* flashOff.png in Resources */ = {isa = PBXBuildFile; fileRef = 9167C83015CC8EE800E25A2F /* flashOff.png */; };
@@ -146,6 +147,7 @@
 		9155239F15B0A58900F2F539 /* AddIndexToLineItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddIndexToLineItem.xcdatamodel; sourceTree = "<group>"; };
 		915523A015B0B20900F2F539 /* AddDeletedFlagToLineItem.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddDeletedFlagToLineItem.xcdatamodel; sourceTree = "<group>"; };
 		915523AB15B0BB0900F2F539 /* FixRawTextIssue.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FixRawTextIssue.xcdatamodel; sourceTree = "<group>"; };
+		91615810161609C50031FE6B /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = SOURCE_ROOT; };
 		9167C82E15CC8EE800E25A2F /* flashAuto.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flashAuto.png; sourceTree = "<group>"; };
 		9167C82F15CC8EE800E25A2F /* flashAuto@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flashAuto@2x.png"; sourceTree = "<group>"; };
 		9167C83015CC8EE800E25A2F /* flashOff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = flashOff.png; sourceTree = "<group>"; };
@@ -469,6 +471,7 @@
 			children = (
 				91D0953A1595310C00E22EEC /* Default.png */,
 				91D0953B1595310C00E22EEC /* Default@2x.png */,
+				91615810161609C50031FE6B /* Default-568h@2x.png */,
 				91B9CCD01577DA4100AAEDC0 /* iTunesArtwork */,
 				91B9CCD11577DA4100AAEDC0 /* iTunesArtwork@2x */,
 				91B9CCC41577D72500AAEDC0 /* Icon-72.png */,
@@ -615,6 +618,7 @@
 				9167C83715CC8EE800E25A2F /* flashOff@2x.png in Resources */,
 				9167C83815CC8EE800E25A2F /* flashOn.png in Resources */,
 				9167C83915CC8EE800E25A2F /* flashOn@2x.png in Resources */,
+				91615811161609C50031FE6B /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -866,6 +870,7 @@
 				9182243315F90A5A00A6CDCF /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		91B9CC4C1576C3ED00AAEDC0 /* Build configuration list for PBXProject "billy" */ = {
 			isa = XCConfigurationList;
