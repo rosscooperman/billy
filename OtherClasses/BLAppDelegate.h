@@ -20,9 +20,9 @@
 @property (readonly) BOOL shouldSendFeedback;
 
 // core data properties
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
+@property (readonly, strong) NSManagedObjectContext *managedObjectContext;
+@property (readonly, strong) NSManagedObjectModel *managedObjectModel;
+@property (readonly, strong) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 
 
 // class methods

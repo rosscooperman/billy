@@ -10,12 +10,6 @@
 #import "BLSplitCountViewController.h"
 
 
-//#import "BLSummaryViewController.h"
-//#import "Bill.h"
-//#import "LineItem.h"
-//#import "Person.h"
-//#import "Assignment.h"
-
 @implementation BLStartViewController
 
 
@@ -23,6 +17,9 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+  // make sure we do one successful save of the managed object context before the app can proceed
+  while (![[BLAppDelegate appDelegate].managedObjectContext save:nil]) { TFLog(@"here"); }
+  
   BLSplitCountViewController *countController = [[BLSplitCountViewController alloc] init];
   [self.navigationController pushViewController:countController animated:YES];
 }

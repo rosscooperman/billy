@@ -128,15 +128,17 @@
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-  if (_managedObjectContext == nil) {  
-    NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
-    if (coordinator != nil) {
-      _managedObjectContext = [[NSManagedObjectContext alloc] init];
-      [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+  @synchronized(self) {
+    if (_managedObjectContext == nil) {
+      NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+      if (coordinator != nil) {
+        _managedObjectContext = [[NSManagedObjectContext alloc] init];
+        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+      }
     }
-  }
   
-  return _managedObjectContext;
+    return _managedObjectContext;
+  }
 }
 
 

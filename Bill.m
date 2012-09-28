@@ -47,19 +47,21 @@
 
 + (void)processPendingFeedback
 {
+  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+  
   // do all of this in another thread
   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
     request.predicate = [NSPredicate predicateWithFormat:@"sendFeedback == YES AND feedbackSent == NO"];
     request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:YES]];
     
-    NSArray *results = [[BLAppDelegate appDelegate].managedObjectContext executeFetchRequest:request error:nil];
+    NSArray *results = [context executeFetchRequest:request error:nil];
     if (results && results.count > 0) {
       [results enumerateObjectsUsingBlock:^(Bill *bill, NSUInteger idx, BOOL *stop) {
         // shortcut actual upload because this bill has no useful data
         if (!bill.originalImage && !bill.processedImage && !bill.rawText) {
           bill.feedbackSent = YES;
-          [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+          [context save:nil];
         }
         else {
           ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://feedback.billyup.com/feedback"]];
@@ -76,7 +78,7 @@
           
           [request setCompletionBlock:^{
             bill.feedbackSent = YES;
-            [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+            [context save:nil];
           }];
                     
           [request startAsynchronous];
