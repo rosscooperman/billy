@@ -49,6 +49,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+  // don't care about the answer, just want to ask the user as early as possible
+  [self shouldSendFeedback];
   [Bill processPendingFeedback];
 }
 
