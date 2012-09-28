@@ -46,41 +46,41 @@
 							<object class="IBUILabel" id="318437187">
 								<reference key="NSNextResponder" ref="838394495"/>
 								<int key="NSvFlags">301</int>
-								<string key="NSFrame">{{20, 20}, {360, 460}}</string>
+								<string key="NSFrame">{{161, 217}, {102, 50}}</string>
 								<reference key="NSSuperview" ref="838394495"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="630882712"/>
+								<reference key="NSNextKeyView" ref="59532470"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor">
+									<int key="NSColorSpace">1</int>
+									<bytes key="NSRGB">MC4zMTM3MjU0OTAyIDAuODg2Mjc0NTA5OCAwLjY1ODgyMzUyOTQAA</bytes>
+								</object>
 								<bool key="IBUIOpaque">NO</bool>
 								<bool key="IBUIClipsSubviews">YES</bool>
 								<int key="IBUIContentMode">7</int>
 								<bool key="IBUIUserInteractionEnabled">NO</bool>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<string key="IBUIText">6%</string>
-								<object class="NSColor" key="IBUITextColor">
-									<int key="NSColorSpace">2</int>
-									<bytes key="NSRGB">MC4zNjA3ODQzMjIgMC44OTgwMzkyODE0IDAuNzE3NjQ3MDc1NwA</bytes>
-								</object>
 								<nil key="IBUIHighlightedColor"/>
 								<int key="IBUIBaselineAdjustment">1</int>
-								<float key="IBUIMinimumFontSize">80</float>
 								<int key="IBUITextAlignment">1</int>
-								<object class="IBUIFontDescription" key="IBUIFontDescription">
+								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1042366003">
 									<string key="name">Futura-CondensedMedium</string>
 									<string key="family">Futura</string>
 									<int key="traits">0</int>
-									<double key="pointSize">250</double>
+									<double key="pointSize">28</double>
 								</object>
-								<object class="NSFont" key="IBUIFont">
+								<object class="NSFont" key="IBUIFont" id="273746213">
 									<string key="NSName">Futura-Medium</string>
-									<double key="NSSize">250</double>
+									<double key="NSSize">28</double>
 									<int key="NSfFlags">16</int>
 								</object>
+								<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 							</object>
 							<object class="IBUIButton" id="300586571">
 								<reference key="NSNextResponder" ref="838394495"/>
 								<int key="NSvFlags">301</int>
-								<string key="NSFrame">{{45, 227}, {50, 50}}</string>
+								<string key="NSFrame">{{5, 217}, {50, 50}}</string>
 								<reference key="NSSuperview" ref="838394495"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="679557370"/>
@@ -127,10 +127,10 @@
 							<object class="IBUITextField" id="679557370">
 								<reference key="NSNextResponder" ref="838394495"/>
 								<int key="NSvFlags">301</int>
-								<string key="NSFrame">{{97, 227}, {206, 50}}</string>
+								<string key="NSFrame">{{57, 217}, {102, 50}}</string>
 								<reference key="NSSuperview" ref="838394495"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="59532470"/>
+								<reference key="NSNextKeyView" ref="318437187"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">3</int>
@@ -150,28 +150,20 @@
 									</object>
 								</object>
 								<int key="IBUITextAlignment">1</int>
-								<float key="IBUIMinimumFontSize">17</float>
+								<bool key="IBUIAdjustsFontSizeToFit">YES</bool>
+								<float key="IBUIMinimumFontSize">12</float>
 								<object class="IBUITextInputTraits" key="IBUITextInputTraits">
 									<int key="IBUIKeyboardType">2</int>
 									<int key="IBUIReturnKeyType">9</int>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								</object>
-								<object class="IBUIFontDescription" key="IBUIFontDescription" id="1042366003">
-									<string key="name">Futura-CondensedMedium</string>
-									<string key="family">Futura</string>
-									<int key="traits">0</int>
-									<double key="pointSize">28</double>
-								</object>
-								<object class="NSFont" key="IBUIFont" id="242097994">
-									<string key="NSName">Futura-Medium</string>
-									<double key="NSSize">28</double>
-									<int key="NSfFlags">16</int>
-								</object>
+								<reference key="IBUIFontDescription" ref="1042366003"/>
+								<reference key="IBUIFont" ref="273746213"/>
 							</object>
 							<object class="IBUIButton" id="59532470">
 								<reference key="NSNextResponder" ref="838394495"/>
 								<int key="NSvFlags">301</int>
-								<string key="NSFrame">{{305, 227}, {50, 50}}</string>
+								<string key="NSFrame">{{265, 217}, {50, 50}}</string>
 								<reference key="NSSuperview" ref="838394495"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="987870027"/>
@@ -200,7 +192,7 @@
 							<object class="IBUILabel" id="630882712">
 								<reference key="NSNextResponder" ref="838394495"/>
 								<int key="NSvFlags">293</int>
-								<string key="NSFrame">{{45, 25}, {310, 50}}</string>
+								<string key="NSFrame">{{5, 25}, {310, 50}}</string>
 								<reference key="NSSuperview" ref="838394495"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="300586571"/>
@@ -224,13 +216,13 @@
 								<float key="IBUIMinimumFontSize">10</float>
 								<int key="IBUITextAlignment">1</int>
 								<reference key="IBUIFontDescription" ref="1042366003"/>
-								<reference key="IBUIFont" ref="242097994"/>
+								<reference key="IBUIFont" ref="273746213"/>
 							</object>
 						</array>
-						<string key="NSFrame">{{-40, -20}, {400, 500}}</string>
+						<string key="NSFrame">{{0, -20}, {320, 480}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="318437187"/>
+						<reference key="NSNextKeyView" ref="630882712"/>
 						<string key="NSReuseIdentifierKey">_NS:10</string>
 						<reference key="IBUIBackgroundColor" ref="454968790"/>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>

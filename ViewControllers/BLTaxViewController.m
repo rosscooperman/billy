@@ -18,7 +18,6 @@
 
 @property (nonatomic, strong) Bill *bill;
 @property (nonatomic, assign) float taxPercentage;
-@property (nonatomic, readonly) NSNumberFormatter *percentFormatter;
 @property (nonatomic, strong) NSTimer *longPressTimer;
 @property (assign) BOOL tourShowing;
 
@@ -40,7 +39,6 @@
 @synthesize closeKeyboardRecognizer;
 @synthesize bill;
 @synthesize taxPercentage = _taxPercentage;
-@synthesize percentFormatter = _percentFormatter;
 @synthesize longPressTimer;
 @synthesize contentWrapper;
 
@@ -122,7 +120,7 @@
       self.minusButton.enabled = YES;    
     }
   }
-  self.percentLabel.text = [self.percentFormatter stringFromNumber:[NSNumber numberWithFloat:self.taxPercentage]];
+  self.percentLabel.text = [NSString stringWithFormat:@"%.3f%%", self.taxPercentage * 100.0];
   [self.bill.managedObjectContext save:nil];  
 }
 
@@ -175,21 +173,6 @@
   } completion:^(BOOL finished) {
     [self updateLabels];
   }];
-}
-
-
-#pragma mark - Property Implementations
-
-- (NSNumberFormatter *)percentFormatter
-{
-  if (!_percentFormatter) {
-    _percentFormatter = [[NSNumberFormatter alloc] init];
-    _percentFormatter.roundingMode = NSNumberFormatterRoundHalfUp;
-    _percentFormatter.roundingIncrement = [NSNumber numberWithFloat:0.005];
-    _percentFormatter.numberStyle = NSNumberFormatterPercentStyle;
-    _percentFormatter.maximumFractionDigits = 3;
-  }
-  return _percentFormatter;
 }
 
 
