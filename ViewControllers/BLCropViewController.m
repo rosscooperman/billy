@@ -28,6 +28,7 @@
 @property (nonatomic, assign) CGFloat cropTop;
 @property (nonatomic, assign) CGFloat cropRight;
 @property (nonatomic, assign) CGFloat cropBottom;
+@property (readonly) CGFloat delta;
 
 
 - (CAShapeLayer *)initializeMaskLayer;
@@ -68,9 +69,9 @@
 
 #pragma mark - View Lifecycle
 
-- (void)viewDidLoad
+- (void)viewDidLayoutSubviews
 {
-  [self initializeCropRectangle];
+  [self initializeCropRectangle];  
 }
 
 
@@ -79,6 +80,11 @@
   if (self.photoData) {
     self.previewView.alpha = 0.0;
     self.previewView.image = [UIImage imageWithData:self.photoData];
+        
+    self.cropTop = self.delta + 20.0;
+    self.cropBottom = self.previewView.bounds.size.height - self.delta - 20.0;
+    [self adjustCropRectangle];
+  
     [UIView animateWithDuration:0.3 animations:^{
       self.previewView.alpha = 1.0;
       self.cropBoundary.alpha = 1.0;
@@ -93,6 +99,16 @@
 {
   [self.processingImageIndicator stopAnimating];
   [self.processImageButton setImage:[UIImage imageNamed:@"iconCheck"] forState:UIControlStateNormal];
+}
+
+
+#pragma mark - Property Implementations
+
+- (CGFloat)delta
+{
+  CGFloat scalingFactor = self.previewView.bounds.size.width / self.previewView.image.size.width;
+  CGFloat scaledHeight = self.previewView.image.size.height * scalingFactor;
+  return (self.previewView.bounds.size.height - scaledHeight) / 2.0;
 }
 
 
@@ -401,25 +417,25 @@
       CGPoint newPanPoint = [recognizer translationInView:self.view];
       if (recognizer.view == self.leftHandle) {
         CGFloat newX = self.cropLeft + (newPanPoint.x - self.lastPanPoint.x);
-        if (newX > 20 && newX < self.cropRight - 100) {
+        if (newX > 0 && newX < self.cropRight - 100) {
           self.cropLeft = newX;
         }        
       }
       else if (recognizer.view == self.topHandle) {
         CGFloat newY = self.cropTop + (newPanPoint.y - self.lastPanPoint.y);
-        if (newY > 20 && newY < self.cropBottom - 100) {
+        if (newY > self.delta && newY < self.cropBottom - 100) {
           self.cropTop = newY;
         }
       }
       else if (recognizer.view == self.rightHandle) {
         CGFloat newX = self.cropRight + (newPanPoint.x - self.lastPanPoint.x);
-        if (newX < self.cropBoundary.frame.size.width - 20 && newX > self.cropLeft + 100) {
+        if (newX < self.cropBoundary.frame.size.width && newX > self.cropLeft + 100) {
           self.cropRight = newX;
         }
       }
       else if (recognizer.view == self.bottomHandle) {
         CGFloat newY = self.cropBottom + (newPanPoint.y - self.lastPanPoint.y);
-        if (newY < self.cropBoundary.frame.size.height - 55 && newY > self.cropTop + 100) {
+        if (newY < self.cropBoundary.frame.size.height - self.delta && newY > self.cropTop + 100) {
           self.cropBottom = newY;
         }
       }
