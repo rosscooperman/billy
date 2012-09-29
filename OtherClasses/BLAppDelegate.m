@@ -7,7 +7,8 @@
 //
 
 #import "BLAppDelegate.h"
-#import "BLStartViewController.h"
+//#import "BLStartViewController.h"
+#import "BLSplitCountViewController.h"
 #import "Bill.h"
 
 
@@ -39,7 +40,7 @@
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
   
   // construct the only navigation controller we'll ever need
-  self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLStartViewController alloc] init]];
+  self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLSplitCountViewController alloc] init]];
   self.viewController.navigationBarHidden = YES;
   self.window.rootViewController = self.viewController;
   [self.window makeKeyAndVisible];

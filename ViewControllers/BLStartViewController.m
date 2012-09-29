@@ -18,7 +18,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   // make sure we do one successful save of the managed object context before the app can proceed
-  while (![[BLAppDelegate appDelegate].managedObjectContext save:nil]) { TFLog(@"here"); }
+  while (![[BLAppDelegate appDelegate].managedObjectContext save:nil]) { }
   
   BLSplitCountViewController *countController = [[BLSplitCountViewController alloc] init];
   [self.navigationController pushViewController:countController animated:YES];

@@ -13,6 +13,7 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
+			<string>IBUIImageView</string>
 			<string>IBUILabel</string>
 			<string>IBUIView</string>
 		</array>
@@ -42,7 +43,7 @@
 						<string key="NSFrame">{{-50, 0}, {420, 460}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="959852004"/>
+						<reference key="NSNextKeyView" ref="273347755"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClipsSubviews">YES</bool>
@@ -187,6 +188,7 @@
 						<string key="NSFrame">{{265, 405}, {50, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -219,6 +221,41 @@
 							<double key="NSSize">22</double>
 							<int key="NSfFlags">16</int>
 						</object>
+					</object>
+					<object class="IBUIView" id="273347755">
+						<reference key="NSNextResponder" ref="191373211"/>
+						<int key="NSvFlags">292</int>
+						<array class="NSMutableArray" key="NSSubviews">
+							<object class="IBUIImageView" id="474007712">
+								<reference key="NSNextResponder" ref="273347755"/>
+								<int key="NSvFlags">274</int>
+								<string key="NSFrame">{{0, 568}, {320, 568}}</string>
+								<reference key="NSSuperview" ref="273347755"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="959852004"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<int key="IBUIContentMode">2</int>
+								<bool key="IBUIUserInteractionEnabled">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<object class="NSCustomResource" key="IBUIImage">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">Default-568h@2x.png</string>
+								</object>
+							</object>
+						</array>
+						<string key="NSFrame">{{0, -588}, {320, 1136}}</string>
+						<reference key="NSSuperview" ref="191373211"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="474007712"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MQA</bytes>
+							<object class="NSColorSpace" key="NSCustomColorSpace">
+								<int key="NSID">2</int>
+							</object>
+						</object>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
@@ -275,6 +312,14 @@
 					<int key="connectionID">15</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">coverView</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="273347755"/>
+					</object>
+					<int key="connectionID">19</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">decrementCount:</string>
 						<reference key="source" ref="959852004"/>
@@ -319,6 +364,7 @@
 							<reference ref="22227018"/>
 							<reference ref="705671391"/>
 							<reference ref="649259784"/>
+							<reference ref="273347755"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -363,6 +409,20 @@
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Split Count</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">18</int>
+						<reference key="object" ref="273347755"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="474007712"/>
+						</array>
+						<reference key="parent" ref="191373211"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">16</int>
+						<reference key="object" ref="474007712"/>
+						<reference key="parent" ref="273347755"/>
+						<string key="objectName">Cover Image</string>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -374,6 +434,8 @@
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="13.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="0.0" key="13.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="4.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="0.0" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
@@ -387,7 +449,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">15</int>
+			<int key="maxID">19</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -415,6 +477,7 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="countLabel">UILabel</string>
+						<string key="coverView">UIView</string>
 						<string key="minusButton">UIButton</string>
 						<string key="nextScreenButton">UIButton</string>
 						<string key="plusButton">UIButton</string>
@@ -423,6 +486,10 @@
 						<object class="IBToOneOutletInfo" key="countLabel">
 							<string key="name">countLabel</string>
 							<string key="candidateClassName">UILabel</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="coverView">
+							<string key="name">coverView</string>
+							<string key="candidateClassName">UIView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="minusButton">
 							<string key="name">minusButton</string>
@@ -452,10 +519,10 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">iconCheck.png</string>
-			<string key="NS.object.0">{23, 17}</string>
-		</object>
+		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="Default-568h@2x.png">{640, 1136}</string>
+			<string key="iconCheck.png">{23, 17}</string>
+		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>

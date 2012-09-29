@@ -14,6 +14,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *minusButton;
 @property (nonatomic, strong) IBOutlet UIButton *plusButton;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
+@property (nonatomic, strong) IBOutlet UIView *coverView;
 
 
 - (IBAction)incrementCount:(id)sender;

@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "UIViewController+GuidedTour.h"
 #import "UIViewController+ButtonManagement.h"
 #import "BLSplitCountViewController.h"
@@ -31,6 +33,7 @@
 @synthesize plusButton;
 @synthesize bill;
 @synthesize nextScreenButton;
+@synthesize coverView;
 
 
 #pragma mark - View Lifecycle
@@ -59,6 +62,12 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [[BLAppDelegate appDelegate] askForRating];
+  [UIView animateWithDuration:5.0 animations:^{
+    CATransform3D transform = CATransform3DMakeRotation(M_PI_2, 1.0f, 0.0f, 0.0f);
+    transform.m11 = 0.001f;
+    transform.m44 = -0.0015f;
+    self.coverView.layer.transform = transform;
+  }];
 }
 
 
