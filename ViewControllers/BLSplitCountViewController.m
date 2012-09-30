@@ -62,11 +62,13 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [[BLAppDelegate appDelegate] askForRating];
-  [UIView animateWithDuration:5.0 animations:^{
-    CATransform3D transform = CATransform3DMakeRotation(M_PI_2, 1.0f, 0.0f, 0.0f);
-    transform.m11 = 0.001f;
-    transform.m44 = -0.0015f;
-    self.coverView.layer.transform = transform;
+  [UIView animateWithDuration:0.5 animations:^{
+    CATransform3D move = CATransform3DMakeTranslation(1.0f, 1.0f, 1.5f);
+    CATransform3D rotation = CATransform3DMakeRotation(M_PI_2, 1.0f, 0.0f, 0.0f);
+    CATransform3D scale = CATransform3DMakeScale(1.5f, 1.0f, 1.0f);
+    self.coverView.layer.transform = CATransform3DConcat(move, CATransform3DConcat(rotation, scale));
+  } completion:^(BOOL finished) {
+    [self.coverView removeFromSuperview];
   }];
 }
 
