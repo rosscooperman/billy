@@ -6,9 +6,10 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BLViewController.h"
 
-@interface BLSplitCountViewController : UIViewController
+
+@interface BLSplitCountViewController : BLViewController
 
 @property (nonatomic, strong) IBOutlet UILabel *countLabel;
 @property (nonatomic, strong) IBOutlet UIButton *minusButton;

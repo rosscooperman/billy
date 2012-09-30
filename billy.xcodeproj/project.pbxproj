@@ -50,6 +50,11 @@
 		9182245E15F94BFB00A6CDCF /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182245D15F94BFB00A6CDCF /* CFNetwork.framework */; };
 		9182246015F94C4400A6CDCF /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182245F15F94C4400A6CDCF /* SystemConfiguration.framework */; };
 		9182246215F94C5A00A6CDCF /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182246115F94C5A00A6CDCF /* MobileCoreServices.framework */; };
+		9194585F1617E54800E0B710 /* stdHead.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194585D1617E54800E0B710 /* stdHead.png */; };
+		919458601617E54800E0B710 /* stdHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194585E1617E54800E0B710 /* stdHead@2x.png */; };
+		919458631617E56300E0B710 /* BLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 919458621617E56300E0B710 /* BLViewController.m */; };
+		919458661617E7C200E0B710 /* imgBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 919458641617E7C200E0B710 /* imgBackground.png */; };
+		919458671617E7C200E0B710 /* imgBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 919458651617E7C200E0B710 /* imgBackground@2x.png */; };
 		9198BF13157AEB25001B74A9 /* BLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF07157AEB25001B74A9 /* BLCameraViewController.m */; };
 		9198BF14157AEB25001B74A9 /* BLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF09157AEB25001B74A9 /* BLCropViewController.m */; };
 		9198BF15157AEB25001B74A9 /* BLFixItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF0B157AEB25001B74A9 /* BLFixItemsViewController.m */; };
@@ -183,6 +188,12 @@
 		9182245D15F94BFB00A6CDCF /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		9182245F15F94C4400A6CDCF /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		9182246115F94C5A00A6CDCF /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		9194585D1617E54800E0B710 /* stdHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdHead.png; sourceTree = "<group>"; };
+		9194585E1617E54800E0B710 /* stdHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdHead@2x.png"; sourceTree = "<group>"; };
+		919458611617E56300E0B710 /* BLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLViewController.h; path = ViewControllers/BLViewController.h; sourceTree = "<group>"; };
+		919458621617E56300E0B710 /* BLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLViewController.m; path = ViewControllers/BLViewController.m; sourceTree = "<group>"; };
+		919458641617E7C200E0B710 /* imgBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgBackground.png; sourceTree = "<group>"; };
+		919458651617E7C200E0B710 /* imgBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgBackground@2x.png"; sourceTree = "<group>"; };
 		9198BF06157AEB25001B74A9 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = ViewControllers/BLCameraViewController.h; sourceTree = "<group>"; };
 		9198BF07157AEB25001B74A9 /* BLCameraViewController.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BLCameraViewController.m; path = ViewControllers/BLCameraViewController.m; sourceTree = "<group>"; };
 		9198BF08157AEB25001B74A9 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = ViewControllers/BLCropViewController.h; sourceTree = "<group>"; };
@@ -352,6 +363,17 @@
 			path = Frameworks/ASIHTTPRequest/Reachability;
 			sourceTree = "<group>";
 		};
+		9194585B1617E53600E0B710 /* NEW STUFF */ = {
+			isa = PBXGroup;
+			children = (
+				919458641617E7C200E0B710 /* imgBackground.png */,
+				919458651617E7C200E0B710 /* imgBackground@2x.png */,
+				9194585D1617E54800E0B710 /* stdHead.png */,
+				9194585E1617E54800E0B710 /* stdHead@2x.png */,
+			);
+			name = "NEW STUFF";
+			sourceTree = "<group>";
+		};
 		91B9CC471576C3ED00AAEDC0 = {
 			isa = PBXGroup;
 			children = (
@@ -435,6 +457,8 @@
 				91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */,
 				91AAE668158D3A8400C609C4 /* BLTipViewController.h */,
 				91AAE669158D3A8400C609C4 /* BLTipViewController.m */,
+				919458611617E56300E0B710 /* BLViewController.h */,
+				919458621617E56300E0B710 /* BLViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -469,6 +493,7 @@
 		91B9CCB31577D50800AAEDC0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9194585B1617E53600E0B710 /* NEW STUFF */,
 				91D0953A1595310C00E22EEC /* Default.png */,
 				91D0953B1595310C00E22EEC /* Default@2x.png */,
 				91615810161609C50031FE6B /* Default-568h@2x.png */,
@@ -619,6 +644,10 @@
 				9167C83815CC8EE800E25A2F /* flashOn.png in Resources */,
 				9167C83915CC8EE800E25A2F /* flashOn@2x.png in Resources */,
 				91615811161609C50031FE6B /* Default-568h@2x.png in Resources */,
+				9194585F1617E54800E0B710 /* stdHead.png in Resources */,
+				919458601617E54800E0B710 /* stdHead@2x.png in Resources */,
+				919458661617E7C200E0B710 /* imgBackground.png in Resources */,
+				919458671617E7C200E0B710 /* imgBackground@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -665,6 +694,7 @@
 				9155239D15B0949500F2F539 /* Assignment.m in Sources */,
 				91E62D1715CC654A00E3AD5D /* UIViewController+GuidedTour.m in Sources */,
 				91E62D1A15CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m in Sources */,
+				919458631617E56300E0B710 /* BLViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

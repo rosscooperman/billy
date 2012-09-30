@@ -41,7 +41,8 @@
   
   // construct the only navigation controller we'll ever need
   self.viewController = [[UINavigationController alloc] initWithRootViewController:[[BLSplitCountViewController alloc] init]];
-  self.viewController.navigationBarHidden = YES;
+  [self.viewController.navigationBar setBackgroundImage:[UIImage imageNamed:@"stdHead"] forBarMetrics:UIBarMetricsDefault];
+  
   self.window.rootViewController = self.viewController;
   [self.window makeKeyAndVisible];
   return YES;

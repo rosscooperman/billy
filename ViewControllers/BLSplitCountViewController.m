@@ -42,6 +42,10 @@
 {
   [self showTourText:@"cycle through the number of splits\nby tapping +/-" atPoint:CGPointMake(5.0, 5.0) animated:NO];
   if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
+  
+  // move the cover view to be the top view of the current window
+  [[BLAppDelegate appDelegate].window addSubview:self.coverView];
+  self.coverView.frame = CGRectOffset(self.coverView.frame, 0.0f, 20.0f);
 }
 
 
@@ -62,14 +66,17 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   [[BLAppDelegate appDelegate] askForRating];
-  [UIView animateWithDuration:0.5 animations:^{
-    CATransform3D move = CATransform3DMakeTranslation(1.0f, 1.0f, 1.5f);
-    CATransform3D rotation = CATransform3DMakeRotation(M_PI_2, 1.0f, 0.0f, 0.0f);
-    CATransform3D scale = CATransform3DMakeScale(1.5f, 1.0f, 1.0f);
-    self.coverView.layer.transform = CATransform3DConcat(move, CATransform3DConcat(rotation, scale));
-  } completion:^(BOOL finished) {
-    [self.coverView removeFromSuperview];
-  }];
+  
+  if (self.coverView.superview) {
+    [UIView animateWithDuration:0.5 animations:^{
+      CATransform3D move = CATransform3DMakeTranslation(1.0f, 1.0f, 1.5f);
+      CATransform3D rotation = CATransform3DMakeRotation(M_PI_2, 1.0f, 0.0f, 0.0f);
+      CATransform3D scale = CATransform3DMakeScale(1.5f, 1.0f, 1.0f);
+      self.coverView.layer.transform = CATransform3DConcat(move, CATransform3DConcat(rotation, scale));
+    } completion:^(BOOL finished) {
+      [self.coverView removeFromSuperview];
+    }];
+  }
 }
 
 
