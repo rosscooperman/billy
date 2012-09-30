@@ -45,6 +45,9 @@
 
 - (void)showTourText:(NSString *)text atPoint:(CGPoint)point animated:(BOOL)animated
 {
+  // temporarily? remove tour text entirely
+  return;
+  
   if (![self shouldShowTour]) return;
   NSMutableArray *splitText = [[text componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]] mutableCopy];
   
