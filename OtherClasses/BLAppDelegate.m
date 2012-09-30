@@ -15,6 +15,8 @@
 @interface BLAppDelegate ()
 
 @property (nonatomic, strong) NSArray *colors;
+@property (nonatomic, strong) NSArray *secondaryColors;
+@property (nonatomic, strong) NSArray *tertiaryColors;
 
 @end
 
@@ -27,6 +29,8 @@
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize currentBill = _currentBill;
 @synthesize colors;
+@synthesize secondaryColors;
+@synthesize tertiaryColors;
 
 
 #pragma mark - Application Lifecycle
@@ -71,19 +75,59 @@
 {
   if (!self.colors) {
     NSMutableArray *_colors = [[NSMutableArray alloc] initWithCapacity:9];
-    [_colors addObject:[UIColor colorWithRed:0.858823529 green:0.956862745 blue:0.917647059 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:0.996078431 green:0.270588235 blue:0.262745098 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:1.000000000 green:0.556862745 blue:0.247058824 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:1.000000000 green:0.694117647 blue:0.003921569 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:0.772549020 green:0.964705882 blue:0.117647059 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:0.000000000 green:0.800000000 blue:0.294117647 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:0.360784314 green:0.898039216 blue:0.717647059 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:0.792156863 green:0.000000000 blue:0.850980392 alpha:1.0]];
-    [_colors addObject:[UIColor colorWithRed:1.000000000 green:0.082352941 blue:0.403921569 alpha:1.0]];
+    [_colors addObject:[UIColor lightGrayColor]];
+    [_colors addObject:[UIColor colorWithRed:0.90588 green:0.92941 blue:0.95294 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.89020 green:0.87843 blue:0.93725 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.94902 green:0.89804 blue:0.94902 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.93333 green:0.87059 blue:0.87843 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.94902 green:0.91765 blue:0.89804 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.93333 green:0.90980 blue:0.86667 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.94510 green:0.94118 blue:0.89020 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.90980 green:0.92941 blue:0.86275 alpha:1.0]];
     self.colors = [NSArray arrayWithArray:_colors];
   }
   
   return (index < self.colors.count) ? [self.colors objectAtIndex:index] : [self.colors objectAtIndex:0];
+}
+
+
+- (UIColor *)secondaryColorAtIndex:(NSInteger)index
+{
+  if (!self.secondaryColors) {
+    NSMutableArray *_colors = [[NSMutableArray alloc] initWithCapacity:9];
+    [_colors addObject:[UIColor lightGrayColor]];
+    [_colors addObject:[UIColor colorWithRed:0.85490 green:0.89020 blue:0.92549 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.84706 green:0.82745 blue:0.91373 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.92549 green:0.85098 blue:0.92549 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.90980 green:0.81961 blue:0.82745 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.92157 green:0.87451 blue:0.84314 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.90588 green:0.87451 blue:0.81569 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.91765 green:0.91373 blue:0.83922 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.87451 green:0.90196 blue:0.80784 alpha:1.0]];
+    self.secondaryColors = [NSArray arrayWithArray:_colors];
+  }
+  
+  return (index < self.secondaryColors.count) ? [self.secondaryColors objectAtIndex:index] : [self.secondaryColors objectAtIndex:0];
+}
+
+
+- (UIColor *)tertiaryColorAtIndex:(NSInteger)index
+{
+  if (!self.tertiaryColors) {
+    NSMutableArray *_colors = [[NSMutableArray alloc] initWithCapacity:9];
+    [_colors addObject:[UIColor lightGrayColor]];
+    [_colors addObject:[UIColor colorWithRed:0.80784 green:0.85490 blue:0.90196 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.80000 green:0.78039 blue:0.89020 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.89804 green:0.80000 blue:0.89804 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.87059 green:0.74510 blue:0.75686 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.89804 green:0.83529 blue:0.79216 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.87843 green:0.83922 blue:0.76471 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.89020 green:0.88235 blue:0.78431 alpha:1.0]];
+    [_colors addObject:[UIColor colorWithRed:0.83922 green:0.87451 blue:0.75294 alpha:1.0]];
+    self.tertiaryColors = [NSArray arrayWithArray:_colors];
+  }
+  
+  return (index < self.tertiaryColors.count) ? [self.tertiaryColors objectAtIndex:index] : [self.tertiaryColors objectAtIndex:0];
 }
 
 

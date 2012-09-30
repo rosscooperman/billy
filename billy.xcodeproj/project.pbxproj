@@ -55,6 +55,13 @@
 		919458631617E56300E0B710 /* BLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 919458621617E56300E0B710 /* BLViewController.m */; };
 		919458661617E7C200E0B710 /* imgBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 919458641617E7C200E0B710 /* imgBackground.png */; };
 		919458671617E7C200E0B710 /* imgBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 919458651617E7C200E0B710 /* imgBackground@2x.png */; };
+		9194586A1618014400E0B710 /* BLMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 919458691618014400E0B710 /* BLMainView.m */; };
+		9194586D161805F100E0B710 /* imgMainBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194586B161805F100E0B710 /* imgMainBackground.png */; };
+		9194586E161805F100E0B710 /* imgMainBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194586C161805F100E0B710 /* imgMainBackground@2x.png */; };
+		919458711618087000E0B710 /* stdBottomBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194586F1618087000E0B710 /* stdBottomBorder.png */; };
+		919458721618087000E0B710 /* stdBottomBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 919458701618087000E0B710 /* stdBottomBorder@2x.png */; };
+		9194587516180FFC00E0B710 /* stdBttnContinue.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194587316180FFC00E0B710 /* stdBttnContinue.png */; };
+		9194587616180FFC00E0B710 /* stdBttnContinue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194587416180FFC00E0B710 /* stdBttnContinue@2x.png */; };
 		9198BF13157AEB25001B74A9 /* BLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF07157AEB25001B74A9 /* BLCameraViewController.m */; };
 		9198BF14157AEB25001B74A9 /* BLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF09157AEB25001B74A9 /* BLCropViewController.m */; };
 		9198BF15157AEB25001B74A9 /* BLFixItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF0B157AEB25001B74A9 /* BLFixItemsViewController.m */; };
@@ -194,6 +201,14 @@
 		919458621617E56300E0B710 /* BLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLViewController.m; path = ViewControllers/BLViewController.m; sourceTree = "<group>"; };
 		919458641617E7C200E0B710 /* imgBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgBackground.png; sourceTree = "<group>"; };
 		919458651617E7C200E0B710 /* imgBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgBackground@2x.png"; sourceTree = "<group>"; };
+		919458681618014400E0B710 /* BLMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLMainView.h; path = CustomUI/BLMainView.h; sourceTree = "<group>"; };
+		919458691618014400E0B710 /* BLMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLMainView.m; path = CustomUI/BLMainView.m; sourceTree = "<group>"; };
+		9194586B161805F100E0B710 /* imgMainBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imgMainBackground.png; sourceTree = "<group>"; };
+		9194586C161805F100E0B710 /* imgMainBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgMainBackground@2x.png"; sourceTree = "<group>"; };
+		9194586F1618087000E0B710 /* stdBottomBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdBottomBorder.png; sourceTree = "<group>"; };
+		919458701618087000E0B710 /* stdBottomBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdBottomBorder@2x.png"; sourceTree = "<group>"; };
+		9194587316180FFC00E0B710 /* stdBttnContinue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdBttnContinue.png; sourceTree = "<group>"; };
+		9194587416180FFC00E0B710 /* stdBttnContinue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdBttnContinue@2x.png"; sourceTree = "<group>"; };
 		9198BF06157AEB25001B74A9 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = ViewControllers/BLCameraViewController.h; sourceTree = "<group>"; };
 		9198BF07157AEB25001B74A9 /* BLCameraViewController.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BLCameraViewController.m; path = ViewControllers/BLCameraViewController.m; sourceTree = "<group>"; };
 		9198BF08157AEB25001B74A9 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = ViewControllers/BLCropViewController.h; sourceTree = "<group>"; };
@@ -302,6 +317,8 @@
 		9148AE071579471600985CA0 /* Custom UI */ = {
 			isa = PBXGroup;
 			children = (
+				919458681618014400E0B710 /* BLMainView.h */,
+				919458691618014400E0B710 /* BLMainView.m */,
 				9148AE081579473700985CA0 /* BLTextField.h */,
 				9148AE091579473700985CA0 /* BLTextField.m */,
 			);
@@ -368,6 +385,12 @@
 			children = (
 				919458641617E7C200E0B710 /* imgBackground.png */,
 				919458651617E7C200E0B710 /* imgBackground@2x.png */,
+				9194586B161805F100E0B710 /* imgMainBackground.png */,
+				9194586C161805F100E0B710 /* imgMainBackground@2x.png */,
+				9194586F1618087000E0B710 /* stdBottomBorder.png */,
+				919458701618087000E0B710 /* stdBottomBorder@2x.png */,
+				9194587316180FFC00E0B710 /* stdBttnContinue.png */,
+				9194587416180FFC00E0B710 /* stdBttnContinue@2x.png */,
 				9194585D1617E54800E0B710 /* stdHead.png */,
 				9194585E1617E54800E0B710 /* stdHead@2x.png */,
 			);
@@ -648,6 +671,12 @@
 				919458601617E54800E0B710 /* stdHead@2x.png in Resources */,
 				919458661617E7C200E0B710 /* imgBackground.png in Resources */,
 				919458671617E7C200E0B710 /* imgBackground@2x.png in Resources */,
+				9194586D161805F100E0B710 /* imgMainBackground.png in Resources */,
+				9194586E161805F100E0B710 /* imgMainBackground@2x.png in Resources */,
+				919458711618087000E0B710 /* stdBottomBorder.png in Resources */,
+				919458721618087000E0B710 /* stdBottomBorder@2x.png in Resources */,
+				9194587516180FFC00E0B710 /* stdBttnContinue.png in Resources */,
+				9194587616180FFC00E0B710 /* stdBttnContinue@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -695,6 +724,7 @@
 				91E62D1715CC654A00E3AD5D /* UIViewController+GuidedTour.m in Sources */,
 				91E62D1A15CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m in Sources */,
 				919458631617E56300E0B710 /* BLViewController.m in Sources */,
+				9194586A1618014400E0B710 /* BLMainView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -30,6 +30,8 @@
 
 // instance methods
 - (UIColor *)colorAtIndex:(NSInteger)index;
+- (UIColor *)secondaryColorAtIndex:(NSInteger)index;
+- (UIColor *)tertiaryColorAtIndex:(NSInteger)index;
 - (void)startOver;
 - (void)askForRating;
 

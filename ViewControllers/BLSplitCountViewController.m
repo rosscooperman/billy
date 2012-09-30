@@ -46,6 +46,9 @@
   // move the cover view to be the top view of the current window
   [[BLAppDelegate appDelegate].window addSubview:self.coverView];
   self.coverView.frame = CGRectOffset(self.coverView.frame, 0.0f, 20.0f);
+  
+  // bump up the font size of the count label
+  self.countLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:375.0];
 }
 
 
@@ -93,7 +96,7 @@
   self.minusButton.enabled = YES;
   self.plusButton.enabled = YES;
   self.countLabel.text = [NSString stringWithFormat:@"%d", count];
-  self.countLabel.textColor = [[BLAppDelegate appDelegate] colorAtIndex:count];
+  self.countLabel.textColor = [[BLAppDelegate appDelegate] tertiaryColorAtIndex:count];
   
   if (count <= 2) {
     self.minusButton.enabled = NO;
