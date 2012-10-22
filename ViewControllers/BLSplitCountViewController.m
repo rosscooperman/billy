@@ -20,6 +20,7 @@
 @property (nonatomic, strong) Bill *bill;
 
 
+- (void)layoutControls;
 - (void)setCount:(NSInteger)count;
 - (void)transitionTour;
 
@@ -29,11 +30,12 @@
 @implementation BLSplitCountViewController
 
 @synthesize countLabel;
+@synthesize controlView;
 @synthesize minusButton;
 @synthesize plusButton;
 @synthesize bill;
 @synthesize nextScreenButton;
-@synthesize coverView;
+@synthesize realView;
 
 
 #pragma mark - View Lifecycle
@@ -43,12 +45,9 @@
   [self showTourText:@"cycle through the number of splits\nby tapping +/-" atPoint:CGPointMake(5.0, 5.0) animated:NO];
   if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
   
-  // move the cover view to be the top view of the current window
-  [[BLAppDelegate appDelegate].window addSubview:self.coverView];
-  self.coverView.frame = CGRectOffset(self.coverView.frame, 0.0f, 20.0f);
-  
   // bump up the font size of the count label
   self.countLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:375.0];
+  self.realView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"imgBackground"]];  
 }
 
 
@@ -57,29 +56,28 @@
   [super viewWillAppear:animated];
   self.bill = [BLAppDelegate appDelegate].currentBill;
   [self setCount:self.bill.splitCount];
+  
+  [self.controlView.superview addObserver:self forKeyPath:@"frame" options:0 context:nil];
+  [self layoutControls];
 }
 
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+  
+  [self.controlView.superview removeObserver:self forKeyPath:@"frame"];
 }
 
 
 - (void)viewDidAppear:(BOOL)animated
 {
-  [[BLAppDelegate appDelegate] askForRating];
+  self.realView.frame = self.view.frame;
   
-  if (self.coverView.superview) {
-    [UIView animateWithDuration:0.5 animations:^{
-      CATransform3D move = CATransform3DMakeTranslation(1.0f, 1.0f, 1.5f);
-      CATransform3D rotation = CATransform3DMakeRotation(M_PI_2, 1.0f, 0.0f, 0.0f);
-      CATransform3D scale = CATransform3DMakeScale(1.5f, 1.0f, 1.0f);
-      self.coverView.layer.transform = CATransform3DConcat(move, CATransform3DConcat(rotation, scale));
-    } completion:^(BOOL finished) {
-      [self.coverView removeFromSuperview];
-    }];
-  }
+  [UIView transitionFromView:self.view toView:self.realView duration:1.0 options:UIViewAnimationOptionTransitionCurlUp completion:^(BOOL finished) {
+    self.navigationController.navigationBarHidden = NO;    
+    [[BLAppDelegate appDelegate] askForRating];
+  }];
 }
 
 
@@ -90,6 +88,29 @@
 
 
 #pragma mark - Instance Methods
+
+- (void)layoutControls
+{
+  CGFloat idealTop = CGRectGetMidY(self.controlView.superview.bounds) - (self.controlView.bounds.size.height / 2.0f);
+  CGFloat lineHeight = 1.0f / [UIScreen mainScreen].scale;
+  CGFloat testTop = -lineHeight, selectedTop = -lineHeight;
+  CGFloat closest = 1000.0f;
+  
+  while (testTop < self.controlView.superview.bounds.size.height) {
+    CGFloat proximity = fabsf(idealTop - testTop);
+    if (proximity < closest) {
+      closest = proximity;
+      selectedTop = testTop;
+    }
+    
+    testTop += 45.0f + (1.5f * lineHeight);
+  }
+  
+  CGRect newFrame = self.controlView.frame;
+  newFrame.origin.y = selectedTop;
+  self.controlView.frame = newFrame;
+}
+
 
 - (void)setCount:(NSInteger)count
 {
@@ -137,8 +158,16 @@
 
 - (void)nextScreen:(id)sender
 {
-  BLNamesViewController *namesController = [[BLNamesViewController alloc] init];
-  [self.navigationController pushViewController:namesController animated:YES];
+//  BLNamesViewController *namesController = [[BLNamesViewController alloc] init];
+//  [self.navigationController pushViewController:namesController animated:YES];
+}
+
+
+#pragma mark - KVO Methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  [self layoutControls];
 }
 
 @end

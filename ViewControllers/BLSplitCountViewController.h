@@ -12,10 +12,11 @@
 @interface BLSplitCountViewController : BLViewController
 
 @property (nonatomic, strong) IBOutlet UILabel *countLabel;
+@property (nonatomic, strong) IBOutlet UIView *controlView;
 @property (nonatomic, strong) IBOutlet UIButton *minusButton;
 @property (nonatomic, strong) IBOutlet UIButton *plusButton;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
-@property (nonatomic, strong) IBOutlet UIView *coverView;
+@property (nonatomic, strong) IBOutlet UIView *realView;
 
 
 - (IBAction)incrementCount:(id)sender;

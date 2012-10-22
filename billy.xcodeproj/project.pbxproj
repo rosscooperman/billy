@@ -393,6 +393,9 @@
 				9194587416180FFC00E0B710 /* stdBttnContinue@2x.png */,
 				9194585D1617E54800E0B710 /* stdHead.png */,
 				9194585E1617E54800E0B710 /* stdHead@2x.png */,
+				91D0953A1595310C00E22EEC /* Default.png */,
+				91D0953B1595310C00E22EEC /* Default@2x.png */,
+				91615810161609C50031FE6B /* Default-568h@2x.png */,
 			);
 			name = "NEW STUFF";
 			sourceTree = "<group>";
@@ -517,9 +520,6 @@
 			isa = PBXGroup;
 			children = (
 				9194585B1617E53600E0B710 /* NEW STUFF */,
-				91D0953A1595310C00E22EEC /* Default.png */,
-				91D0953B1595310C00E22EEC /* Default@2x.png */,
-				91615810161609C50031FE6B /* Default-568h@2x.png */,
 				91B9CCD01577DA4100AAEDC0 /* iTunesArtwork */,
 				91B9CCD11577DA4100AAEDC0 /* iTunesArtwork@2x */,
 				91B9CCC41577D72500AAEDC0 /* Icon-72.png */,
