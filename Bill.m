@@ -83,13 +83,26 @@
             [request addFile:bill.processedImage withFileName:@"processed.jpg" andContentType:@"image/jpeg" forKey:@"feedback[processed]"];
           }
           
+          // mark the beginning of a background task (uploading feedback)
+          __block UIBackgroundTaskIdentifier bgTask = UIBackgroundTaskInvalid;
+          bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
+            [request cancel];
+            [[UIApplication sharedApplication] endBackgroundTask:bgTask];
+            bgTask = UIBackgroundTaskInvalid;
+          }];
+          
           [request setCompletionBlock:^{
             dispatch_async(dispatch_get_main_queue(), ^{
               bill.feedbackSent = YES;
               [context save:nil];
+              
+              if (bgTask != UIBackgroundTaskInvalid) {
+                [[UIApplication sharedApplication] endBackgroundTask:bgTask];
+                bgTask = UIBackgroundTaskInvalid;
+              }
             });
           }];
-                    
+          
           [request startAsynchronous];
         }
       }];
