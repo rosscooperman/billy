@@ -147,12 +147,10 @@
 										<bool key="IBUIEnabled">NO</bool>
 										<int key="IBUIContentHorizontalAlignment">0</int>
 										<int key="IBUIContentVerticalAlignment">0</int>
-										<double key="IBUITitleEdgeInsets.top">0.0</double>
-										<double key="IBUITitleEdgeInsets.bottom">2</double>
-										<double key="IBUITitleEdgeInsets.left">0.0</double>
-										<double key="IBUITitleEdgeInsets.right">0.0</double>
-										<string key="IBUITitleShadowOffset">{0, -1}</string>
-										<string key="IBUINormalTitle">–</string>
+										<double key="IBUIImageEdgeInsets.top">2</double>
+										<double key="IBUIImageEdgeInsets.bottom">0.0</double>
+										<double key="IBUIImageEdgeInsets.left">0.0</double>
+										<double key="IBUIImageEdgeInsets.right">0.0</double>
 										<object class="NSColor" key="IBUIHighlightedTitleColor" id="22772324">
 											<int key="NSColorSpace">3</int>
 											<bytes key="NSWhite">MAA</bytes>
@@ -172,6 +170,10 @@
 										<object class="NSColor" key="IBUINormalTitleShadowColor">
 											<int key="NSColorSpace">1</int>
 											<bytes key="NSRGB">MC4zNTI5NDExNzY1IDAuNDgyMzUyOTQxMiAwLjQxOTYwNzg0MzEAA</bytes>
+										</object>
+										<object class="NSCustomResource" key="IBUINormalImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">stdSplitSubtrct.png</string>
 										</object>
 										<object class="IBUIFontDescription" key="IBUIFontDescription" id="18870518">
 											<string key="name">Avenir-Heavy</string>
@@ -240,7 +242,6 @@
 										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 										<int key="IBUIContentHorizontalAlignment">0</int>
 										<int key="IBUIContentVerticalAlignment">0</int>
-										<string key="IBUINormalTitle">+</string>
 										<reference key="IBUIHighlightedTitleColor" ref="22772324"/>
 										<object class="NSColor" key="IBUIDisabledTitleColor">
 											<int key="NSColorSpace">1</int>
@@ -257,6 +258,10 @@
 										<object class="NSColor" key="IBUINormalTitleShadowColor">
 											<int key="NSColorSpace">1</int>
 											<bytes key="NSRGB">MC4zNTI5NDExNzY1IDAuNDgyMzUyOTQxMiAwLjQxOTYwNzg0MzEAA</bytes>
+										</object>
+										<object class="NSCustomResource" key="IBUINormalImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">stdSplitAdd.png</string>
 										</object>
 										<reference key="IBUIFontDescription" ref="18870518"/>
 										<reference key="IBUIFont" ref="968789451"/>
@@ -292,6 +297,7 @@
 						<string key="NSFrame">{{204, 403}, {110, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -551,11 +557,11 @@
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="4.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
+				<real value="2" key="4.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="3" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="5.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
-				<real value="3" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="2" key="5.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
+				<real value="0.0" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -659,6 +665,8 @@
 			<string key="Default-568h@2x.png">{640, 1136}</string>
 			<string key="stdBttnContinue.png">{110, 50}</string>
 			<string key="stdHead.png">{320, 51}</string>
+			<string key="stdSplitAdd.png">{13, 13}</string>
+			<string key="stdSplitSubtrct.png">{13, 4}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1929</string>
 	</data>
