@@ -18,6 +18,7 @@
 @interface BLSplitCountViewController ()
 
 @property (nonatomic, strong) Bill *bill;
+@property (nonatomic, assign) BOOL transitioned;
 
 
 - (void)layoutControls;
@@ -36,6 +37,8 @@
 @synthesize bill;
 @synthesize nextScreenButton;
 @synthesize realView;
+@synthesize fauxHeader;
+@synthesize transitioned;
 
 
 #pragma mark - View Lifecycle
@@ -56,6 +59,7 @@
   [super viewWillAppear:animated];
   self.bill = [BLAppDelegate appDelegate].currentBill;
   [self setCount:self.bill.splitCount];
+  if (self.transitioned) return;
   
   [self.controlView.superview addObserver:self forKeyPath:@"frame" options:0 context:nil];
   [self layoutControls];
@@ -64,16 +68,16 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
-  
-  [self.controlView.superview removeObserver:self forKeyPath:@"frame"];
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];  
+  if (!self.transitioned) [self.controlView.superview removeObserver:self forKeyPath:@"frame"];
 }
 
 
 - (void)viewDidAppear:(BOOL)animated
 {
   self.realView.frame = self.view.frame;
-  
+  if (transitioned) return;
+
   [UIView transitionFromView:self.view toView:self.realView duration:1.0 options:UIViewAnimationOptionTransitionCurlUp completion:^(BOOL finished) {
     self.navigationController.navigationBarHidden = NO;    
     [[BLAppDelegate appDelegate] askForRating];
@@ -84,6 +88,18 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
   [self hideTourTextAnimated:NO complete:nil];
+  if (!self.transitioned) {
+    self.view = self.realView;
+    
+    CGRect newFrame = self.controlView.superview.frame;
+    newFrame.origin.y = self.fauxHeader.frame.origin.y;
+    newFrame.size.height += self.fauxHeader.frame.size.height;
+    self.controlView.superview.frame = newFrame;
+    [self.fauxHeader removeFromSuperview];
+
+    
+    self.transitioned = YES;
+  }
 }
 
 
@@ -158,8 +174,8 @@
 
 - (void)nextScreen:(id)sender
 {
-//  BLNamesViewController *namesController = [[BLNamesViewController alloc] init];
-//  [self.navigationController pushViewController:namesController animated:YES];
+  BLNamesViewController *namesController = [[BLNamesViewController alloc] init];
+  [self.navigationController pushViewController:namesController animated:YES];
 }
 
 

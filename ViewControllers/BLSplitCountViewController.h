@@ -17,6 +17,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *plusButton;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
 @property (nonatomic, strong) IBOutlet UIView *realView;
+@property (nonatomic, strong) IBOutlet UIImageView *fauxHeader;
 
 
 - (IBAction)incrementCount:(id)sender;

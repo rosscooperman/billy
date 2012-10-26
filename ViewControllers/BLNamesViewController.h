@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BLViewController.h"
 
-@interface BLNamesViewController : UIViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
+@interface BLNamesViewController : BLViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
