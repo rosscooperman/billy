@@ -18,11 +18,14 @@
 
 @implementation BLViewController
 
+#pragma mark - Object Lifecycle
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
   self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
   if (self) {
     [self customizeAppearance];
+    self.navigationItem.hidesBackButton = YES;
   }
   return self;
 }

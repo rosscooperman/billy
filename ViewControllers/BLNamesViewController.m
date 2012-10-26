@@ -6,8 +6,9 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#define TEXT_BOX_HEIGHT 50
-#define TEXT_BOX_WIDTH 206
+#define TEXT_BOX_HEIGHT 50.0f
+#define TEXT_BOX_WIDTH 230.0f
+#define PADDING_WIDTH 45.0f
 
 
 #import "UIViewController+GuidedTour.h"
@@ -30,6 +31,8 @@
 
 
 - (UIView *)generateTextFieldForIndex:(NSInteger)index;
+- (UIView *)generateLeftPaddingForIndex:(NSInteger)index;
+- (UIView *)generateRightPaddingForIndex:(NSInteger)index;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
 - (NSArray *)nameDefaults;
@@ -76,15 +79,18 @@
   [context save:nil];
   [context refreshObject:self.bill mergeChanges:NO];
   
-  CGFloat innerHeight = ((TEXT_BOX_HEIGHT + 2) * self.bill.splitCount) + 2;
-  CGFloat innerTop = ((self.contentArea.frame.size.height - innerHeight) / 2) + 15;
-  CGRect frame = CGRectMake((320.0 - TEXT_BOX_WIDTH) / 2.0, innerTop, TEXT_BOX_WIDTH, innerHeight);
+  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
+  CGFloat innerHeight = ((TEXT_BOX_HEIGHT + size) * self.bill.splitCount) + size;
+  CGRect frame = CGRectMake(0.0f, 26.0f, 320.0f, innerHeight);
   
   self.innerContainer = [[UIView alloc] initWithFrame:frame];
+  self.innerContainer.backgroundColor = [UIColor colorWithRed:0.54118 green:0.77255 blue:0.64706 alpha:1.0];
   self.contentArea.contentSize = CGSizeMake(320, MAX(self.contentArea.frame.size.height, frame.size.height));
   
   for (NSInteger i = 0; i < self.bill.splitCount; i++) {
     [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
+    [self.innerContainer addSubview:[self generateLeftPaddingForIndex:i]];
+    [self.innerContainer addSubview:[self generateRightPaddingForIndex:i]];
   }
   [self.textFields.lastObject setReturnKeyType:UIReturnKeyDone];
   
@@ -121,11 +127,15 @@
 
 - (UIView *)generateTextFieldForIndex:(NSInteger)index
 {
+  // calculate the size of separator lines (based on screen scale) and create a frame for the text box
+  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
+  CGRect frame = CGRectMake(PADDING_WIDTH + (2.0f * size), (TEXT_BOX_HEIGHT + size) * index + size, TEXT_BOX_WIDTH - (4.0f * size), TEXT_BOX_HEIGHT);
+  
   // set up the text field
-  BLTextField *textField = [[BLTextField alloc] initWithFrame:CGRectMake(0.0, (TEXT_BOX_HEIGHT + 2) * index, TEXT_BOX_WIDTH, TEXT_BOX_HEIGHT)];
+  BLTextField *textField = [[BLTextField alloc] initWithFrame:frame];
   textField.borderStyle = UITextBorderStyleNone;
-  textField.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:26];
-  textField.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];;
+  textField.font = [UIFont fontWithName:@"Avenir" size:20];
+  textField.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
   textField.textColor = [UIColor blackColor];
   textField.autocorrectionType = UITextAutocorrectionTypeNo;
   textField.keyboardAppearance = UIKeyboardAppearanceAlert;
@@ -137,6 +147,30 @@
   [self.textFields insertObject:textField atIndex:index];
   
   return textField;
+}
+
+
+- (UIView *)generateLeftPaddingForIndex:(NSInteger)index
+{
+  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
+  CGRect frame = CGRectMake(size, (TEXT_BOX_HEIGHT + size) * index + size, PADDING_WIDTH, TEXT_BOX_HEIGHT);
+  
+  UIView *view = [[UIView alloc] initWithFrame:frame];
+  view.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
+  
+  return view;
+}
+
+
+- (UIView *)generateRightPaddingForIndex:(NSInteger)index
+{
+  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
+  CGRect frame = CGRectMake(320.0f - (size + PADDING_WIDTH), (TEXT_BOX_HEIGHT + size) * index + size, PADDING_WIDTH, TEXT_BOX_HEIGHT);
+  
+  UIView *view = [[UIView alloc] initWithFrame:frame];
+  view.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
+  
+  return view;
 }
 
 
@@ -242,8 +276,8 @@
 
 - (void)nextScreen:(id)sender
 {
-  BLCameraViewController *cameraController = [[BLCameraViewController alloc] init];
-  [self.navigationController pushViewController:cameraController animated:YES];
+//  BLCameraViewController *cameraController = [[BLCameraViewController alloc] init];
+//  [self.navigationController pushViewController:cameraController animated:YES];
 }
 
 
