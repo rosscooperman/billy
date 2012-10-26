@@ -40,6 +40,13 @@
 		916E7064163B2A6B0082ECD1 /* stdSplitAdd@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E7060163B2A6B0082ECD1 /* stdSplitAdd@2x.png */; };
 		916E7065163B2A6B0082ECD1 /* stdSplitSubtrct.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E7061163B2A6B0082ECD1 /* stdSplitSubtrct.png */; };
 		916E7066163B2A6B0082ECD1 /* stdSplitSubtrct@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E7062163B2A6B0082ECD1 /* stdSplitSubtrct@2x.png */; };
+		916E706E163B349D0082ECD1 /* stdCaptureCam.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E7068163B349D0082ECD1 /* stdCaptureCam.png */; };
+		916E706F163B349D0082ECD1 /* stdCaptureCam@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E7069163B349D0082ECD1 /* stdCaptureCam@2x.png */; };
+		916E7070163B349D0082ECD1 /* stdContinueCheck.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E706A163B349D0082ECD1 /* stdContinueCheck.png */; };
+		916E7071163B349D0082ECD1 /* stdContinueCheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E706B163B349D0082ECD1 /* stdContinueCheck@2x.png */; };
+		916E7072163B349D0082ECD1 /* stdContinueNew.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E706C163B349D0082ECD1 /* stdContinueNew.png */; };
+		916E7073163B349D0082ECD1 /* stdContinueNew@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 916E706D163B349D0082ECD1 /* stdContinueNew@2x.png */; };
+		916E7076163B3A1D0082ECD1 /* BLProgressButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 916E7075163B3A1D0082ECD1 /* BLProgressButton.m */; };
 		9182242815F90A5A00A6CDCF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91B9CC581576C3ED00AAEDC0 /* Foundation.framework */; };
 		9182243415F90A7400A6CDCF /* libASIHTTPRequest.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9182242715F90A5A00A6CDCF /* libASIHTTPRequest.a */; };
 		9182244A15F90AF200A6CDCF /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 9182243715F90AF200A6CDCF /* ASIAuthenticationDialog.m */; };
@@ -64,8 +71,6 @@
 		9194586E161805F100E0B710 /* imgMainBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194586C161805F100E0B710 /* imgMainBackground@2x.png */; };
 		919458711618087000E0B710 /* stdBottomBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194586F1618087000E0B710 /* stdBottomBorder.png */; };
 		919458721618087000E0B710 /* stdBottomBorder@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 919458701618087000E0B710 /* stdBottomBorder@2x.png */; };
-		9194587516180FFC00E0B710 /* stdBttnContinue.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194587316180FFC00E0B710 /* stdBttnContinue.png */; };
-		9194587616180FFC00E0B710 /* stdBttnContinue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9194587416180FFC00E0B710 /* stdBttnContinue@2x.png */; };
 		9198BF13157AEB25001B74A9 /* BLCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF07157AEB25001B74A9 /* BLCameraViewController.m */; };
 		9198BF14157AEB25001B74A9 /* BLCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF09157AEB25001B74A9 /* BLCropViewController.m */; };
 		9198BF15157AEB25001B74A9 /* BLFixItemsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF0B157AEB25001B74A9 /* BLFixItemsViewController.m */; };
@@ -174,6 +179,14 @@
 		916E7060163B2A6B0082ECD1 /* stdSplitAdd@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdSplitAdd@2x.png"; sourceTree = "<group>"; };
 		916E7061163B2A6B0082ECD1 /* stdSplitSubtrct.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdSplitSubtrct.png; sourceTree = "<group>"; };
 		916E7062163B2A6B0082ECD1 /* stdSplitSubtrct@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdSplitSubtrct@2x.png"; sourceTree = "<group>"; };
+		916E7068163B349D0082ECD1 /* stdCaptureCam.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdCaptureCam.png; sourceTree = "<group>"; };
+		916E7069163B349D0082ECD1 /* stdCaptureCam@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdCaptureCam@2x.png"; sourceTree = "<group>"; };
+		916E706A163B349D0082ECD1 /* stdContinueCheck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdContinueCheck.png; sourceTree = "<group>"; };
+		916E706B163B349D0082ECD1 /* stdContinueCheck@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdContinueCheck@2x.png"; sourceTree = "<group>"; };
+		916E706C163B349D0082ECD1 /* stdContinueNew.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdContinueNew.png; sourceTree = "<group>"; };
+		916E706D163B349D0082ECD1 /* stdContinueNew@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdContinueNew@2x.png"; sourceTree = "<group>"; };
+		916E7074163B3A1D0082ECD1 /* BLProgressButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLProgressButton.h; path = CustomUI/BLProgressButton.h; sourceTree = "<group>"; };
+		916E7075163B3A1D0082ECD1 /* BLProgressButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLProgressButton.m; path = CustomUI/BLProgressButton.m; sourceTree = "<group>"; };
 		9182241515F12F0400A6CDCF /* AddFeedbackSettingsToBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddFeedbackSettingsToBill.xcdatamodel; sourceTree = "<group>"; };
 		9182241615F139D400A6CDCF /* AddImageURLDataToBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddImageURLDataToBill.xcdatamodel; sourceTree = "<group>"; };
 		9182242715F90A5A00A6CDCF /* libASIHTTPRequest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libASIHTTPRequest.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -215,8 +228,6 @@
 		9194586C161805F100E0B710 /* imgMainBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "imgMainBackground@2x.png"; sourceTree = "<group>"; };
 		9194586F1618087000E0B710 /* stdBottomBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdBottomBorder.png; sourceTree = "<group>"; };
 		919458701618087000E0B710 /* stdBottomBorder@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdBottomBorder@2x.png"; sourceTree = "<group>"; };
-		9194587316180FFC00E0B710 /* stdBttnContinue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdBttnContinue.png; sourceTree = "<group>"; };
-		9194587416180FFC00E0B710 /* stdBttnContinue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdBttnContinue@2x.png"; sourceTree = "<group>"; };
 		9198BF06157AEB25001B74A9 /* BLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCameraViewController.h; path = ViewControllers/BLCameraViewController.h; sourceTree = "<group>"; };
 		9198BF07157AEB25001B74A9 /* BLCameraViewController.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = BLCameraViewController.m; path = ViewControllers/BLCameraViewController.m; sourceTree = "<group>"; };
 		9198BF08157AEB25001B74A9 /* BLCropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLCropViewController.h; path = ViewControllers/BLCropViewController.h; sourceTree = "<group>"; };
@@ -327,6 +338,8 @@
 			children = (
 				919458681618014400E0B710 /* BLMainView.h */,
 				919458691618014400E0B710 /* BLMainView.m */,
+				916E7074163B3A1D0082ECD1 /* BLProgressButton.h */,
+				916E7075163B3A1D0082ECD1 /* BLProgressButton.m */,
 				9148AE081579473700985CA0 /* BLTextField.h */,
 				9148AE091579473700985CA0 /* BLTextField.m */,
 			);
@@ -397,8 +410,12 @@
 				9194586C161805F100E0B710 /* imgMainBackground@2x.png */,
 				9194586F1618087000E0B710 /* stdBottomBorder.png */,
 				919458701618087000E0B710 /* stdBottomBorder@2x.png */,
-				9194587316180FFC00E0B710 /* stdBttnContinue.png */,
-				9194587416180FFC00E0B710 /* stdBttnContinue@2x.png */,
+				916E7068163B349D0082ECD1 /* stdCaptureCam.png */,
+				916E7069163B349D0082ECD1 /* stdCaptureCam@2x.png */,
+				916E706A163B349D0082ECD1 /* stdContinueCheck.png */,
+				916E706B163B349D0082ECD1 /* stdContinueCheck@2x.png */,
+				916E706C163B349D0082ECD1 /* stdContinueNew.png */,
+				916E706D163B349D0082ECD1 /* stdContinueNew@2x.png */,
 				9194585D1617E54800E0B710 /* stdHead.png */,
 				9194585E1617E54800E0B710 /* stdHead@2x.png */,
 				916E705F163B2A6B0082ECD1 /* stdSplitAdd.png */,
@@ -687,12 +704,16 @@
 				9194586E161805F100E0B710 /* imgMainBackground@2x.png in Resources */,
 				919458711618087000E0B710 /* stdBottomBorder.png in Resources */,
 				919458721618087000E0B710 /* stdBottomBorder@2x.png in Resources */,
-				9194587516180FFC00E0B710 /* stdBttnContinue.png in Resources */,
-				9194587616180FFC00E0B710 /* stdBttnContinue@2x.png in Resources */,
 				916E7063163B2A6B0082ECD1 /* stdSplitAdd.png in Resources */,
 				916E7064163B2A6B0082ECD1 /* stdSplitAdd@2x.png in Resources */,
 				916E7065163B2A6B0082ECD1 /* stdSplitSubtrct.png in Resources */,
 				916E7066163B2A6B0082ECD1 /* stdSplitSubtrct@2x.png in Resources */,
+				916E706E163B349D0082ECD1 /* stdCaptureCam.png in Resources */,
+				916E706F163B349D0082ECD1 /* stdCaptureCam@2x.png in Resources */,
+				916E7070163B349D0082ECD1 /* stdContinueCheck.png in Resources */,
+				916E7071163B349D0082ECD1 /* stdContinueCheck@2x.png in Resources */,
+				916E7072163B349D0082ECD1 /* stdContinueNew.png in Resources */,
+				916E7073163B349D0082ECD1 /* stdContinueNew@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,6 +762,7 @@
 				91E62D1A15CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m in Sources */,
 				919458631617E56300E0B710 /* BLViewController.m in Sources */,
 				9194586A1618014400E0B710 /* BLMainView.m in Sources */,
+				916E7076163B3A1D0082ECD1 /* BLProgressButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
