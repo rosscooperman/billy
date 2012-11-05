@@ -59,10 +59,9 @@
   [super viewWillAppear:animated];
   self.bill = [BLAppDelegate appDelegate].currentBill;
   [self setCount:self.bill.splitCount];
-  if (self.transitioned) return;
-  
-  [self.controlView.superview addObserver:self forKeyPath:@"frame" options:0 context:nil];
   [self layoutControls];
+  
+  if (!self.transitioned) [self.controlView.superview addObserver:self forKeyPath:@"frame" options:0 context:nil];
 }
 
 
@@ -76,7 +75,7 @@
 - (void)viewDidAppear:(BOOL)animated
 {
   self.realView.frame = self.view.frame;
-  if (transitioned) return;
+  if (self.transitioned) return;
 
   [UIView transitionFromView:self.view toView:self.realView duration:1.0 options:UIViewAnimationOptionTransitionCurlUp completion:^(BOOL finished) {
     self.navigationController.navigationBarHidden = NO;    
@@ -97,7 +96,6 @@
     self.controlView.superview.frame = newFrame;
     [self.fauxHeader removeFromSuperview];
 
-    
     self.transitioned = YES;
   }
 }
