@@ -80,13 +80,13 @@
   [context refreshObject:self.bill mergeChanges:NO];
   
   CGFloat size = 1.0f / [UIScreen mainScreen].scale;
-  CGFloat innerHeight = ((TEXT_BOX_HEIGHT + size) * self.bill.splitCount) + size;
+  CGFloat innerHeight = ((TEXT_BOX_HEIGHT + size) * self.bill.splitCount);
   CGRect frame = CGRectMake(0.0f, 26.0f, 320.0f, innerHeight);
-  
+    
   self.innerContainer = [[UIView alloc] initWithFrame:frame];
   self.innerContainer.backgroundColor = [UIColor colorWithRed:0.54118 green:0.77255 blue:0.64706 alpha:1.0];
   self.contentArea.contentSize = CGSizeMake(320, MAX(self.contentArea.frame.size.height, frame.size.height));
-  
+    
   for (NSInteger i = 0; i < self.bill.splitCount; i++) {
     [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
     [self.innerContainer addSubview:[self generateLeftPaddingForIndex:i]];
@@ -95,6 +95,11 @@
   [self.textFields.lastObject setReturnKeyType:UIReturnKeyDone];
   
   [self.contentArea addSubview:self.innerContainer];
+  
+  // add the bottom border of the inner container
+  UIImageView *bottomBorder = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, innerHeight + 26.0f, 320.0f, 2.0f)];
+  bottomBorder.image = [UIImage imageNamed:@"stdBottomBorder"];
+  [self.contentArea addSubview:bottomBorder];
 }
 
 
