@@ -281,8 +281,8 @@
 
 - (void)nextScreen:(id)sender
 {
-//  BLCameraViewController *cameraController = [[BLCameraViewController alloc] init];
-//  [self.navigationController pushViewController:cameraController animated:YES];
+  BLCameraViewController *cameraController = [[BLCameraViewController alloc] init];
+  [self.navigationController pushViewController:cameraController animated:YES];
 }
 
 

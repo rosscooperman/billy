@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		913F91D21649AED40057A3A5 /* cameraBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D01649AED40057A3A5 /* cameraBackground.png */; };
+		913F91D31649AED40057A3A5 /* cameraBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D11649AED40057A3A5 /* cameraBackground@2x.png */; };
+		913F91D71649B4AB0057A3A5 /* stdSkipArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D51649B4AB0057A3A5 /* stdSkipArrow.png */; };
+		913F91D81649B4AB0057A3A5 /* stdSkipArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D61649B4AB0057A3A5 /* stdSkipArrow@2x.png */; };
 		9148ADD71577DCC200985CA0 /* iconCamera.png in Resources */ = {isa = PBXBuildFile; fileRef = 9148ADD51577DCC200985CA0 /* iconCamera.png */; };
 		9148ADD81577DCC200985CA0 /* iconCamera@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9148ADD61577DCC200985CA0 /* iconCamera@2x.png */; };
 		9148ADDA1577DDBF00985CA0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9148ADD91577DDBF00985CA0 /* AVFoundation.framework */; };
@@ -138,6 +142,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		913F91D01649AED40057A3A5 /* cameraBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraBackground.png; sourceTree = "<group>"; };
+		913F91D11649AED40057A3A5 /* cameraBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraBackground@2x.png"; sourceTree = "<group>"; };
+		913F91D51649B4AB0057A3A5 /* stdSkipArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stdSkipArrow.png; sourceTree = "<group>"; };
+		913F91D61649B4AB0057A3A5 /* stdSkipArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "stdSkipArrow@2x.png"; sourceTree = "<group>"; };
 		9148ADD51577DCC200985CA0 /* iconCamera.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconCamera.png; sourceTree = "<group>"; };
 		9148ADD61577DCC200985CA0 /* iconCamera@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconCamera@2x.png"; sourceTree = "<group>"; };
 		9148ADD91577DDBF00985CA0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -408,12 +416,14 @@
 		9194585B1617E53600E0B710 /* NEW STUFF */ = {
 			isa = PBXGroup;
 			children = (
-				916E7077163B3F5C0082ECD1 /* stdBackArrow.png */,
-				916E7078163B3F5C0082ECD1 /* stdBackArrow@2x.png */,
+				913F91D01649AED40057A3A5 /* cameraBackground.png */,
+				913F91D11649AED40057A3A5 /* cameraBackground@2x.png */,
 				919458641617E7C200E0B710 /* imgBackground.png */,
 				919458651617E7C200E0B710 /* imgBackground@2x.png */,
 				9194586B161805F100E0B710 /* imgMainBackground.png */,
 				9194586C161805F100E0B710 /* imgMainBackground@2x.png */,
+				916E7077163B3F5C0082ECD1 /* stdBackArrow.png */,
+				916E7078163B3F5C0082ECD1 /* stdBackArrow@2x.png */,
 				9194586F1618087000E0B710 /* stdBottomBorder.png */,
 				919458701618087000E0B710 /* stdBottomBorder@2x.png */,
 				916E7068163B349D0082ECD1 /* stdCaptureCam.png */,
@@ -424,6 +434,8 @@
 				916E706D163B349D0082ECD1 /* stdContinueNew@2x.png */,
 				9194585D1617E54800E0B710 /* stdHead.png */,
 				9194585E1617E54800E0B710 /* stdHead@2x.png */,
+				913F91D51649B4AB0057A3A5 /* stdSkipArrow.png */,
+				913F91D61649B4AB0057A3A5 /* stdSkipArrow@2x.png */,
 				916E705F163B2A6B0082ECD1 /* stdSplitAdd.png */,
 				916E7060163B2A6B0082ECD1 /* stdSplitAdd@2x.png */,
 				916E7061163B2A6B0082ECD1 /* stdSplitSubtrct.png */,
@@ -722,6 +734,10 @@
 				916E7073163B349D0082ECD1 /* stdContinueNew@2x.png in Resources */,
 				916E7079163B3F5C0082ECD1 /* stdBackArrow.png in Resources */,
 				916E707A163B3F5C0082ECD1 /* stdBackArrow@2x.png in Resources */,
+				913F91D21649AED40057A3A5 /* cameraBackground.png in Resources */,
+				913F91D31649AED40057A3A5 /* cameraBackground@2x.png in Resources */,
+				913F91D71649B4AB0057A3A5 /* stdSkipArrow.png in Resources */,
+				913F91D81649B4AB0057A3A5 /* stdSkipArrow@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

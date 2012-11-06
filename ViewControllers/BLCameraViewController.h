@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BLViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
 
-@interface BLCameraViewController : UIViewController
+@interface BLCameraViewController : BLViewController
 
 @property (nonatomic, strong) IBOutlet UIView *previewView;
 @property (nonatomic, strong) IBOutlet UIView *mask;
