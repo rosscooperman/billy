@@ -13,6 +13,7 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
+			<string>IBUIImageView</string>
 			<string>IBUIScrollView</string>
 			<string>IBUITapGestureRecognizer</string>
 			<string>IBUIView</string>
@@ -41,17 +42,49 @@
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
 						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="657132020">
+							<object class="IBUIView" id="326813882">
 								<reference key="NSNextResponder" ref="1066498837"/>
 								<int key="NSvFlags">304</int>
+								<array class="NSMutableArray" key="NSSubviews">
+									<object class="IBUIImageView" id="858159655">
+										<reference key="NSNextResponder" ref="326813882"/>
+										<int key="NSvFlags">269</int>
+										<string key="NSFrame">{{0, 471}, {320, 5}}</string>
+										<reference key="NSSuperview" ref="326813882"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="929234122"/>
+										<string key="NSReuseIdentifierKey">_NS:9</string>
+										<bool key="IBUIUserInteractionEnabled">NO</bool>
+										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+										<object class="NSCustomResource" key="IBUIImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">tearTop.png</string>
+										</object>
+									</object>
+									<object class="IBUIImageView" id="929234122">
+										<reference key="NSNextResponder" ref="326813882"/>
+										<int key="NSvFlags">269</int>
+										<string key="NSFrame">{{0, 475}, {320, 5}}</string>
+										<reference key="NSSuperview" ref="326813882"/>
+										<reference key="NSWindow"/>
+										<reference key="NSNextKeyView" ref="682326280"/>
+										<string key="NSReuseIdentifierKey">_NS:9</string>
+										<bool key="IBUIUserInteractionEnabled">NO</bool>
+										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+										<object class="NSCustomResource" key="IBUIImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">tearBottom.png</string>
+										</object>
+									</object>
+								</array>
 								<string key="NSFrame">{{0, -477}, {320, 480}}</string>
 								<reference key="NSSuperview" ref="1066498837"/>
 								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="682326280"/>
+								<reference key="NSNextKeyView" ref="858159655"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
 									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MCAwIDAgMC4yAA</bytes>
+									<bytes key="NSRGB">MC45NDExNzY0NzA2IDAuOTQ5MDE5NjA3OCAwLjk0NTA5ODAzOTIAA</bytes>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -59,7 +92,7 @@
 						<string key="NSFrame">{{0, -20}, {320, 420}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="657132020"/>
+						<reference key="NSNextKeyView" ref="326813882"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -207,6 +240,14 @@
 					<int key="connectionID">21</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">topTear</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="858159655"/>
+					</object>
+					<int key="connectionID">26</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="191373211"/>
@@ -225,6 +266,14 @@
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
 					<int key="connectionID">12</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="1066498837"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">27</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -300,7 +349,7 @@
 						<int key="objectID">6</int>
 						<reference key="object" ref="1066498837"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="657132020"/>
+							<reference ref="326813882"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Content Area</string>
@@ -319,9 +368,25 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">23</int>
-						<reference key="object" ref="657132020"/>
+						<reference key="object" ref="326813882"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="858159655"/>
+							<reference ref="929234122"/>
+						</array>
 						<reference key="parent" ref="1066498837"/>
 						<string key="objectName">Top Overflow</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">24</int>
+						<reference key="object" ref="858159655"/>
+						<reference key="parent" ref="326813882"/>
+						<string key="objectName">Top Tear</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">25</int>
+						<reference key="object" ref="929234122"/>
+						<reference key="parent" ref="326813882"/>
+						<string key="objectName">Bottom Tear</string>
 					</object>
 				</array>
 			</object>
@@ -341,13 +406,15 @@
 				<real value="2" key="19.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="0.0" key="19.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="25.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">23</int>
+			<int key="maxID">27</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -376,6 +443,7 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="contentArea">UIScrollView</string>
 						<string key="nextScreenButton">UIButton</string>
+						<string key="topTear">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
 						<object class="IBToOneOutletInfo" key="contentArea">
@@ -385,6 +453,10 @@
 						<object class="IBToOneOutletInfo" key="nextScreenButton">
 							<string key="name">nextScreenButton</string>
 							<string key="candidateClassName">UIButton</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="topTear">
+							<string key="name">topTear</string>
+							<string key="candidateClassName">UIImageView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -421,6 +493,8 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="stdBackArrow.png">{26, 17}</string>
 			<string key="stdContinueCheck.png">{22, 17}</string>
+			<string key="tearBottom.png">{320, 5}</string>
+			<string key="tearTop.png">{320, 6}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>
 	</data>

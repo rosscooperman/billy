@@ -28,6 +28,7 @@
 @property (nonatomic, strong) UIView *innerContainer;
 @property (nonatomic, strong) Bill *bill;
 @property (readonly, nonatomic, strong) NSArray *people;
+@property (nonatomic, assign) CGFloat normalTopTearY;
 
 
 - (UIView *)generateTextFieldForIndex:(NSInteger)index;
@@ -44,17 +45,21 @@
 
 @synthesize contentArea;
 @synthesize nextScreenButton;
+@synthesize topTear;
 @synthesize textFields;
 @synthesize activeField;
 @synthesize innerContainer;
 @synthesize bill;
 @synthesize people = _people;
+@synthesize normalTopTearY;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
+  self.normalTopTearY = 0.0;
+  
   [self showTourText:@"enter nicknames\ntap on a blank color. type. repeat. done." atPoint:CGPointMake(5.0, 5.0) animated:NO];
   if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
   
@@ -274,6 +279,20 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
   return !CGRectContainsPoint(self.innerContainer.frame, [touch locationInView:self.contentArea]);
+}
+
+
+#pragma mark - UIScrollViewDelegate Methods
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+  if (self.normalTopTearY <= 0.0) self.normalTopTearY = self.topTear.frame.origin.y;
+  
+  if (scrollView.contentOffset.y <= -9.0) {
+    CGRect frame = self.topTear.frame;
+    frame.origin.y = normalTopTearY + scrollView.contentOffset.y + 9.0;
+    self.topTear.frame = frame;
+  }
 }
 
 
