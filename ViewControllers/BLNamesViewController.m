@@ -165,7 +165,7 @@
   textField.textColor = [UIColor blackColor];
   textField.autocorrectionType = UITextAutocorrectionTypeNo;
   textField.keyboardAppearance = UIKeyboardAppearanceAlert;
-  textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+  textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
   textField.returnKeyType = UIReturnKeyNext;
   textField.delegate = self;
   textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
