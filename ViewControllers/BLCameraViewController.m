@@ -188,15 +188,15 @@
   UIImage *buttonImage = nil;
   switch (self.videoCaptureDevice.flashMode) {
     case AVCaptureFlashModeAuto:
-      buttonImage = [UIImage imageNamed:@"flashAuto"];
+      buttonImage = [UIImage imageNamed:@"cameraFlashAuto"];
       break;
       
     case AVCaptureFlashModeOff:
-      buttonImage = [UIImage imageNamed:@"flashOff"];
+      buttonImage = [UIImage imageNamed:@"cameraFlashOff"];
       break;
       
     case AVCaptureFlashModeOn:
-      buttonImage = [UIImage imageNamed:@"flashOn"];
+      buttonImage = [UIImage imageNamed:@"cameraFlashOn"];
       break;
   }
   [self.flashButton setImage:buttonImage forState:UIControlStateNormal];
@@ -267,7 +267,7 @@
   }
   
   if (!self.focusArea) {
-    self.focusArea = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"autoFocus"]];
+    self.focusArea = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cameraFocus"]];
     [self.previewView addSubview:self.focusArea];
   }
 

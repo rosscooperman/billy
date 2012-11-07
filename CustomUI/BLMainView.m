@@ -39,10 +39,10 @@
   self.clipsToBounds = NO;
 
   // give the view the appropriate background image
-  self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"imgMainBackground"]];
+  self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"billBackground"]];
   
   // add the bottom border just below this view
-  UIImageView *bottomBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"stdBottomBorder"]];
+  UIImageView *bottomBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bottomBorder"]];
   bottomBorder.frame = CGRectMake(self.bounds.origin.x, self.bounds.size.height, self.bounds.size.width, 2.0f);
   bottomBorder.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
   [self addSubview:bottomBorder];

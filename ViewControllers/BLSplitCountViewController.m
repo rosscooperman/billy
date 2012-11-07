@@ -50,7 +50,7 @@
   
   // bump up the font size of the count label
   self.countLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:375.0];
-  self.realView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"imgBackground"]];  
+  self.realView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"viewBackground"]];  
 }
 
 

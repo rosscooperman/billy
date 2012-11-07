@@ -35,7 +35,7 @@
 
 - (void)customizeAppearance
 {
-  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"imgBackground"]];
+  self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"viewBackground"]];
 }
 
 @end

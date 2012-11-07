@@ -49,7 +49,7 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">cameraBackground.png</string>
+							<string key="NSResourceName">cameraPreviewFrame.png</string>
 						</object>
 					</object>
 					<object class="IBUIView" id="463004180">
@@ -112,7 +112,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">flashOff.png</string>
+							<string key="NSResourceName">cameraFlashOff.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="139455154">
 							<int key="type">2</int>
@@ -191,7 +191,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="512770005"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">stdBackArrow.png</string>
+							<string key="NSResourceName">navButtonBack.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="712374469">
 							<string key="name">Avenir-Medium</string>
@@ -240,7 +240,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="512770005"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">stdSkipArrow.png</string>
+							<string key="NSResourceName">navButtonSkip.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="712374469"/>
 						<reference key="IBUIFont" ref="87438988"/>
@@ -280,7 +280,7 @@
 						<reference key="IBUINormalTitleShadowColor" ref="512770005"/>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">stdCaptureCam.png</string>
+							<string key="NSResourceName">navButtonCamera.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="712374469"/>
 						<reference key="IBUIFont" ref="87438988"/>
@@ -634,12 +634,12 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="cameraBackground.png">{312, 397}</string>
-			<string key="flashOff.png">{33, 33}</string>
+			<string key="cameraFlashOff.png">{33, 33}</string>
+			<string key="cameraPreviewFrame.png">{312, 397}</string>
 			<string key="iconCamera.png">{23, 16}</string>
-			<string key="stdBackArrow.png">{26, 17}</string>
-			<string key="stdCaptureCam.png">{25, 17}</string>
-			<string key="stdSkipArrow.png">{29, 14}</string>
+			<string key="navButtonBack.png">{26, 17}</string>
+			<string key="navButtonCamera.png">{25, 17}</string>
+			<string key="navButtonSkip.png">{29, 14}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>
 	</data>
