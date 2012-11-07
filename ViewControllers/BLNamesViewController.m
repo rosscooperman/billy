@@ -46,20 +46,26 @@
 @synthesize contentArea;
 @synthesize nextScreenButton;
 @synthesize topTear;
+@synthesize bottomTear;
 @synthesize textFields;
 @synthesize activeField;
 @synthesize innerContainer;
 @synthesize bill;
 @synthesize people = _people;
-@synthesize normalTopTearY;
+
+
+#pragma mark - KVO Methods
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+  TFLog(@"%@: %@", keyPath, object);
+}
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
-{
-  self.normalTopTearY = 0.0;
-  
+{  
   [self showTourText:@"enter nicknames\ntap on a blank color. type. repeat. done." atPoint:CGPointMake(5.0, 5.0) animated:NO];
   if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
   
@@ -86,7 +92,7 @@
   
   CGFloat size = 1.0f / [UIScreen mainScreen].scale;
   CGFloat innerHeight = ((TEXT_BOX_HEIGHT + size) * self.bill.splitCount);
-  CGRect frame = CGRectMake(0.0f, 26.0f, 320.0f, innerHeight);
+  CGRect frame = CGRectMake(0.0f, 0.0f, 320.0f, innerHeight);
     
   self.innerContainer = [[UIView alloc] initWithFrame:frame];
   self.innerContainer.backgroundColor = [UIColor colorWithRed:0.54118 green:0.77255 blue:0.64706 alpha:1.0];
@@ -99,17 +105,18 @@
   }
   [self.textFields.lastObject setReturnKeyType:UIReturnKeyDone];
   
-  [self.contentArea addSubview:self.innerContainer];
+  [self.contentArea insertSubview:self.innerContainer atIndex:0];
   
   // add the bottom border of the inner container
-  UIImageView *bottomBorder = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, innerHeight + 26.0f, 320.0f, 2.0f)];
-  bottomBorder.image = [UIImage imageNamed:@"stdBottomBorder"];
+  UIImageView *bottomBorder = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, innerHeight, 320.0f, 2.0f)];
+  bottomBorder.image = [UIImage imageNamed:@"bottomBorder"];
   [self.contentArea addSubview:bottomBorder];
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
+  [self.contentArea addObserver:self forKeyPath:@"frame" options:0 context:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];  
 }
@@ -117,7 +124,16 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+  [self.contentArea removeObserver:self forKeyPath:@"frame"];
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  if (self.navigationController.navigationBarHidden) {
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+  }
 }
 
 
@@ -286,13 +302,14 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-  if (self.normalTopTearY <= 0.0) self.normalTopTearY = self.topTear.frame.origin.y;
-  
-  if (scrollView.contentOffset.y <= -9.0) {
-    CGRect frame = self.topTear.frame;
-    frame.origin.y = normalTopTearY + scrollView.contentOffset.y + 9.0;
-    self.topTear.frame = frame;
+  CGRect frame = self.topTear.frame;
+  if (scrollView.contentOffset.y <= -9.0f) {
+    frame.origin.y = CGRectGetMaxY(self.topTear.superview.bounds) + scrollView.contentOffset.y;
   }
+  else {
+    frame.origin.y = CGRectGetMaxY(self.topTear.superview.bounds) - 9.0f;
+  }
+  self.topTear.frame = frame;
 }
 
 

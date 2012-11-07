@@ -62,18 +62,6 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated
-{
-  [UIApplication sharedApplication].statusBarHidden = YES;
-}
-
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-  [UIApplication sharedApplication].statusBarHidden = NO;
-}
-
-
 - (void)viewDidAppear:(BOOL)animated
 {
   if (!self.navigationController.navigationBarHidden) {

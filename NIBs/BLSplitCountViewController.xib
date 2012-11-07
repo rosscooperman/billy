@@ -74,7 +74,7 @@
 					<object class="IBUIImageView" id="743785863">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrameSize">{320, 51}</string>
+						<string key="NSFrameSize">{320, 44}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="783908824"/>
@@ -93,7 +93,7 @@
 							<object class="IBUILabel" id="22227018">
 								<reference key="NSNextResponder" ref="783908824"/>
 								<int key="NSvFlags">274</int>
-								<string key="NSFrame">{{0, 26}, {320, 325}}</string>
+								<string key="NSFrame">{{0, 26}, {320, 332}}</string>
 								<reference key="NSSuperview" ref="783908824"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="810614581"/>
@@ -267,7 +267,7 @@
 										<reference key="IBUIFont" ref="968789451"/>
 									</object>
 								</array>
-								<string key="NSFrame">{{0, 137}, {320, 45}}</string>
+								<string key="NSFrame">{{0, 140}, {320, 45}}</string>
 								<reference key="NSSuperview" ref="783908824"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="959852004"/>
@@ -279,7 +279,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 51}, {320, 345}}</string>
+						<string key="NSFrame">{{0, 44}, {320, 352}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="22227018"/>
@@ -689,7 +689,7 @@
 			<string key="buttonAdd.png">{13, 13}</string>
 			<string key="buttonSubtract.png">{13, 4}</string>
 			<string key="navButtonCheck.png">{22, 17}</string>
-			<string key="navigationBar.png">{320, 51}</string>
+			<string key="navigationBar.png">{320, 44}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>
 	</data>
