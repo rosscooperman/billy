@@ -8,12 +8,10 @@
 
 #import "BLViewController.h"
 
-@interface BLNamesViewController : BLViewController <UITextFieldDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate>
+@interface BLNamesViewController : BLViewController <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
-@property (nonatomic, strong) IBOutlet UIImageView *topTear;
-@property (nonatomic, strong) IBOutlet UIImageView *bottomTear;
 
 
 - (IBAction)nextScreen:(id)sender;

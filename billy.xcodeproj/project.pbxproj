@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		910945EF164C362600CBD8E2 /* BLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 910945EE164C362600CBD8E2 /* BLScrollView.m */; };
 		913F91D21649AED40057A3A5 /* cameraPreviewFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D01649AED40057A3A5 /* cameraPreviewFrame.png */; };
 		913F91D31649AED40057A3A5 /* cameraPreviewFrame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D11649AED40057A3A5 /* cameraPreviewFrame@2x.png */; };
 		913F91D71649B4AB0057A3A5 /* navButtonSkip.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D51649B4AB0057A3A5 /* navButtonSkip.png */; };
@@ -140,6 +141,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		910945ED164C362600CBD8E2 /* BLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLScrollView.h; path = CustomUI/BLScrollView.h; sourceTree = "<group>"; };
+		910945EE164C362600CBD8E2 /* BLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLScrollView.m; path = CustomUI/BLScrollView.m; sourceTree = "<group>"; };
 		913F91D01649AED40057A3A5 /* cameraPreviewFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraPreviewFrame.png; sourceTree = "<group>"; };
 		913F91D11649AED40057A3A5 /* cameraPreviewFrame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraPreviewFrame@2x.png"; sourceTree = "<group>"; };
 		913F91D51649B4AB0057A3A5 /* navButtonSkip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navButtonSkip.png; sourceTree = "<group>"; };
@@ -432,6 +435,8 @@
 				916E7075163B3A1D0082ECD1 /* BLProgressButton.m */,
 				9148AE081579473700985CA0 /* BLTextField.h */,
 				9148AE091579473700985CA0 /* BLTextField.m */,
+				910945ED164C362600CBD8E2 /* BLScrollView.h */,
+				910945EE164C362600CBD8E2 /* BLScrollView.m */,
 			);
 			name = "Custom UI";
 			sourceTree = "<group>";
@@ -811,6 +816,7 @@
 				919458631617E56300E0B710 /* BLViewController.m in Sources */,
 				9194586A1618014400E0B710 /* BLMainView.m in Sources */,
 				916E7076163B3A1D0082ECD1 /* BLProgressButton.m in Sources */,
+				910945EF164C362600CBD8E2 /* BLScrollView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

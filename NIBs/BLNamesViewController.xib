@@ -13,7 +13,6 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
-			<string>IBUIImageView</string>
 			<string>IBUIScrollView</string>
 			<string>IBUITapGestureRecognizer</string>
 			<string>IBUIView</string>
@@ -41,58 +40,11 @@
 					<object class="IBUIScrollView" id="1066498837">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<array class="NSMutableArray" key="NSSubviews">
-							<object class="IBUIView" id="386530814">
-								<reference key="NSNextResponder" ref="1066498837"/>
-								<int key="NSvFlags">288</int>
-								<array class="NSMutableArray" key="NSSubviews">
-									<object class="IBUIImageView" id="73766380">
-										<reference key="NSNextResponder" ref="386530814"/>
-										<int key="NSvFlags">269</int>
-										<string key="NSFrame">{{0, 991}, {320, 5}}</string>
-										<reference key="NSSuperview" ref="386530814"/>
-										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="162700951"/>
-										<string key="NSReuseIdentifierKey">_NS:9</string>
-										<bool key="IBUIUserInteractionEnabled">NO</bool>
-										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<object class="NSCustomResource" key="IBUIImage">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">tearTop.png</string>
-										</object>
-									</object>
-									<object class="IBUIImageView" id="162700951">
-										<reference key="NSNextResponder" ref="386530814"/>
-										<int key="NSvFlags">269</int>
-										<string key="NSFrame">{{0, 995}, {320, 5}}</string>
-										<reference key="NSSuperview" ref="386530814"/>
-										<reference key="NSWindow"/>
-										<reference key="NSNextKeyView" ref="682326280"/>
-										<string key="NSReuseIdentifierKey">_NS:9</string>
-										<bool key="IBUIUserInteractionEnabled">NO</bool>
-										<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-										<object class="NSCustomResource" key="IBUIImage">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">tearBottom.png</string>
-										</object>
-									</object>
-								</array>
-								<string key="NSFrame">{{0, -1000}, {320, 1000}}</string>
-								<reference key="NSSuperview" ref="1066498837"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView" ref="73766380"/>
-								<string key="NSReuseIdentifierKey">_NS:9</string>
-								<object class="NSColor" key="IBUIBackgroundColor">
-									<int key="NSColorSpace">1</int>
-									<bytes key="NSRGB">MC45NDExNzY0NzA2IDAuOTQ5MDE5NjA3OCAwLjk0NTA5ODAzOTIAA</bytes>
-								</object>
-								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-							</object>
-						</array>
+						<array class="NSMutableArray" key="NSSubviews"/>
 						<string key="NSFrameSize">{320, 356}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="386530814"/>
+						<reference key="NSNextKeyView" ref="682326280"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIClipsSubviews">YES</bool>
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
@@ -244,22 +196,6 @@
 					<int key="connectionID">21</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">topTear</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="73766380"/>
-					</object>
-					<int key="connectionID">26</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">bottomTear</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="162700951"/>
-					</object>
-					<int key="connectionID">28</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="191373211"/>
@@ -278,14 +214,6 @@
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
 					<int key="connectionID">12</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="1066498837"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">27</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -360,9 +288,7 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">6</int>
 						<reference key="object" ref="1066498837"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="386530814"/>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Content Area</string>
 					</object>
@@ -377,28 +303,6 @@
 						<reference key="object" ref="682326280"/>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Back Button</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">23</int>
-						<reference key="object" ref="386530814"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="73766380"/>
-							<reference ref="162700951"/>
-						</array>
-						<reference key="parent" ref="1066498837"/>
-						<string key="objectName">Top Overflow</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">24</int>
-						<reference key="object" ref="73766380"/>
-						<reference key="parent" ref="386530814"/>
-						<string key="objectName">Top Tear</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">25</int>
-						<reference key="object" ref="162700951"/>
-						<reference key="parent" ref="386530814"/>
-						<string key="objectName">Bottom Tear</string>
 					</object>
 				</array>
 			</object>
@@ -417,9 +321,7 @@
 				<string key="19.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="2" key="19.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="0.0" key="19.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
-				<string key="23.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<string key="25.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="6.CustomClassName">BLScrollView</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
@@ -453,16 +355,10 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="bottomTear">UIImageView</string>
 						<string key="contentArea">UIScrollView</string>
 						<string key="nextScreenButton">UIButton</string>
-						<string key="topTear">UIImageView</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="bottomTear">
-							<string key="name">bottomTear</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="contentArea">
 							<string key="name">contentArea</string>
 							<string key="candidateClassName">UIScrollView</string>
@@ -470,10 +366,6 @@
 						<object class="IBToOneOutletInfo" key="nextScreenButton">
 							<string key="name">nextScreenButton</string>
 							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="topTear">
-							<string key="name">topTear</string>
-							<string key="candidateClassName">UIImageView</string>
 						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -487,6 +379,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/BLProgressButton.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">BLScrollView</string>
+					<string key="superclassName">UIScrollView</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/BLScrollView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -510,8 +410,6 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="navButtonBack.png">{26, 17}</string>
 			<string key="navButtonCheck.png">{22, 17}</string>
-			<string key="tearBottom.png">{320, 5}</string>
-			<string key="tearTop.png">{320, 6}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1930</string>
 	</data>
