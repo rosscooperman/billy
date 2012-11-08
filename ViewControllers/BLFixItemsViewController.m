@@ -6,10 +6,9 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#define TEXT_BOX_HEIGHT 45
-#define QUANTITY_BOX_WIDTH 45
-#define NAME_BOX_WIDTH 189
-#define PRICE_BOX_WIDTH 72
+#define TEXT_BOX_HEIGHT 45.0f
+#define QUANTITY_BOX_WIDTH 40.0f
+#define PRICE_BOX_WIDTH 85.0f
 
 
 #import <QuartzCore/QuartzCore.h>
@@ -50,11 +49,13 @@ typedef enum {
 @property (nonatomic, assign) BLTourStep tourStep;
 @property (readonly) CGPoint tourInsertionPoint;
 @property (nonatomic, assign) BOOL shouldMarkTourShown;
+@property (nonatomic, strong) UIView *contentBackground;
+@property (nonatomic, assign) CGFloat borderWidth;
 
 
 - (void)findLineItems;
 - (void)generateTextFields;
-- (BLTextField *)generateTextField;
+- (BLTextField *)generateTextFieldForIndex:(NSInteger)index;
 - (UIView *)generateViewForIndex:(NSInteger)index;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
@@ -79,12 +80,15 @@ typedef enum {
 @synthesize activeField;
 @synthesize bill;
 @synthesize tourStep;
+@synthesize contentBackground;
+@synthesize borderWidth;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
-{  
+{
+  self.borderWidth = 1.0f / [UIScreen mainScreen].scale;
   self.bill = [BLAppDelegate appDelegate].currentBill;
   self.lineItems = [NSMutableArray array];
     
@@ -134,6 +138,14 @@ typedef enum {
 - (void)viewWillDisappear:(BOOL)animated
 {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+- (void)viewDidAppear:(BOOL)animated
+{
+  if (self.navigationController.navigationBarHidden) {
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+  }
 }
 
 
@@ -208,11 +220,27 @@ typedef enum {
   NSInteger count = self.lineItems.count;
   self.dataFields = [NSMutableArray arrayWithCapacity:count];
   
+  // add the individual line item views
   for (NSInteger i = 0; i < count; i++) {
     [self.contentArea addSubview:[self generateViewForIndex:i]];
   }
-  self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * count) + 8);
-  self.contentArea.contentInset = UIEdgeInsetsMake(0.0, 0.0, 75.0, 0.0);
+  
+  // set up the content area so it will scroll correctly
+  self.contentArea.contentSize = CGSizeMake(320.0f, (TEXT_BOX_HEIGHT + self.borderWidth) * count);
+  self.contentArea.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 75.0f, 0.0f);
+  
+  // add a background view to provide the lines between items
+  CGRect bgFrame = (CGRect){ CGPointMake(0.0f, -self.borderWidth), self.contentArea.contentSize };
+  self.contentBackground = [[UIView alloc] initWithFrame:bgFrame];
+  self.contentBackground.autoresizesSubviews = YES;
+  self.contentBackground.backgroundColor = [UIColor colorWithRed:0.54118f green:0.77255f blue:0.64706f alpha:1.0f];
+  [self.contentArea insertSubview:self.contentBackground atIndex:0];
+  
+  // add a bottom border to the background view
+  UIImageView *bottomBorder = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, CGRectGetMaxY(bgFrame) + self.borderWidth, 320.0f, 2.0f)];
+  bottomBorder.image = [UIImage imageNamed:@"bottomBorder"];
+  bottomBorder.autoresizingMask = UIViewAutoresizingFlexibleTopMargin;
+  [self.contentBackground addSubview:bottomBorder];
 }
 
 
@@ -221,13 +249,13 @@ typedef enum {
   LineItem *lineItem = [self.lineItems objectAtIndex:index];
   
   // create the wrapper that will surround all of the text fields
-  CGRect frame = CGRectMake(5, 25 + ((TEXT_BOX_HEIGHT + 2) * index), 310, TEXT_BOX_HEIGHT);
+  CGRect frame = CGRectMake(0.0f, (TEXT_BOX_HEIGHT + self.borderWidth) * index, 320.0f, TEXT_BOX_HEIGHT);
   UIView *wrapper = [[UIView alloc] initWithFrame:frame];
-  
+    
   // generate the quantity text field
-  BLTextField *quantity = [self generateTextField];
-  quantity.frame = CGRectMake(0, 0, QUANTITY_BOX_WIDTH, TEXT_BOX_HEIGHT);
-  quantity.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:20];
+  BLTextField *quantity = [self generateTextFieldForIndex:index];
+  quantity.frame = CGRectMake(0.0f, 0.0f, QUANTITY_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  quantity.font = [UIFont fontWithName:@"Avenir-Heavy" size:18];
   quantity.text = (lineItem.quantity > 0) ? [NSString stringWithFormat:@"%lld", lineItem.quantity] : @"";
   quantity.textAlignment = UITextAlignmentCenter;
   quantity.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
@@ -236,20 +264,20 @@ typedef enum {
   [wrapper addSubview:quantity];
   
   // generate the name text field
-  BLTextField *name = [self generateTextField];
-  name.frame = CGRectMake(2 + QUANTITY_BOX_WIDTH, 0, NAME_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  BLTextField *name = [self generateTextFieldForIndex:index];
+  CGFloat width = 320.0f - ((2.0f * self.borderWidth) + QUANTITY_BOX_WIDTH + PRICE_BOX_WIDTH);
+  name.frame = CGRectMake(CGRectGetMaxX(quantity.frame) + self.borderWidth, 0.0f, width, TEXT_BOX_HEIGHT);
   name.text = [lineItem.desc uppercaseString];
-  name.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
+  name.autocapitalizationType = UITextAutocapitalizationTypeWords;
   name.tag = 1;
-  name.placeholder = @"DESCRIPTION";
+  name.placeholder = @"Description";
   [wrapper addSubview:name];
   
   // generate the price field
-  BLTextField *price = [self generateTextField];
-  price.frame = CGRectMake(4 + QUANTITY_BOX_WIDTH + NAME_BOX_WIDTH, 0, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
-  price.font = [UIFont fontWithName:@"Futura-CondensedExtraBold" size:16];
-  price.text = (lineItem.price > 0.0) ? [NSString stringWithFormat:@"%.2f", lineItem.price] : @"";
-  price.textAlignment = UITextAlignmentCenter;
+  BLTextField *price = [self generateTextFieldForIndex:index];
+  price.frame = CGRectMake(CGRectGetMaxX(name.frame) + self.borderWidth, 0.0f, PRICE_BOX_WIDTH, TEXT_BOX_HEIGHT);
+  price.text = (lineItem.price > 0.0f) ? [NSString stringWithFormat:@"%.2f", lineItem.price] : @"";
+  price.textAlignment = UITextAlignmentRight;
   price.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
   price.tag = 2;
   price.placeholder = @"0.00";
@@ -260,23 +288,22 @@ typedef enum {
   [self.dataFields addObject:fields];
   
   // add a pan gesture recognizer to the wrapper
-  UISwipeGestureRecognizer *swipeToDelete = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToDelete:)];
-  swipeToDelete.numberOfTouchesRequired = 1;
-  [wrapper addGestureRecognizer:swipeToDelete];
+//  UISwipeGestureRecognizer *swipeToDelete = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeToDelete:)];
+//  swipeToDelete.numberOfTouchesRequired = 1;
+//  [wrapper addGestureRecognizer:swipeToDelete];
   
   return wrapper;
 }
 
 
-- (BLTextField *)generateTextField
+- (BLTextField *)generateTextFieldForIndex:(NSInteger)index
 {
   BLTextField *textField = [[BLTextField alloc] init];
-  textField.backgroundColor = [UIColor colorWithWhite:0.88627451 alpha:1.0];
+  textField.backgroundColor = (index % 2 == 0) ? [UIColor whiteColor] : [UIColor colorWithRed:0.97255f green:0.99608f blue:0.98824f alpha:1.0f];
   textField.textColor = [UIColor blackColor];
   textField.borderStyle = UITextBorderStyleNone;
-  textField.font = [UIFont fontWithName:@"Futura-Medium" size:16];
+  textField.font = [UIFont fontWithName:@"Avenir" size:18.0f];
   textField.autocorrectionType = UITextAutocorrectionTypeNo;
-  textField.keyboardAppearance = UIKeyboardAppearanceAlert;
   textField.autocapitalizationType = UITextAutocapitalizationTypeAllCharacters;
   textField.returnKeyType = UIReturnKeyDone;
   textField.delegate = self;
@@ -290,16 +317,16 @@ typedef enum {
   NSDictionary *info = [notification userInfo];
   CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
   
-  UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize.height + 30, 0.0);
+  UIEdgeInsets contentInsets = UIEdgeInsetsMake(0.0f, 0.0f, keyboardSize.height + 30.0f, 0.0f);
   self.contentArea.contentInset = contentInsets;
   self.contentArea.scrollIndicatorInsets = contentInsets;
   
   CGRect frame = self.contentArea.frame;
   frame.size.height -= keyboardSize.height;
   CGPoint translatedOrigin = [self.view convertPoint:activeField.superview.frame.origin fromView:self.contentArea];
-  translatedOrigin.y += TEXT_BOX_HEIGHT + 10;
+  translatedOrigin.y += TEXT_BOX_HEIGHT + 10.0f;
   if (!CGRectContainsPoint(frame, translatedOrigin) ) {
-    CGPoint scrollPoint = CGPointMake(0.0, self.activeField.superview.frame.origin.y - keyboardSize.height);
+    CGPoint scrollPoint = CGPointMake(0.0f, self.activeField.superview.frame.origin.y - keyboardSize.height);
     [self.contentArea setContentOffset:scrollPoint animated:YES];
   }
 }
@@ -307,8 +334,8 @@ typedef enum {
 
 - (void)keyboardHidden:(NSNotification *)notification
 {
-  [UIView animateWithDuration:0.3 animations:^{
-    self.contentArea.contentInset = UIEdgeInsetsMake(0.0, 0.0, 75.0, 0.0);
+  [UIView animateWithDuration:0.3f animations:^{
+    self.contentArea.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 75.0f, 0.0f);
     self.contentArea.scrollIndicatorInsets = UIEdgeInsetsZero;
   }];
 }
@@ -366,7 +393,8 @@ typedef enum {
         [quantity.superview removeFromSuperview];
         [blindView removeFromSuperview];
       }];
-      self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.dataFields.count) + 8);   
+      self.contentArea.contentSize = CGSizeMake(320.0f, (TEXT_BOX_HEIGHT + self.borderWidth) * self.dataFields.count);
+      self.contentBackground.frame = (CGRect){ CGPointMake(0.0f, -self.borderWidth), self.contentArea.contentSize };
     }
     else {
       quantity.enabled = NO;
@@ -688,7 +716,8 @@ typedef enum {
   
   UIView *newRow = [self generateViewForIndex:lineItem.index];
   [self.contentArea addSubview:newRow];
-  self.contentArea.contentSize = CGSizeMake(320, ((TEXT_BOX_HEIGHT + 2) * self.lineItems.count) + 8);
+  self.contentArea.contentSize = CGSizeMake(320.0f, (TEXT_BOX_HEIGHT + self.borderWidth) * self.lineItems.count);
+  self.contentBackground.frame = (CGRect){ CGPointMake(0.0f, -self.borderWidth), self.contentArea.contentSize };
   
   NSDictionary *fields = [self.dataFields objectAtIndex:lineItem.index];
   BLTextField *field = [fields objectForKey:@"quantity"];

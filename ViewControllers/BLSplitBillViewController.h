@@ -6,9 +6,9 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BLViewController.h"
 
-@interface BLSplitBillViewController : UIViewController
+@interface BLSplitBillViewController : BLViewController
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;

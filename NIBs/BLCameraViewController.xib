@@ -175,7 +175,7 @@
 					<object class="IBUIButton" id="1053867281">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">265</int>
-						<string key="NSFrame">{{120, 405}, {78, 50}}</string>
+						<string key="NSFrame">{{120, 405}, {80, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="177892031"/>
@@ -192,11 +192,11 @@
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<double key="IBUITitleEdgeInsets.top">30</double>
 						<double key="IBUITitleEdgeInsets.bottom">0.0</double>
-						<double key="IBUITitleEdgeInsets.left">-12</double>
+						<double key="IBUITitleEdgeInsets.left">-15</double>
 						<double key="IBUITitleEdgeInsets.right">13</double>
 						<double key="IBUIImageEdgeInsets.top">0.0</double>
 						<double key="IBUIImageEdgeInsets.bottom">16</double>
-						<double key="IBUIImageEdgeInsets.left">26</double>
+						<double key="IBUIImageEdgeInsets.left">22</double>
 						<double key="IBUIImageEdgeInsets.right">0.0</double>
 						<int key="IBUILineBreakMode">2</int>
 						<string key="IBUINormalTitle">SKIP</string>
@@ -215,9 +215,10 @@
 					<object class="IBUIButton" id="177892031">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">265</int>
-						<string key="NSFrame">{{203, 405}, {112, 50}}</string>
+						<string key="NSFrame">{{205, 405}, {110, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -232,11 +233,11 @@
 						<bool key="IBUIAdjustsImageWhenDisabled">NO</bool>
 						<double key="IBUITitleEdgeInsets.top">30</double>
 						<double key="IBUITitleEdgeInsets.bottom">0.0</double>
-						<double key="IBUITitleEdgeInsets.left">-9</double>
+						<double key="IBUITitleEdgeInsets.left">-10</double>
 						<double key="IBUITitleEdgeInsets.right">13</double>
 						<double key="IBUIImageEdgeInsets.top">0.0</double>
 						<double key="IBUIImageEdgeInsets.bottom">16</double>
-						<double key="IBUIImageEdgeInsets.left">43</double>
+						<double key="IBUIImageEdgeInsets.left">41</double>
 						<double key="IBUIImageEdgeInsets.right">0.0</double>
 						<int key="IBUILineBreakMode">2</int>
 						<string key="IBUINormalTitle">CONTINUE</string>
@@ -465,7 +466,7 @@
 				<string key="24.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="27.CustomClassName">BLProgressButton</string>
 				<string key="27.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="2" key="27.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
+				<real value="1" key="27.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="0.0" key="27.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="28.CustomClassName">BLProgressButton</string>
 				<string key="28.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -474,7 +475,7 @@
 				<string key="32.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="33.CustomClassName">BLProgressButton</string>
 				<string key="33.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="33.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
+				<real value="2" key="33.IBUIButtonInspectorSelectedEdgeInsetMetadataKey"/>
 				<real value="0.0" key="33.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>

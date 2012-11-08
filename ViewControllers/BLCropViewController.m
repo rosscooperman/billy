@@ -78,6 +78,10 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
+  if (!self.navigationController.navigationBarHidden) {
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+  }
+  
   if (self.photoData) {
     self.previewView.alpha = 0.0;
     self.previewView.image = [UIImage imageWithData:self.photoData];

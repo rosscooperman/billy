@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BLViewController.h"
 
 
-@interface BLFixItemsViewController : UIViewController <UITextFieldDelegate>
+@interface BLFixItemsViewController : BLViewController <UITextFieldDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
