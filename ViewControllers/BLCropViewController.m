@@ -64,6 +64,7 @@
 @synthesize cropRight;
 @synthesize cropBottom;
 @synthesize processImageButton;
+@synthesize iconMask;
 @synthesize processingImageIndicator;
 
 
@@ -81,8 +82,8 @@
     self.previewView.alpha = 0.0;
     self.previewView.image = [UIImage imageWithData:self.photoData];
         
-    self.cropTop = self.delta + 20.0;
-    self.cropBottom = self.previewView.bounds.size.height - self.delta - 20.0;
+    //self.cropTop = self.delta + 20.0;
+    //self.cropBottom = self.previewView.bounds.size.height - self.delta - 20.0;
     [self adjustCropRectangle];
   
     [UIView animateWithDuration:0.3 animations:^{
@@ -173,7 +174,7 @@
   self.topMask.path = [UIBezierPath bezierPathWithRect:box].CGPath;
 
   // ...the right masking segment
-  box = CGRectMake(self.cropRight, 0.0, self.leftMask.bounds.size.width - self.cropLeft, self.leftMask.bounds.size.height);
+  box = CGRectMake(self.cropRight, 0.0, self.cropBoundary.bounds.size.width - self.cropRight, self.leftMask.bounds.size.height);
   self.rightMask.path = [UIBezierPath bezierPathWithRect:box].CGPath;
   
   // ...the bottom masking segment
@@ -416,25 +417,27 @@
     case UIGestureRecognizerStateChanged: {
       CGPoint newPanPoint = [recognizer translationInView:self.view];
       if (recognizer.view == self.leftHandle) {
-        CGFloat newX = self.cropLeft + (newPanPoint.x - self.lastPanPoint.x);
+        CGFloat newX = MAX(1.0, self.cropLeft + (newPanPoint.x - self.lastPanPoint.x));
         if (newX > 0 && newX < self.cropRight - 100) {
           self.cropLeft = newX;
         }        
       }
       else if (recognizer.view == self.topHandle) {
-        CGFloat newY = self.cropTop + (newPanPoint.y - self.lastPanPoint.y);
+        CGFloat newY = MAX(1.0, self.cropTop + (newPanPoint.y - self.lastPanPoint.y));
         if (newY > self.delta && newY < self.cropBottom - 100) {
           self.cropTop = newY;
         }
       }
       else if (recognizer.view == self.rightHandle) {
-        CGFloat newX = self.cropRight + (newPanPoint.x - self.lastPanPoint.x);
+        CGFloat min = CGRectGetMaxX(self.cropBoundary.bounds) - 1.0;
+        CGFloat newX = MIN(min, self.cropRight + (newPanPoint.x - self.lastPanPoint.x));
         if (newX < self.cropBoundary.frame.size.width && newX > self.cropLeft + 100) {
           self.cropRight = newX;
         }
       }
       else if (recognizer.view == self.bottomHandle) {
-        CGFloat newY = self.cropBottom + (newPanPoint.y - self.lastPanPoint.y);
+        CGFloat min = CGRectGetMaxY(self.cropBoundary.bounds) - 1.0;
+        CGFloat newY = MIN(min, self.cropBottom + (newPanPoint.y - self.lastPanPoint.y));
         if (newY < self.cropBoundary.frame.size.height - self.delta && newY > self.cropTop + 100) {
           self.cropBottom = newY;
         }
@@ -457,7 +460,7 @@
 
 - (void)processImage:(id)sender
 {
-  [self.processImageButton setImage:nil forState:UIControlStateNormal];
+  self.iconMask.hidden = NO;
   [self.processingImageIndicator startAnimating];
   [CATransaction commit];
   

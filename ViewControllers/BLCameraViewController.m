@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#define CAMERA_BUTTON_COLOR [UIColor colorWithRed:0.0 green:0.8 blue:0.294117647 alpha:0.80]
+#define CAMERA_BUTTON_COLOR [UIColor colorWithRed:0.42353 green:0.69804 blue:0.55294 alpha:1.0]
 
 
 #import <ImageIO/CGImageProperties.h>
@@ -201,42 +201,42 @@
 
 - (void)takePicture:(id)sender
 {
-//  self.cameraButton.enabled = NO;
-//  self.skipCameraButton.enabled = NO;
-//  self.previousScreenButton.enabled = NO;
-//  
-//  self.cameraButton.backgroundColor = [UIColor lightGrayColor];
-//  [UIView animateWithDuration:0.3 animations:^{
-//    self.mask.alpha = 1.0;
-//  }];
-//  
-//  AVCaptureConnection *captureConnection = [self.stillCapturer.connections objectAtIndex:0];
-//  [self.stillCapturer captureStillImageAsynchronouslyFromConnection:captureConnection completionHandler:
-//    ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-//      [self.captureSession stopRunning];
-//      if (error) {
-//        TFLog(@"Error getting a still capture: %@", error);
-//      }
-//      else {
-//        BLCropViewController *cropController = [[BLCropViewController alloc] init];
-//        cropController.photoData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-//        [self.navigationController pushViewController:cropController animated:YES];
-//        
-//        if ([BLAppDelegate appDelegate].shouldSendFeedback) {
-//          [[BLAppDelegate appDelegate].currentBill storeOriginalImage:cropController.photoData];
-//        }
-//      }
-//    }
-//  ];
+  self.cameraButton.enabled = NO;
+  self.skipCameraButton.enabled = NO;
+  self.previousScreenButton.enabled = NO;
+  
+  self.cameraButton.backgroundColor = [UIColor lightGrayColor];
+  [UIView animateWithDuration:0.3 animations:^{
+    self.mask.alpha = 1.0;
+  }];
+
+  AVCaptureConnection *captureConnection = [self.stillCapturer.connections objectAtIndex:0];
+  [self.stillCapturer captureStillImageAsynchronouslyFromConnection:captureConnection completionHandler:
+    ^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
+      [self.captureSession stopRunning];
+      if (error) {
+        TFLog(@"Error getting a still capture: %@", error);
+      }
+      else {
+        BLCropViewController *cropController = [[BLCropViewController alloc] init];
+        cropController.photoData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
+        [self.navigationController pushViewController:cropController animated:YES];
+        
+        if ([BLAppDelegate appDelegate].shouldSendFeedback) {
+          [[BLAppDelegate appDelegate].currentBill storeOriginalImage:cropController.photoData];
+        }
+      }
+    }
+  ];
 }
 
 
 - (void)skipCamera:(id)sender
 {
-//  [BLAppDelegate appDelegate].currentBill.rawText = @"";
-//  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
-//  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
-//  [self.navigationController pushViewController:fixItemsController animated:YES];
+  [BLAppDelegate appDelegate].currentBill.rawText = @"";
+  [[BLAppDelegate appDelegate].managedObjectContext save:nil];
+  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
+  [self.navigationController pushViewController:fixItemsController animated:YES];
 }
 
 

@@ -6,11 +6,11 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BLViewController.h"
 #import "Tesseract.h"
 
 
-@interface BLCropViewController : UIViewController {
+@interface BLCropViewController : BLViewController {
   TessBaseAPI *_tesseract;
 }
 
@@ -23,6 +23,7 @@
 @property (nonatomic, strong) IBOutlet UIButton *rightHandle;
 @property (nonatomic, strong) IBOutlet UIButton *bottomHandle;
 @property (nonatomic, strong) IBOutlet UIButton *processImageButton;
+@property (nonatomic, strong) IBOutlet UIView *iconMask;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *processingImageIndicator;
 
 
