@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		910945EF164C362600CBD8E2 /* BLScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 910945EE164C362600CBD8E2 /* BLScrollView.m */; };
+		910945F3164D807000CBD8E2 /* BLPaddedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 910945F2164D807000CBD8E2 /* BLPaddedTextField.m */; };
+		910945F6164D925500CBD8E2 /* BLFeedback.m in Sources */ = {isa = PBXBuildFile; fileRef = 910945F5164D925500CBD8E2 /* BLFeedback.m */; };
 		913F91D21649AED40057A3A5 /* cameraPreviewFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D01649AED40057A3A5 /* cameraPreviewFrame.png */; };
 		913F91D31649AED40057A3A5 /* cameraPreviewFrame@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D11649AED40057A3A5 /* cameraPreviewFrame@2x.png */; };
 		913F91D71649B4AB0057A3A5 /* navButtonSkip.png in Resources */ = {isa = PBXBuildFile; fileRef = 913F91D51649B4AB0057A3A5 /* navButtonSkip.png */; };
@@ -143,6 +145,10 @@
 /* Begin PBXFileReference section */
 		910945ED164C362600CBD8E2 /* BLScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLScrollView.h; path = CustomUI/BLScrollView.h; sourceTree = "<group>"; };
 		910945EE164C362600CBD8E2 /* BLScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLScrollView.m; path = CustomUI/BLScrollView.m; sourceTree = "<group>"; };
+		910945F1164D807000CBD8E2 /* BLPaddedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLPaddedTextField.h; path = CustomUI/BLPaddedTextField.h; sourceTree = "<group>"; };
+		910945F2164D807000CBD8E2 /* BLPaddedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLPaddedTextField.m; path = CustomUI/BLPaddedTextField.m; sourceTree = "<group>"; };
+		910945F4164D925500CBD8E2 /* BLFeedback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLFeedback.h; path = OtherClasses/BLFeedback.h; sourceTree = "<group>"; };
+		910945F5164D925500CBD8E2 /* BLFeedback.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLFeedback.m; path = OtherClasses/BLFeedback.m; sourceTree = "<group>"; };
 		913F91D01649AED40057A3A5 /* cameraPreviewFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraPreviewFrame.png; sourceTree = "<group>"; };
 		913F91D11649AED40057A3A5 /* cameraPreviewFrame@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraPreviewFrame@2x.png"; sourceTree = "<group>"; };
 		913F91D51649B4AB0057A3A5 /* navButtonSkip.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navButtonSkip.png; sourceTree = "<group>"; };
@@ -431,6 +437,8 @@
 			children = (
 				919458681618014400E0B710 /* BLMainView.h */,
 				919458691618014400E0B710 /* BLMainView.m */,
+				910945F1164D807000CBD8E2 /* BLPaddedTextField.h */,
+				910945F2164D807000CBD8E2 /* BLPaddedTextField.m */,
 				916E7074163B3A1D0082ECD1 /* BLProgressButton.h */,
 				916E7075163B3A1D0082ECD1 /* BLProgressButton.m */,
 				9148AE081579473700985CA0 /* BLTextField.h */,
@@ -629,6 +637,8 @@
 			children = (
 				91CAC83D157E6704001B500F /* BLAppDelegate.h */,
 				91CAC83E157E6704001B500F /* BLAppDelegate.m */,
+				910945F4164D925500CBD8E2 /* BLFeedback.h */,
+				910945F5164D925500CBD8E2 /* BLFeedback.m */,
 				91E62D1815CC7F2B00E3AD5D /* UIViewController+ButtonManagement.h */,
 				91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */,
 				91E62D1515CC654A00E3AD5D /* UIViewController+GuidedTour.h */,
@@ -817,6 +827,8 @@
 				9194586A1618014400E0B710 /* BLMainView.m in Sources */,
 				916E7076163B3A1D0082ECD1 /* BLProgressButton.m in Sources */,
 				910945EF164C362600CBD8E2 /* BLScrollView.m in Sources */,
+				910945F3164D807000CBD8E2 /* BLPaddedTextField.m in Sources */,
+				910945F6164D925500CBD8E2 /* BLFeedback.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,6 +9,7 @@
 #import "BLAppDelegate.h"
 #import "BLSplitCountViewController.h"
 #import "Bill.h"
+#import "BLFeedback.h"
 
 
 @interface BLAppDelegate ()
@@ -57,7 +58,7 @@
 {
   // don't care about the answer, just want to ask the user as early as possible
   [self shouldSendFeedback];
-  [Bill processPendingFeedback];
+  [BLFeedback processPendingFeedback];
 }
 
 

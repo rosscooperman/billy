@@ -16,26 +16,24 @@
 #import "BLNamesViewController.h"
 #import "BLCameraViewController.h"
 #import "BLFixItemsViewController.h"
-#import "BLTextField.h"
+#import "BLPaddedTextField.h"
 #import "Bill.h"
 #import "Person.h"
 
 
 @interface BLNamesViewController ()
 
-@property (nonatomic, strong) NSMutableArray *textFields;
 @property (nonatomic, unsafe_unretained) UITextField *activeField;
 @property (nonatomic, strong) UIView *innerContainer;
 @property (nonatomic, strong) Bill *bill;
-@property (readonly, nonatomic, strong) NSArray *people;
 
 
-- (UIView *)generateTextFieldForIndex:(NSInteger)index;
-- (UIView *)generateLeftPaddingForIndex:(NSInteger)index;
-- (UIView *)generateRightPaddingForIndex:(NSInteger)index;
+//- (UIView *)generateTextFieldForIndex:(NSInteger)index;
+//- (UIView *)generateLeftPaddingForIndex:(NSInteger)index;
+//- (UIView *)generateRightPaddingForIndex:(NSInteger)index;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
-- (NSArray *)nameDefaults;
+//- (NSArray *)nameDefaults;
 
 @end
 
@@ -44,40 +42,17 @@
 
 @synthesize contentArea;
 @synthesize nextScreenButton;
-@synthesize textFields;
 @synthesize activeField;
 @synthesize innerContainer;
 @synthesize bill;
-@synthesize people = _people;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {  
-  [self showTourText:@"enter nicknames\ntap on a blank color. type. repeat. done." atPoint:CGPointMake(5.0, 5.0) animated:NO];
-  if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
-  
   // fetch the current bill from the app delegate and allocate an array for the name views we're going to create
   self.bill = [BLAppDelegate appDelegate].currentBill;
-  self.textFields = [NSMutableArray arrayWithCapacity:self.bill.splitCount];
-  
-  // fetch a list of names from the last bill
-  NSArray *previousNames = [self nameDefaults];
-  
-  // make sure the associated bill has enough person objects created
-  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
-  NSInteger shortfall = self.bill.splitCount - self.bill.people.count;
-  for (NSInteger i = 0; i < shortfall; i++) {
-    Person *person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:context];
-    person.index = self.bill.people.count;
-    if (previousNames.count > person.index) {
-      person.name = [previousNames objectAtIndex:person.index];
-    }
-    [self.bill addPeopleObject:person];
-  }
-  [context save:nil];
-  [context refreshObject:self.bill mergeChanges:NO];
   
   CGFloat size = 1.0f / [UIScreen mainScreen].scale;
   CGFloat innerHeight = ((TEXT_BOX_HEIGHT + size) * self.bill.splitCount);
@@ -85,21 +60,17 @@
     
   self.innerContainer = [[UIView alloc] initWithFrame:frame];
   self.innerContainer.backgroundColor = [UIColor colorWithRed:0.54118 green:0.77255 blue:0.64706 alpha:1.0];
-  self.contentArea.contentSize = CGSizeMake(320, MAX(self.contentArea.frame.size.height, frame.size.height));
-    
-  for (NSInteger i = 0; i < self.bill.splitCount; i++) {
-    [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
-    [self.innerContainer addSubview:[self generateLeftPaddingForIndex:i]];
-    [self.innerContainer addSubview:[self generateRightPaddingForIndex:i]];
-  }
-  [self.textFields.lastObject setReturnKeyType:UIReturnKeyDone];
+  self.contentArea.contentSize = CGSizeMake(320.0f, frame.size.height);
   
+//  for (NSInteger i = 0; i < self.bill.splitCount; i++) {
+//    BLPaddedTextField *
+//    [self.innerContainer addSubview:[]]
+//    [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
+//    [self.innerContainer addSubview:[self generateLeftPaddingForIndex:i]];
+//    [self.innerContainer addSubview:[self generateRightPaddingForIndex:i]];
+//  }
+//  
   [self.contentArea insertSubview:self.innerContainer atIndex:0];
-  
-  // add the bottom border of the inner container
-  UIImageView *bottomBorder = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, innerHeight - size, 320.0f, 2.0f)];
-  bottomBorder.image = [UIImage imageNamed:@"bottomBorder"];
-  [self.contentArea addSubview:bottomBorder];
 }
 
 
@@ -124,67 +95,55 @@
 }
 
 
-#pragma mark - Property Implementations
-
-- (NSArray *)people
-{
-  if (!_people) {
-    NSSortDescriptor *indexDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES];
-    _people = [self.bill.people sortedArrayUsingDescriptors:[NSArray arrayWithObject:indexDescriptor]];
-  }
-  return _people;
-}
-
-
 #pragma mark - Instance Methods
 
-- (UIView *)generateTextFieldForIndex:(NSInteger)index
-{
-  // calculate the size of separator lines (based on screen scale) and create a frame for the text box
-  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
-  CGRect frame = CGRectMake(PADDING_WIDTH + (2.0f * size), (TEXT_BOX_HEIGHT + size) * index + size, TEXT_BOX_WIDTH - (4.0f * size), TEXT_BOX_HEIGHT);
-  
-  // set up the text field
-  BLTextField *textField = [[BLTextField alloc] initWithFrame:frame];
-  textField.borderStyle = UITextBorderStyleNone;
-  textField.font = [UIFont fontWithName:@"Avenir" size:20];
-  textField.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
-  textField.textColor = [UIColor blackColor];
-  textField.autocorrectionType = UITextAutocorrectionTypeNo;
-  textField.keyboardAppearance = UIKeyboardAppearanceAlert;
-  textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-  textField.returnKeyType = UIReturnKeyNext;
-  textField.delegate = self;
-  textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-  textField.text = [[self.people objectAtIndex:index] name];
-  [self.textFields insertObject:textField atIndex:index];
-  
-  return textField;
-}
+//- (UIView *)generateTextFieldForIndex:(NSInteger)index
+//{
+//  // calculate the size of separator lines (based on screen scale) and create a frame for the text box
+//  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
+//  CGRect frame = CGRectMake(PADDING_WIDTH + (2.0f * size), (TEXT_BOX_HEIGHT + size) * index + size, TEXT_BOX_WIDTH - (4.0f * size), TEXT_BOX_HEIGHT);
+//  
+//  // set up the text field
+//  BLTextField *textField = [[BLTextField alloc] initWithFrame:frame];
+//  textField.borderStyle = UITextBorderStyleNone;
+//  textField.font = [UIFont fontWithName:@"Avenir" size:20];
+//  textField.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
+//  textField.textColor = [UIColor blackColor];
+//  textField.autocorrectionType = UITextAutocorrectionTypeNo;
+//  textField.keyboardAppearance = UIKeyboardAppearanceAlert;
+//  textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
+//  textField.returnKeyType = UIReturnKeyNext;
+//  textField.delegate = self;
+//  textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+//  textField.text = [[self.people objectAtIndex:index] name];
+//  [self.textFields insertObject:textField atIndex:index];
+//  
+//  return textField;
+//}
 
 
-- (UIView *)generateLeftPaddingForIndex:(NSInteger)index
-{
-  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
-  CGRect frame = CGRectMake(size, (TEXT_BOX_HEIGHT + size) * index + size, PADDING_WIDTH, TEXT_BOX_HEIGHT);
-  
-  UIView *view = [[UIView alloc] initWithFrame:frame];
-  view.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
-  
-  return view;
-}
+//- (UIView *)generateLeftPaddingForIndex:(NSInteger)index
+//{
+//  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
+//  CGRect frame = CGRectMake(size, (TEXT_BOX_HEIGHT + size) * index + size, PADDING_WIDTH, TEXT_BOX_HEIGHT);
+//  
+//  UIView *view = [[UIView alloc] initWithFrame:frame];
+//  view.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
+//  
+//  return view;
+//}
 
 
-- (UIView *)generateRightPaddingForIndex:(NSInteger)index
-{
-  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
-  CGRect frame = CGRectMake(320.0f - (size + PADDING_WIDTH), (TEXT_BOX_HEIGHT + size) * index + size, PADDING_WIDTH, TEXT_BOX_HEIGHT);
-  
-  UIView *view = [[UIView alloc] initWithFrame:frame];
-  view.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
-  
-  return view;
-}
+//- (UIView *)generateRightPaddingForIndex:(NSInteger)index
+//{
+//  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
+//  CGRect frame = CGRectMake(320.0f - (size + PADDING_WIDTH), (TEXT_BOX_HEIGHT + size) * index + size, PADDING_WIDTH, TEXT_BOX_HEIGHT);
+//  
+//  UIView *view = [[UIView alloc] initWithFrame:frame];
+//  view.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
+//  
+//  return view;
+//}
 
 
 - (void)keyboardShown:(NSNotification *)notification
@@ -213,26 +172,26 @@
 }
 
 
-- (NSArray *)nameDefaults
-{
-  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
-  request.predicate = [NSPredicate predicateWithFormat:@"createdAt < %@", self.bill.createdAt];
-  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
-  request.fetchLimit = 1;
-  
-  NSArray *results = [self.bill.managedObjectContext executeFetchRequest:request error:nil];
-  if (results && results.count > 0) {
-    Bill *previousBill = [results objectAtIndex:0];
-    NSMutableArray *names = [NSMutableArray arrayWithCapacity:previousBill.people.count];
-    [previousBill.people enumerateObjectsUsingBlock:^(Person *person, BOOL *stop) {
-      NSString *name = (person.name) ? person.name : @"";
-      [names addObject:name];
-    }];
-    return names;
-  }
-  
-  return [NSArray array];
-}
+//- (NSArray *)nameDefaults
+//{
+//  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
+//  request.predicate = [NSPredicate predicateWithFormat:@"createdAt < %@", self.bill.createdAt];
+//  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
+//  request.fetchLimit = 1;
+//  
+//  NSArray *results = [self.bill.managedObjectContext executeFetchRequest:request error:nil];
+//  if (results && results.count > 0) {
+//    Bill *previousBill = [results objectAtIndex:0];
+//    NSMutableArray *names = [NSMutableArray arrayWithCapacity:previousBill.people.count];
+//    [previousBill.people enumerateObjectsUsingBlock:^(Person *person, BOOL *stop) {
+//      NSString *name = (person.name) ? person.name : @"";
+//      [names addObject:name];
+//    }];
+//    return names;
+//  }
+//  
+//  return [NSArray array];
+//}
 
 
 #pragma mark - UITextFieldDelegate Methods
@@ -243,37 +202,36 @@
   
   if (self.nextScreenButton.enabled) return;
   [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
-  [self hideTourTextAnimated:YES complete:nil];
   [self markTourShown];
 }
 
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-  UITextField *nextField = nil;
-  NSInteger currentIndex = [self.textFields indexOfObject:textField];
-  if (currentIndex == self.bill.splitCount - 1) {
-    if (textField.returnKeyType == UIReturnKeyDone) {
-      [textField resignFirstResponder];
-      return NO;
-    }
-    nextField = [self.textFields objectAtIndex:0];
-  }
-  else {
-    nextField = [self.textFields objectAtIndex:currentIndex + 1];
-  }
-  [nextField becomeFirstResponder];
-  
+//  UITextField *nextField = nil;
+//  NSInteger currentIndex = [self.textFields indexOfObject:textField];
+//  if (currentIndex == self.bill.splitCount - 1) {
+//    if (textField.returnKeyType == UIReturnKeyDone) {
+//      [textField resignFirstResponder];
+//      return NO;
+//    }
+//    nextField = [self.textFields objectAtIndex:0];
+//  }
+//  else {
+//    nextField = [self.textFields objectAtIndex:currentIndex + 1];
+//  }
+//  [nextField becomeFirstResponder];
+//  
   return NO;
 }
 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-  NSInteger index = [self.textFields indexOfObject:textField];
-  Person *person = [self.people objectAtIndex:index];
-  person.name = textField.text;
-  [person.managedObjectContext save:nil];
+//  NSInteger index = [self.textFields indexOfObject:textField];
+//  Person *person = [self.people objectAtIndex:index];
+//  person.name = textField.text;
+//  [person.managedObjectContext save:nil];
 }
 
 
@@ -302,8 +260,8 @@
 
 - (void)contentAreaTapped:(UITapGestureRecognizer *)recognizer
 {
-  [self.textFields enumerateObjectsUsingBlock:^(UITextField *textField, NSUInteger idx, BOOL *stop) {
-    [textField resignFirstResponder];
+  [self.view.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger i, BOOL *stop) {
+    if (view.class == [UIResponder class]) [view resignFirstResponder];
   }];
 }
 

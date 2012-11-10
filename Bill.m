@@ -9,27 +9,27 @@
 #import "Bill.h"
 #import "LineItem.h"
 #import "Person.h"
-#import "ASIFormDataRequest.h"
+#import "BLFeedback.h"
 
 
 @interface Bill ()
 
 @property (nonatomic, strong) NSData *originalData;
 @property (nonatomic, strong) NSData *processedData;
-
-
-- (void)storeImageFile:(NSString *)base data:(NSData *)data complete:(void (^)(NSString *filename))complete;
+@property (readonly) NSArray *mostCommonNames;
 
 @end
 
 
 @implementation Bill
+{
+  int64_t _splitCount;
+}
 
 @dynamic subtotal;
 @dynamic tax;
 @dynamic tip;
 @dynamic total;
-@dynamic splitCount;
 @dynamic sendFeedback;
 @dynamic feedbackSent;
 @dynamic rawText;
@@ -43,86 +43,41 @@
 @synthesize processedData;
 
 
-#pragma mark - Class Methods
+#pragma mark - Property Implementations
 
-+ (void)processPendingFeedback
+- (void)setSplitCount:(int64_t)splitCount
 {
-  // A BRIEF NOTE ABOUT WHAT'S GOING ON HERE
-  //
-  // Core Data is not 100% threadsafe so all actual Core Data operations need to happen on the main thread.
-  // The more expensive image processing and uploading code should be on a low priority background thread, though.
-  // The solution is to fetch feedback items that need to be sent, iterate over them in the background, and then
-  // mark them as submitted on the main thread.
+  [self willChangeValueForKey:@"splitCount"];
   
-  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
-  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
-  request.predicate = [NSPredicate predicateWithFormat:@"sendFeedback == YES AND feedbackSent == NO"];
-  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:YES]];
-  NSArray *results = [context executeFetchRequest:request error:nil];
+  _splitCount = splitCount;
+  NSArray *commonNames = nil;
+  if (self.people.count < splitCount) commonNames = [self mostCommonNames];
+  
+  // create people to compensate for any shortfall in people objects
+  for (NSInteger i = self.people.count; i < splitCount; i++) {
+    Person *person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
+    person.name = [[[commonNames objectAtIndex:i] objectForKey:@"name"] capitalizedString];
+    person.index = i;
+    [self addPeopleObject:person];
+  }
+  
+  // remove people to compensate for any overage in people objects
+  for (NSInteger i = splitCount + 1; i <= self.people.count; i++) {
+    Person *toRemove = [self.sortedPeople objectAtIndex:i - 1];
+    [self removePeopleObject:toRemove];
+    [self.managedObjectContext deleteObject:toRemove];
+  }
+  
+  [self didChangeValueForKey:@"splitCount"];
+}
 
-  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-    if (results && results.count > 0) {
-      [results enumerateObjectsUsingBlock:^(Bill *bill, NSUInteger idx, BOOL *stop) {
-        // shortcut actual upload because this bill has no useful data
-        if (!bill.originalImage && !bill.processedImage && !bill.rawText) {
-          dispatch_async(dispatch_get_main_queue(), ^{
-            bill.feedbackSent = YES;
-            [context save:nil];
-          });
-        }
-        else {
-          ASIFormDataRequest *request = [[ASIFormDataRequest alloc] initWithURL:[NSURL URLWithString:@"http://feedback.billyup.com/feedback"]];
-          
-          if (bill.rawText) {
-            [request setPostValue:bill.rawText forKey:@"feedback[raw_text]"];
-          }
-          if (bill.originalImage) {
-            [request addFile:bill.originalImage withFileName:@"original.jpg" andContentType:@"image/jpeg" forKey:@"feedback[original]"];
-          }
-          if (bill.processedImage) {
-            [request addFile:bill.processedImage withFileName:@"processed.jpg" andContentType:@"image/jpeg" forKey:@"feedback[processed]"];
-          }
-          
-          // mark the beginning of a background task (uploading feedback)
-          __block UIBackgroundTaskIdentifier bgTask = UIBackgroundTaskInvalid;
-          bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-            [request cancel];
-            [[UIApplication sharedApplication] endBackgroundTask:bgTask];
-            bgTask = UIBackgroundTaskInvalid;
-          }];
-          
-          [request setCompletionBlock:^{
-            dispatch_async(dispatch_get_main_queue(), ^{
-              bill.feedbackSent = YES;
-              [context save:nil];
-              
-              if (bgTask != UIBackgroundTaskInvalid) {
-                [[UIApplication sharedApplication] endBackgroundTask:bgTask];
-                bgTask = UIBackgroundTaskInvalid;
-              }
-            });
-          }];
-          
-          [request startAsynchronous];
-        }
-      }];
-    }
-    else if (results) {
-      // since there are no bills to process feedback for, clear out any/all cached images
-      NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-      if (paths.count > 0) {
-        NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[paths objectAtIndex:0] error:nil];
-        if (files) {
-          [files enumerateObjectsUsingBlock:^(NSString *file, NSUInteger idx, BOOL *stop) {
-            if ([file hasPrefix:@"original."] || [file hasPrefix:@"processed."]) {
-              NSString *absoluteFilename = [[paths objectAtIndex:0] stringByAppendingPathComponent:file];
-              [[NSFileManager defaultManager] removeItemAtPath:absoluteFilename error:nil];
-            }
-          }];
-        }
-      }
-    }
-  });
+
+- (int64_t)splitCount
+{
+  [self willAccessValueForKey:@"splitCount"];
+  int64_t response = _splitCount;
+  [self didAccessValueForKey:@"splitCount"];
+  return response;
 }
 
 
@@ -131,7 +86,7 @@
 - (void)storeOriginalImage:(NSData *)imageData
 {
   self.originalData = imageData;
-  [self storeImageFile:@"original" data:self.originalData complete:^(NSString *filename) {
+  [BLFeedback storeImageFile:@"original" data:self.originalData complete:^(NSString *filename) {
     [BLAppDelegate appDelegate].currentBill.originalImage = filename;
     [[BLAppDelegate appDelegate].managedObjectContext save:nil];
     self.originalData = nil;
@@ -142,7 +97,7 @@
 - (void)storeProcessedImage:(NSData *)imageData
 {
   self.processedData = imageData;
-  [self storeImageFile:@"processed" data:self.processedData complete:^(NSString *filename) {
+  [BLFeedback storeImageFile:@"processed" data:self.processedData complete:^(NSString *filename) {
     [BLAppDelegate appDelegate].currentBill.processedImage = filename;
     [[BLAppDelegate appDelegate].managedObjectContext save:nil];
     self.processedData = nil;
@@ -150,23 +105,35 @@
 }
 
 
-- (void)storeImageFile:(NSString *)base data:(NSData *)data complete:(void (^)(NSString *filename))complete
+- (NSArray *)sortedPeople
 {
-  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
-  if (paths.count > 0) {
-    NSString *filenameComponent = [NSString stringWithFormat:@"%@.XXXXXX", base];
-    NSString *filenameTemplate = [[paths objectAtIndex:0] stringByAppendingPathComponent:filenameComponent];
-    
-    char *filename = (char *)malloc(strlen(filenameTemplate.fileSystemRepresentation) + 1);
-    strcpy(filename, filenameTemplate.fileSystemRepresentation);
-    
-    if (mkstemp(filename) != -1) {
-      NSString *imagePath = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:filename length:strlen(filename)];
-      dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        if ([data writeToFile:imagePath atomically:YES] && complete) complete(imagePath);
-      });
-    }
-  }
+  NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
+  return [self.people sortedArrayUsingDescriptors:descriptors];
+}
+
+
+- (NSArray *)mostCommonNames
+{
+  NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Person"];
+  NSEntityDescription *personEntity = [NSEntityDescription entityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
+  NSAttributeDescription *nameAttribute = [personEntity.attributesByName objectForKey:@"name"];
+
+  NSExpression *keyPathExpression = [NSExpression expressionForKeyPath:@"index"];
+  NSExpression *countExpression = [NSExpression expressionForFunction:@"count:" arguments:[NSArray arrayWithObject:keyPathExpression]];
+  
+  NSExpressionDescription *countExpressionDescription = [[NSExpressionDescription alloc] init];
+  [countExpressionDescription setName:@"count"];
+  [countExpressionDescription setExpression:countExpression];
+  [countExpressionDescription setExpressionResultType:NSInteger64AttributeType];
+  
+  [fetchRequest setPropertiesToFetch:[NSArray arrayWithObjects:nameAttribute, countExpressionDescription, nil]];
+  [fetchRequest setPropertiesToGroupBy:[NSArray arrayWithObject:nameAttribute]];
+  [fetchRequest setResultType:NSDictionaryResultType];
+  
+  NSError *error = nil;
+  NSArray *names = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+  NSArray *filteredNames = [names filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name.length > 0"]];
+  return [filteredNames sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"count" ascending:NO]]];
 }
 
 @end

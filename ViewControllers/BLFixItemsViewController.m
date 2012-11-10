@@ -227,7 +227,6 @@ typedef enum {
   
   // set up the content area so it will scroll correctly
   self.contentArea.contentSize = CGSizeMake(320.0f, (TEXT_BOX_HEIGHT + self.borderWidth) * count);
-  self.contentArea.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 75.0f, 0.0f);
   
   // add a background view to provide the lines between items
   CGRect bgFrame = (CGRect){ CGPointMake(0.0f, -self.borderWidth), self.contentArea.contentSize };
@@ -335,8 +334,7 @@ typedef enum {
 - (void)keyboardHidden:(NSNotification *)notification
 {
   [UIView animateWithDuration:0.3f animations:^{
-    self.contentArea.contentInset = UIEdgeInsetsMake(0.0f, 0.0f, 75.0f, 0.0f);
-    self.contentArea.scrollIndicatorInsets = UIEdgeInsetsZero;
+    self.contentArea.contentInset = self.contentArea.scrollIndicatorInsets = UIEdgeInsetsZero;
   }];
 }
 

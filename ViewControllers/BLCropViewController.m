@@ -13,6 +13,7 @@
 #import "BLFixItemsViewController.h"
 #import "Tesseract.h"
 #import "Bill.h"
+#import "BLFeedback.h"
 
 
 @interface BLCropViewController ()
@@ -483,7 +484,7 @@
   if ([BLAppDelegate appDelegate].shouldSendFeedback) {
     [BLAppDelegate appDelegate].currentBill.sendFeedback = YES;
     [[BLAppDelegate appDelegate].managedObjectContext save:nil];
-    [Bill processPendingFeedback];
+    [BLFeedback processPendingFeedback];
   }
   
   [self.navigationController pushViewController:fixItemsController animated:YES];

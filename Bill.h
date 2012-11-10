@@ -29,10 +29,9 @@
 @property (nonatomic, retain) NSSet *lineItems;
 
 
-+ (void)processPendingFeedback;
-
 - (void)storeOriginalImage:(NSData *)imageData;
 - (void)storeProcessedImage:(NSData *)imageData;
+- (NSArray *)sortedPeople;
 
 @end
 
