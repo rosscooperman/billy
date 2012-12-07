@@ -56,7 +56,7 @@
   // create people to compensate for any shortfall in people objects
   for (NSInteger i = self.people.count; i < splitCount; i++) {
     Person *person = [NSEntityDescription insertNewObjectForEntityForName:@"Person" inManagedObjectContext:self.managedObjectContext];
-    person.name = [[[commonNames objectAtIndex:i] objectForKey:@"name"] capitalizedString];
+    if (commonNames.count > i) person.name = [[[commonNames objectAtIndex:i] objectForKey:@"name"] capitalizedString];
     person.index = i;
     [self addPeopleObject:person];
   }

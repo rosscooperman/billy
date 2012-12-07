@@ -32,7 +32,8 @@
 
 - (BOOL)shouldShowTour
 {
-  return ![[NSUserDefaults standardUserDefaults] boolForKey:self.tourKey];
+  return false;
+  //return ![[NSUserDefaults standardUserDefaults] boolForKey:self.tourKey];
 }
 
 
