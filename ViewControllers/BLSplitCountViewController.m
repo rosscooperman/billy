@@ -139,6 +139,8 @@
   else if (count >= 8) {
     self.plusButton.enabled = NO;
   }
+  
+  self.bill.splitCount = count;
 }
 
 
@@ -158,14 +160,14 @@
 
 - (void)incrementCount:(id)sender
 {
-  [self setCount:++self.bill.splitCount];
+  [self setCount:self.bill.splitCount + 1];
   [self transitionTour];
 }
 
 
 - (void)decrementCount:(id)sender
 {
-  [self setCount:--self.bill.splitCount];
+  [self setCount:self.bill.splitCount - 1];
   [self transitionTour];
 }
 

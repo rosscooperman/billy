@@ -50,12 +50,32 @@
 
 - (id)initWithPerson:(Person *)aPerson
 {
-  self = [super init];
+  CGRect frame = CGRectMake(0.0f, 0.0f, 320.f, TEXT_BOX_HEIGHT);
+  self = [self initWithFrame:frame];
   if (self) {
     self.person = aPerson;
-    [self createSubviews];
   }
   return self;
+}
+
+
+#pragma mark - Overridden Methods
+
+- (CGRect)textRectForBounds:(CGRect)bounds
+{
+  return CGRectMake((320.0f - TEXT_BOX_WIDTH) / 2.0f, 10.0f, 320.0f, 20.0f);
+}
+
+
+- (CGRect)editingRectForBounds:(CGRect)bounds
+{
+  return [self textRectForBounds:bounds];
+}
+
+
+- (CGRect)placeholderRectForBounds:(CGRect)bounds
+{
+  return [self textRectForBounds:bounds];
 }
 
 
@@ -63,7 +83,7 @@
 
 - (void)createSubviews
 {
-  
+  self.font = [UIFont fontWithName:@"Avenir" size:17.0f];
 }
 
 @end

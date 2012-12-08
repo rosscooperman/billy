@@ -93,7 +93,6 @@
   }
   
   CGFloat bottomY = self.contentOffset.y + self.bounds.size.height - self.bottomBorder.frame.size.height;
-  TFLog(@"%f | %f", bottomY, self.contentSize.height);
   
   // deal with the situation where there is more to reveal at the bottom and the bottom border is still contained by the scroll view
   if (bottomY < self.contentSize.height && self.bottomBorder.superview == self) {

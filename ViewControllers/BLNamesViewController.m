@@ -62,14 +62,18 @@
   self.innerContainer.backgroundColor = [UIColor colorWithRed:0.54118 green:0.77255 blue:0.64706 alpha:1.0];
   self.contentArea.contentSize = CGSizeMake(320.0f, frame.size.height);
   
-//  for (NSInteger i = 0; i < self.bill.splitCount; i++) {
-//    BLPaddedTextField *
-//    [self.innerContainer addSubview:[]]
-//    [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
-//    [self.innerContainer addSubview:[self generateLeftPaddingForIndex:i]];
-//    [self.innerContainer addSubview:[self generateRightPaddingForIndex:i]];
-//  }
-//  
+  NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
+  NSArray *sortedPeople = [self.bill.people sortedArrayUsingDescriptors:descriptors];
+  
+  [sortedPeople enumerateObjectsUsingBlock:^(Person *person, NSUInteger idx, BOOL *stop) {
+    BLPaddedTextField *personField = [[BLPaddedTextField alloc] initWithPerson:person];
+    [self.innerContainer addSubview:personField];
+    //    [self.innerContainer addSubview:[]]
+    //    [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
+    //    [self.innerContainer addSubview:[self generateLeftPaddingForIndex:i]];
+    //    [self.innerContainer addSubview:[self generateRightPaddingForIndex:i]];
+  }];
+  
   [self.contentArea insertSubview:self.innerContainer atIndex:0];
 }
 
