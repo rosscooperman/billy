@@ -107,7 +107,7 @@
 {
   CGFloat idealTop = CGRectGetMidY(self.controlView.superview.bounds) - (self.controlView.bounds.size.height / 2.0f);
   CGFloat lineHeight = 1.0f / [UIScreen mainScreen].scale;
-  CGFloat testTop = -lineHeight, selectedTop = -lineHeight;
+  CGFloat testTop = lineHeight, selectedTop = lineHeight;
   CGFloat closest = 1000.0f;
   
   while (testTop < self.controlView.superview.bounds.size.height) {
@@ -117,7 +117,7 @@
       selectedTop = testTop;
     }
     
-    testTop += 45.0f + (1.5f * lineHeight);
+    testTop += 45.0f + lineHeight;
   }
   
   CGRect newFrame = self.controlView.frame;
