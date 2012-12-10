@@ -14,6 +14,9 @@
 
 @interface BLPaddedTextField : UITextField
 
+@property (nonatomic, strong) Person *person;
+
+
 - (id)initWithPerson:(Person *)aPerson;
 
 @end

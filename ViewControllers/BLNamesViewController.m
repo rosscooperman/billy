@@ -28,12 +28,8 @@
 @property (nonatomic, strong) Bill *bill;
 
 
-//- (UIView *)generateTextFieldForIndex:(NSInteger)index;
-//- (UIView *)generateLeftPaddingForIndex:(NSInteger)index;
-//- (UIView *)generateRightPaddingForIndex:(NSInteger)index;
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
-//- (NSArray *)nameDefaults;
 
 @end
 
@@ -55,7 +51,7 @@
   self.bill = [BLAppDelegate appDelegate].currentBill;
   
   CGFloat size = 1.0f / [UIScreen mainScreen].scale;
-  CGFloat innerHeight = ((TEXT_BOX_HEIGHT + size) * self.bill.splitCount);
+  CGFloat innerHeight = (TEXT_BOX_HEIGHT * self.bill.splitCount);
   CGRect frame = CGRectMake(0.0f, -size, 320.0f, innerHeight);
     
   self.innerContainer = [[UIView alloc] initWithFrame:frame];
@@ -67,11 +63,8 @@
   
   [sortedPeople enumerateObjectsUsingBlock:^(Person *person, NSUInteger idx, BOOL *stop) {
     BLPaddedTextField *personField = [[BLPaddedTextField alloc] initWithPerson:person];
+    personField.delegate = self;
     [self.innerContainer addSubview:personField];
-    //    [self.innerContainer addSubview:[]]
-    //    [self.innerContainer addSubview:[self generateTextFieldForIndex:i]];
-    //    [self.innerContainer addSubview:[self generateLeftPaddingForIndex:i]];
-    //    [self.innerContainer addSubview:[self generateRightPaddingForIndex:i]];
   }];
   
   [self.contentArea insertSubview:self.innerContainer atIndex:0];
@@ -101,55 +94,6 @@
 
 #pragma mark - Instance Methods
 
-//- (UIView *)generateTextFieldForIndex:(NSInteger)index
-//{
-//  // calculate the size of separator lines (based on screen scale) and create a frame for the text box
-//  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
-//  CGRect frame = CGRectMake(PADDING_WIDTH + (2.0f * size), (TEXT_BOX_HEIGHT + size) * index + size, TEXT_BOX_WIDTH - (4.0f * size), TEXT_BOX_HEIGHT);
-//  
-//  // set up the text field
-//  BLTextField *textField = [[BLTextField alloc] initWithFrame:frame];
-//  textField.borderStyle = UITextBorderStyleNone;
-//  textField.font = [UIFont fontWithName:@"Avenir" size:20];
-//  textField.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
-//  textField.textColor = [UIColor blackColor];
-//  textField.autocorrectionType = UITextAutocorrectionTypeNo;
-//  textField.keyboardAppearance = UIKeyboardAppearanceAlert;
-//  textField.autocapitalizationType = UITextAutocapitalizationTypeWords;
-//  textField.returnKeyType = UIReturnKeyNext;
-//  textField.delegate = self;
-//  textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//  textField.text = [[self.people objectAtIndex:index] name];
-//  [self.textFields insertObject:textField atIndex:index];
-//  
-//  return textField;
-//}
-
-
-//- (UIView *)generateLeftPaddingForIndex:(NSInteger)index
-//{
-//  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
-//  CGRect frame = CGRectMake(size, (TEXT_BOX_HEIGHT + size) * index + size, PADDING_WIDTH, TEXT_BOX_HEIGHT);
-//  
-//  UIView *view = [[UIView alloc] initWithFrame:frame];
-//  view.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
-//  
-//  return view;
-//}
-
-
-//- (UIView *)generateRightPaddingForIndex:(NSInteger)index
-//{
-//  CGFloat size = 1.0f / [UIScreen mainScreen].scale;
-//  CGRect frame = CGRectMake(320.0f - (size + PADDING_WIDTH), (TEXT_BOX_HEIGHT + size) * index + size, PADDING_WIDTH, TEXT_BOX_HEIGHT);
-//  
-//  UIView *view = [[UIView alloc] initWithFrame:frame];
-//  view.backgroundColor = [[BLAppDelegate appDelegate] colorAtIndex:index + 1];
-//  
-//  return view;
-//}
-
-
 - (void)keyboardShown:(NSNotification *)notification
 {
   CGSize keyboardSize = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
@@ -176,28 +120,6 @@
 }
 
 
-//- (NSArray *)nameDefaults
-//{
-//  NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Bill"];
-//  request.predicate = [NSPredicate predicateWithFormat:@"createdAt < %@", self.bill.createdAt];
-//  request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"createdAt" ascending:NO]];
-//  request.fetchLimit = 1;
-//  
-//  NSArray *results = [self.bill.managedObjectContext executeFetchRequest:request error:nil];
-//  if (results && results.count > 0) {
-//    Bill *previousBill = [results objectAtIndex:0];
-//    NSMutableArray *names = [NSMutableArray arrayWithCapacity:previousBill.people.count];
-//    [previousBill.people enumerateObjectsUsingBlock:^(Person *person, BOOL *stop) {
-//      NSString *name = (person.name) ? person.name : @"";
-//      [names addObject:name];
-//    }];
-//    return names;
-//  }
-//  
-//  return [NSArray array];
-//}
-
-
 #pragma mark - UITextFieldDelegate Methods
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
@@ -212,30 +134,28 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-//  UITextField *nextField = nil;
-//  NSInteger currentIndex = [self.textFields indexOfObject:textField];
-//  if (currentIndex == self.bill.splitCount - 1) {
-//    if (textField.returnKeyType == UIReturnKeyDone) {
-//      [textField resignFirstResponder];
-//      return NO;
-//    }
-//    nextField = [self.textFields objectAtIndex:0];
-//  }
-//  else {
-//    nextField = [self.textFields objectAtIndex:currentIndex + 1];
-//  }
-//  [nextField becomeFirstResponder];
-//  
+  NSPredicate *paddedTextPredicate = [NSPredicate predicateWithFormat: @"class == %@", [BLPaddedTextField class]];
+  NSArray *paddedFields = [self.innerContainer.subviews filteredArrayUsingPredicate:paddedTextPredicate];
+  NSUInteger nextIndex = [paddedFields indexOfObject:textField] + 1;
+
+  @try {
+    BLPaddedTextField *nextField = [paddedFields objectAtIndex:nextIndex];
+    if (nextIndex == paddedFields.count - 1) nextField.returnKeyType = UIReturnKeyDone;
+    [nextField becomeFirstResponder];
+  }
+  @catch (NSException *exception) {
+    [textField resignFirstResponder];
+  }
+  
   return NO;
 }
 
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
-//  NSInteger index = [self.textFields indexOfObject:textField];
-//  Person *person = [self.people objectAtIndex:index];
-//  person.name = textField.text;
-//  [person.managedObjectContext save:nil];
+  BLPaddedTextField *realField = (BLPaddedTextField *)textField;
+  realField.person.name = textField.text;
+  [realField.person.managedObjectContext save:nil];
 }
 
 
@@ -264,8 +184,8 @@
 
 - (void)contentAreaTapped:(UITapGestureRecognizer *)recognizer
 {
-  [self.view.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger i, BOOL *stop) {
-    if (view.class == [UIResponder class]) [view resignFirstResponder];
+  [self.innerContainer.subviews enumerateObjectsUsingBlock:^(UIView *view, NSUInteger i, BOOL *stop) {
+    if (view.class == [BLPaddedTextField class]) [view resignFirstResponder];
   }];
 }
 
