@@ -109,8 +109,6 @@
 		91CAC83F157E6704001B500F /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAC83E157E6704001B500F /* BLAppDelegate.m */; };
 		91D0953C1595310C00E22EEC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D0953A1595310C00E22EEC /* Default.png */; };
 		91D0953D1595310C00E22EEC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D0953B1595310C00E22EEC /* Default@2x.png */; };
-		91D095411595318600E22EEC /* BLStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91D0953F1595318600E22EEC /* BLStartViewController.m */; };
-		91D09544159531BB00E22EEC /* BLStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91D09543159531BB00E22EEC /* BLStartViewController.xib */; };
 		91E62D1215CC546C00E3AD5D /* cameraFocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1015CC546C00E3AD5D /* cameraFocus.png */; };
 		91E62D1315CC546C00E3AD5D /* cameraFocus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1115CC546C00E3AD5D /* cameraFocus@2x.png */; };
 		91E62D1715CC654A00E3AD5D /* UIViewController+GuidedTour.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E62D1615CC654A00E3AD5D /* UIViewController+GuidedTour.m */; };
@@ -289,9 +287,6 @@
 		91CAC83E157E6704001B500F /* BLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAppDelegate.m; path = OtherClasses/BLAppDelegate.m; sourceTree = "<group>"; };
 		91D0953A1595310C00E22EEC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		91D0953B1595310C00E22EEC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
-		91D0953E1595318600E22EEC /* BLStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLStartViewController.h; path = ViewControllers/BLStartViewController.h; sourceTree = "<group>"; };
-		91D0953F1595318600E22EEC /* BLStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLStartViewController.m; path = ViewControllers/BLStartViewController.m; sourceTree = "<group>"; };
-		91D09543159531BB00E22EEC /* BLStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLStartViewController.xib; path = NIBs/BLStartViewController.xib; sourceTree = "<group>"; };
 		91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddCreatedAtForBill.xcdatamodel; sourceTree = "<group>"; };
 		91E62D1015CC546C00E3AD5D /* cameraFocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraFocus.png; sourceTree = "<group>"; };
 		91E62D1115CC546C00E3AD5D /* cameraFocus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraFocus@2x.png"; sourceTree = "<group>"; };
@@ -579,8 +574,6 @@
 				9198BF0F157AEB25001B74A9 /* BLSplitBillViewController.m */,
 				9198BF10157AEB25001B74A9 /* BLSplitCountViewController.h */,
 				9198BF11157AEB25001B74A9 /* BLSplitCountViewController.m */,
-				91D0953E1595318600E22EEC /* BLStartViewController.h */,
-				91D0953F1595318600E22EEC /* BLStartViewController.m */,
 				91AAE66B158E54BF00C609C4 /* BLSummaryViewController.h */,
 				91AAE66C158E54BF00C609C4 /* BLSummaryViewController.m */,
 				91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */,
@@ -602,7 +595,6 @@
 				91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */,
 				9198BF19157AEB34001B74A9 /* BLSplitBillViewController.xib */,
 				91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */,
-				91D09543159531BB00E22EEC /* BLStartViewController.xib */,
 				91AAE670158E551F00C609C4 /* BLSummaryViewController.xib */,
 				91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */,
 				91AAE665158D3A6C00C609C4 /* BLTipViewController.xib */,
@@ -737,7 +729,6 @@
 				91AAE671158E551F00C609C4 /* BLSummaryViewController.xib in Resources */,
 				91D0953C1595310C00E22EEC /* Default.png in Resources */,
 				91D0953D1595310C00E22EEC /* Default@2x.png in Resources */,
-				91D09544159531BB00E22EEC /* BLStartViewController.xib in Resources */,
 				91E62D1215CC546C00E3AD5D /* cameraFocus.png in Resources */,
 				91E62D1315CC546C00E3AD5D /* cameraFocus@2x.png in Resources */,
 				9167C83415CC8EE800E25A2F /* cameraFlashAuto.png in Resources */,
@@ -815,7 +806,6 @@
 				91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */,
 				91AAE66A158D3A8400C609C4 /* BLTipViewController.m in Sources */,
 				91AAE66E158E54BF00C609C4 /* BLSummaryViewController.m in Sources */,
-				91D095411595318600E22EEC /* BLStartViewController.m in Sources */,
 				9155238115B07A8C00F2F539 /* billy.xcdatamodeld in Sources */,
 				9155239415B0949500F2F539 /* LineItem.m in Sources */,
 				9155239715B0949500F2F539 /* Bill.m in Sources */,
