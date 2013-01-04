@@ -24,6 +24,7 @@
 @implementation Bill
 {
   int64_t _splitCount;
+  NSString *_rawText;
 }
 
 @dynamic subtotal;
@@ -32,7 +33,6 @@
 @dynamic total;
 @dynamic sendFeedback;
 @dynamic feedbackSent;
-@dynamic rawText;
 @dynamic originalImage;
 @dynamic processedImage;
 @dynamic createdAt;
@@ -41,6 +41,19 @@
 
 @synthesize originalData;
 @synthesize processedData;
+
+
+#pragma mark - Core Data Lifecycle
+
+- (void)awakeFromInsert
+{
+  LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:self.managedObjectContext];
+  lineItem.index = 0;
+  [self addLineItemsObject:lineItem];
+  [self.managedObjectContext save:nil];
+  
+  [super awakeFromInsert];
+}
 
 
 #pragma mark - Property Implementations
@@ -77,6 +90,64 @@
   [self willAccessValueForKey:@"splitCount"];
   int64_t response = _splitCount;
   [self didAccessValueForKey:@"splitCount"];
+  return response;
+}
+
+
+- (void)setRawText:(NSString *)rawText
+{
+  [self willChangeValueForKey:@"rawText"];
+  
+  _rawText = [NSString stringWithString:rawText];
+  
+  if (_rawText.length > 0) {
+    NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
+    NSString *pattern = @"^\\s*([\\dIOS]+)\\s+(.*)?\\s+\\$?([\\dIOS]+\\.[\\dIOS]{2})\\s*$";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
+    NSRange range = [_rawText rangeOfString:_rawText];
+  
+    if ([regex numberOfMatchesInString:_rawText options:0 range:range] > 0) {
+      [self.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
+        [self.managedObjectContext deleteObject:lineItem];
+      }];
+    }
+    
+    __block NSUInteger count = 0;
+    [regex enumerateMatchesInString:_rawText options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
+      // create a new line item with a description
+      LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:self.managedObjectContext];
+      lineItem.index = count++;
+      lineItem.desc = [_rawText substringWithRange:[result rangeAtIndex:2]];
+      
+      // tweak and set the new line item's quantity
+      NSString *quantity = [[_rawText substringWithRange:[result rangeAtIndex:1]] uppercaseString];
+      quantity = [quantity stringByReplacingOccurrencesOfString:@"I" withString:@"1"];
+      quantity = [quantity stringByReplacingOccurrencesOfString:@"O" withString:@"0"];
+      quantity = [quantity stringByReplacingOccurrencesOfString:@"S" withString:@"5"];
+      lineItem.quantity = quantity.longLongValue;
+      
+      // tweak and set the line item's price
+      NSString *price = [[_rawText substringWithRange:[result rangeAtIndex:3]] uppercaseString];
+      price = [price stringByReplacingOccurrencesOfString:@"I" withString:@"1"];
+      price = [price stringByReplacingOccurrencesOfString:@"O" withString:@"0"];
+      price = [price stringByReplacingOccurrencesOfString:@"S" withString:@"5"];
+      lineItem.price = price.doubleValue;
+      
+      [self addLineItemsObject:lineItem];
+    }];
+    
+    [self.managedObjectContext save:nil];
+  }
+  
+  [self didChangeValueForKey:@"rawText"];
+}
+
+
+- (NSString *)rawText
+{
+  [self willAccessValueForKey:@"rawText"];
+  NSString *response = (_rawText) ? [NSString stringWithString:_rawText] : nil;
+  [self didAccessValueForKey:@"rawText"];
   return response;
 }
 

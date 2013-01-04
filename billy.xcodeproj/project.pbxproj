@@ -116,6 +116,7 @@
 		91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */; };
 		91EB2BC01586E56F007FD18B /* BLTaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */; };
 		91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */; };
+		91F1B7F11685132C00E81E5E /* BLEditableLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1B7F01685132C00E81E5E /* BLEditableLineItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -298,6 +299,8 @@
 		91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTaxViewController.m; path = ViewControllers/BLTaxViewController.m; sourceTree = "<group>"; };
 		91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTaxViewController.xib; path = NIBs/BLTaxViewController.xib; sourceTree = "<group>"; };
 		91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLNamesViewController.xib; path = NIBs/BLNamesViewController.xib; sourceTree = "<group>"; };
+		91F1B7EF1685132C00E81E5E /* BLEditableLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLEditableLineItem.h; path = CustomUI/BLEditableLineItem.h; sourceTree = "<group>"; };
+		91F1B7F01685132C00E81E5E /* BLEditableLineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLEditableLineItem.m; path = CustomUI/BLEditableLineItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -430,6 +433,8 @@
 		9148AE071579471600985CA0 /* Custom UI */ = {
 			isa = PBXGroup;
 			children = (
+				91F1B7EF1685132C00E81E5E /* BLEditableLineItem.h */,
+				91F1B7F01685132C00E81E5E /* BLEditableLineItem.m */,
 				919458681618014400E0B710 /* BLMainView.h */,
 				919458691618014400E0B710 /* BLMainView.m */,
 				910945F1164D807000CBD8E2 /* BLPaddedTextField.h */,
@@ -819,6 +824,7 @@
 				910945EF164C362600CBD8E2 /* BLScrollView.m in Sources */,
 				910945F3164D807000CBD8E2 /* BLPaddedTextField.m in Sources */,
 				910945F6164D925500CBD8E2 /* BLFeedback.m in Sources */,
+				91F1B7F11685132C00E81E5E /* BLEditableLineItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

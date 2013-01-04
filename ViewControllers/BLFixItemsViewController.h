@@ -9,7 +9,7 @@
 #import "BLViewController.h"
 
 
-@interface BLFixItemsViewController : BLViewController <UITextFieldDelegate>
+@interface BLFixItemsViewController : BLViewController
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
