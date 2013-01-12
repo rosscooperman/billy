@@ -213,11 +213,16 @@
     case UIGestureRecognizerStateEnded:
     case UIGestureRecognizerStateFailed:
     case UIGestureRecognizerStateCancelled: {
-      [UIView animateWithDuration:0.1 animations:^{
-        self.fieldWrapper.transform = self.redDelete.transform = CGAffineTransformIdentity;
-      } completion:^(BOOL finished) {
+      CGFloat animationDuration = translation.x / HEIGHT / 10.0f;
+      CGAffineTransform newTransform = CGAffineTransformIdentity;
+      if (translation.x > HEIGHT) {
+        newTransform = CGAffineTransformMakeTranslation(320.0f, 0.0f);
+        animationDuration = (320.0f - translation.x) / HEIGHT / 10.0f;
+      }
+
+      [UIView animateWithDuration:animationDuration animations:^{
+        self.fieldWrapper.transform = self.redDelete.transform = newTransform;
         self.redDelete.alpha = 0.0f;
-        self.greyDelete.alpha = 0.0f;
       }];
       recognizer.enabled = YES;
       self.isPanning = NO;

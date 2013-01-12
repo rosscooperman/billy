@@ -54,8 +54,6 @@ typedef enum {
 
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
-//- (void)swipeToDelete:(UISwipeGestureRecognizer *)recognizer;
-//- (void)deleteItemAtIndex:(NSInteger)index;
 - (BOOL)validateLineItems;
 - (void)nextTourStep;
 
