@@ -26,11 +26,16 @@
 @property (nonatomic, strong) UITextField *name;
 @property (nonatomic, strong) UITextField *price;
 @property (nonatomic, assign) CGFloat border;
+@property (nonatomic, assign) BOOL isPanning;
+@property (nonatomic, strong) UIImageView *redDelete;
+@property (nonatomic, strong) UIImageView *greyDelete;
 
 
 - (void)createSubviews;
 - (BLTextField *)textFieldWithFrame:(CGRect)frame;
 - (void)panView:(UIPanGestureRecognizer *)recognizer;
+- (void)keyboardShown:(NSNotification *)notification;
+- (void)keyboardHidden:(NSNotification *)notification;
 
 @end
 
@@ -43,6 +48,8 @@
 @synthesize name;
 @synthesize price;
 @synthesize border;
+@synthesize redDelete;
+@synthesize greyDelete;
 
 
 #pragma mark - Object Lifecycle
@@ -56,6 +63,12 @@
     self.lineItem = lineItem;
   }
   return self;
+}
+
+
+- (void)dealloc
+{
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -73,13 +86,35 @@
 
 - (void)createSubviews
 {
-  self.backgroundColor = [UIColor colorWithRed:0.54118f green:0.77255f blue:0.64706f alpha:1.0f];
+//  self.backgroundColor = [UIColor colorWithRed:0.54118f green:0.77255f blue:0.64706f alpha:1.0f];
+  self.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1.0f];
   
-  // generate the view that wraps the field
-  self.fieldWrapper = [[UIView alloc] initWithFrame:self.bounds];
-//  self.fieldWrapper.backgroundColor = ;
-  [self addSubview:self.fieldWrapper];
+  // add the grey delete indicator
+  self.greyDelete = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, HEIGHT, HEIGHT)];
+  self.greyDelete.image = [UIImage imageNamed:@"deleteXGrey"];
+  self.greyDelete.contentMode = UIViewContentModeCenter;
+  [self addSubview:self.greyDelete];
+  
+  // add the (RED) delete indicator
+  self.redDelete = [[UIImageView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, HEIGHT, HEIGHT)];
+  self.redDelete.image = [UIImage imageNamed:@"deleteXRed"];
+  self.redDelete.contentMode = UIViewContentModeCenter;
+  self.redDelete.alpha = 0.0;
+  [self addSubview:self.redDelete];
+  
+  // add a couple of border views to avoid weird transition regions when line items slide
+  UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, self.border)];
+  topBorder.backgroundColor = [UIColor colorWithRed:0.54118f green:0.77255f blue:0.64706f alpha:1.0f];
+  [self addSubview:topBorder];
+  UIView *leftBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0f, self.border, self.border, HEIGHT)];
+  leftBorder.backgroundColor = [UIColor colorWithRed:0.54118f green:0.77255f blue:0.64706f alpha:1.0f];
+  [self addSubview:leftBorder];
 
+  // generate the view that wraps all of the content fields
+  self.fieldWrapper = [[UIView alloc] initWithFrame:self.bounds];
+  self.fieldWrapper.backgroundColor = [UIColor colorWithRed:0.54118f green:0.77255f blue:0.64706f alpha:1.0f];
+  [self addSubview:self.fieldWrapper];
+  
   // create the quantity text box
   self.quantity = [self textFieldWithFrame:CGRectMake(self.border, self.border, QUANTITY_WIDTH - self.border, HEIGHT - self.border)];
   self.quantity.font = [UIFont fontWithName:@"Avenir-Heavy" size:18];
@@ -111,10 +146,16 @@
   }
   
   // create the pan gesture recognizer for deletion
-  UIPanGestureRecognizer *recognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
-  recognizer.maximumNumberOfTouches = 1;
-  recognizer.minimumNumberOfTouches = 1;
-  [self.fieldWrapper addGestureRecognizer:recognizer];
+  UIPanGestureRecognizer *panny = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panView:)];
+  panny.maximumNumberOfTouches = 1;
+  panny.minimumNumberOfTouches = 1;
+  panny.cancelsTouchesInView = NO;
+  panny.delegate = self;
+  [self.fieldWrapper addGestureRecognizer:panny];
+  
+  // register for keyboardShow and keyboardHidden notifications to disable interaction with the wrapper
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
+  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardDidHideNotification object:nil];
 }
 
 
@@ -147,26 +188,62 @@
 
 - (void)panView:(UIPanGestureRecognizer *)recognizer
 {
+  CGPoint translation = [recognizer translationInView:self];
+
   switch (recognizer.state) {
-    case UIGestureRecognizerStateBegan:
+    case UIGestureRecognizerStateBegan: {
+      if (fabs(translation.x) > fabs(translation.y)) {
+        self.isPanning = YES;
+      }
+      else {
+        recognizer.enabled = NO;
+      }
+    }
+      
     case UIGestureRecognizerStateChanged: {
-      self.fieldWrapper.transform = CGAffineTransformMakeTranslation([recognizer translationInView:self].x, 0.0f);
+      if (self.isPanning) {
+        self.fieldWrapper.transform = CGAffineTransformMakeTranslation(translation.x, 0.0f);
+        self.redDelete.transform = CGAffineTransformMakeTranslation(MAX(0.0f, translation.x - HEIGHT), 0.0f);
+        self.redDelete.alpha = MIN(1.0f, translation.x / HEIGHT);
+        self.greyDelete.alpha = 1.0f - self.redDelete.alpha;
+      }
       break;
     }
       
-    case UIGestureRecognizerStateEnded: {
-      [UIView animateWithDuration:0.1 animations:^{
-        self.fieldWrapper.transform = CGAffineTransformIdentity;
-      }];
-      break;
-    }
-      
-    case UIGestureRecognizerStateCancelled:
-    case UIGestureRecognizerStatePossible:
+    case UIGestureRecognizerStateEnded:
     case UIGestureRecognizerStateFailed:
+    case UIGestureRecognizerStateCancelled: {
+      [UIView animateWithDuration:0.1 animations:^{
+        self.fieldWrapper.transform = self.redDelete.transform = CGAffineTransformIdentity;
+      } completion:^(BOOL finished) {
+        self.redDelete.alpha = 0.0f;
+        self.greyDelete.alpha = 0.0f;
+      }];
+      recognizer.enabled = YES;
+      self.isPanning = NO;
+      break;
+    }
+      
+    case UIGestureRecognizerStatePossible:
       // don't do anything in this case
       break;
   }
+}
+
+
+- (void)keyboardShown:(NSNotification *)notification
+{
+  [self.fieldWrapper.gestureRecognizers enumerateObjectsUsingBlock:^(UIGestureRecognizer *recognizer, NSUInteger idx, BOOL *stop) {
+    recognizer.enabled = NO;
+  }];
+}
+
+
+- (void)keyboardHidden:(NSNotification *)notification
+{
+  [self.fieldWrapper.gestureRecognizers enumerateObjectsUsingBlock:^(UIGestureRecognizer *recognizer, NSUInteger idx, BOOL *stop) {
+    recognizer.enabled = YES;
+  }];
 }
 
 
@@ -218,6 +295,14 @@
   }
   
   return returnValue;
+}
+
+
+#pragma mark - UIGestureRecognizerDelegate Methods
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)a shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)b
+{
+  return YES;
 }
 
 @end

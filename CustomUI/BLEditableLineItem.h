@@ -11,7 +11,7 @@
 
 @class LineItem;
 
-@interface BLEditableLineItem : UIView <UITextFieldDelegate>
+@interface BLEditableLineItem : UIView <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
 @property (readonly) BOOL isActive;
 
