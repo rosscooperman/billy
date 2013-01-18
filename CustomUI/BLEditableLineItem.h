@@ -13,6 +13,7 @@
 
 @interface BLEditableLineItem : UIView <UITextFieldDelegate, UIGestureRecognizerDelegate>
 
+@property (nonatomic, strong) LineItem *lineItem;
 @property (readonly) BOOL isActive;
 
 

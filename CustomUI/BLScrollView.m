@@ -17,7 +17,7 @@
 @property (nonatomic, strong) UIView *overflowView;
 @property (nonatomic, strong) UIImageView *topTear;
 @property (nonatomic, strong) UIImageView *bottomTear;
-@property (nonatomic, strong) UIImageView *bottomBorder;
+@property (nonatomic, strong) UIImageView *_bottomBorder;
 @property (nonatomic, assign) CGFloat borderWidth;
 @property (nonatomic, assign) CGFloat separationPoint;
 
@@ -33,7 +33,7 @@
 @synthesize topTear;
 @synthesize bottomTear;
 @synthesize borderWidth;
-@synthesize bottomBorder;
+@synthesize _bottomBorder;
 @synthesize separationPoint;
 
 
@@ -76,7 +76,7 @@
   self.separationPoint = CGRectGetMaxY(self.overflowView.frame) - self.topTear.frame.size.height - self.bottomTear.frame.size.height + 1.0f;
   
   // create the scroll view's bottom border
-  self.bottomBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bottomBorder"]];
+  self._bottomBorder = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bottomBorder"]];
   self.bottomBorder.frame = CGRectMake(0.0f, -self.borderWidth, 320.0f, self.bottomBorder.image.size.height);
 }
 
@@ -103,29 +103,14 @@
   CGRect newFrame = self.bottomBorder.frame;
   newFrame.origin.y = MIN(self.frame.origin.y + self.contentSize.height - self.contentOffset.y - self.borderWidth, CGRectGetMaxY(self.frame));
   self.bottomBorder.frame = newFrame;
-//  TFLog(@"%f, %f", newFrame.origin.y, );
-  
-//  CGFloat bottomY = self.contentOffset.y + self.bounds.size.height;
-//
-//  // deal with the situation where there is more to reveal at the bottom and the bottom border is still contained by the scroll view
-//  if (bottomY < self.contentSize.height - self.bottomBorder.frame.size.height && self.bottomBorder.superview == self) {
-//    TFLog(@"<");
-//    
-//    // move the bottom border into our superview and adjust its frame accordingly
-//    [self.bottomBorder removeFromSuperview];
-//    [self.superview insertSubview:self.bottomBorder atIndex:0];
-//    self.bottomBorder.frame = (CGRect){ CGPointMake(0.0f, CGRectGetMaxY(self.frame)), self.bottomBorder.frame.size };
-//  }
-//  
-//  // and the situation where we've scrolled past the bottom of the scroll view's contents
-//  else if (bottomY >= self.contentSize.height - self.bottomBorder.frame.size.height && self.bottomBorder.superview != self) {
-//    TFLog(@">=");
-//    [self.bottomBorder removeFromSuperview];
-//    [self addSubview:self.bottomBorder];
-//
-//    CGRect currentFrame = self.bottomBorder.frame;
-//    self.bottomBorder.frame = (CGRect){ CGPointMake(currentFrame.origin.x, self.contentSize.height - self.bottomBorder.frame.size.height), currentFrame.size };
-//  }
+}
+
+
+#pragma mark - Property Implementations
+
+- (UIImageView *)bottomBorder
+{
+  return self._bottomBorder;
 }
 
 @end

@@ -19,6 +19,7 @@
 #import "BLSplitBillViewController.h"
 #import "BLTextField.h"
 #import "BLEditableLineItem.h"
+#import "BLScrollView.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Assignment.h"
@@ -54,6 +55,7 @@ typedef enum {
 
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
+- (void)managedObjectChanged:(NSNotification *)notification;
 - (BOOL)validateLineItems;
 - (void)nextTourStep;
 
@@ -89,11 +91,7 @@ typedef enum {
   else {
     self.tourStep = BLTourStepDone;
   }
-}
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
+  
   NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
   NSArray *sortedLineItems = [self.bill.lineItems sortedArrayUsingDescriptors:descriptors];
   
@@ -102,9 +100,15 @@ typedef enum {
     [self.contentArea addSubview:lineItemView];
     self.contentArea.contentSize = CGSizeMake(320.0f, CGRectGetMaxY(lineItemView.frame) + (1.0f / [UIScreen mainScreen].scale));
   }];
-    
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
+  NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+  [center addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
+  [center addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
+  [center addObserver:self selector:@selector(managedObjectChanged:) name:NSManagedObjectContextObjectsDidChangeNotification object:nil];
 }
 
 
@@ -175,6 +179,43 @@ typedef enum {
 {
   [UIView animateWithDuration:0.3f animations:^{
     self.contentArea.contentInset = self.contentArea.scrollIndicatorInsets = UIEdgeInsetsZero;
+  }];
+}
+
+
+- (void)managedObjectChanged:(NSNotification *)notification
+{
+  __block BOOL foundSpot = NO;
+  __block CGFloat shiftHeight = 0.0f;
+  __block UIView *foundView = nil;
+
+  [UIView animateWithDuration:0.2 animations:^{
+    [[notification.userInfo objectForKey:NSDeletedObjectsKey] enumerateObjectsUsingBlock:^(NSManagedObject *obj, NSUInteger idx, BOOL *stop) {
+      if (obj.entity == [NSEntityDescription entityForName:@"LineItem" inManagedObjectContext:self.bill.managedObjectContext]) {
+        [self.contentArea.subviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
+          if (foundSpot) {
+            subview.frame = CGRectOffset(subview.frame, 0.0f, -shiftHeight);
+          }
+          else if ([subview isKindOfClass:[BLEditableLineItem class]]) {
+            BLEditableLineItem *lineItemView = (BLEditableLineItem *)subview;
+            foundSpot = (lineItemView.lineItem == obj);
+            shiftHeight = lineItemView.frame.size.height;
+            foundView = subview;
+            
+            if (foundSpot) {
+              CGRect newFrame = subview.frame;
+              newFrame.size.height = 0.0f;
+              subview.frame = newFrame;
+            }
+          }
+        }];
+      }
+    }];
+      
+    if (foundSpot) self.contentArea.bottomBorder.frame = CGRectOffset(self.contentArea.bottomBorder.frame, 0.0f, -shiftHeight);
+  } completion:^(BOOL finished) {
+    self.contentArea.contentSize = CGSizeMake(self.contentArea.contentSize.width, self.contentArea.contentSize.height - shiftHeight);
+    if (foundView) [foundView removeFromSuperview];
   }];
 }
 

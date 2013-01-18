@@ -20,7 +20,6 @@
 
 @interface BLEditableLineItem ()
 
-@property (nonatomic, strong) LineItem *lineItem;
 @property (nonatomic, strong) UIView *fieldWrapper;
 @property (nonatomic, strong) UITextField *quantity;
 @property (nonatomic, strong) UITextField *name;
@@ -215,7 +214,9 @@
     case UIGestureRecognizerStateCancelled: {
       CGFloat animationDuration = translation.x / HEIGHT / 10.0f;
       CGAffineTransform newTransform = CGAffineTransformIdentity;
-      if (translation.x > HEIGHT) {
+      BOOL willDelete = translation.x > HEIGHT;
+      
+      if (willDelete) {
         newTransform = CGAffineTransformMakeTranslation(320.0f, 0.0f);
         animationDuration = (320.0f - translation.x) / HEIGHT / 10.0f;
       }
@@ -223,7 +224,16 @@
       [UIView animateWithDuration:animationDuration animations:^{
         self.fieldWrapper.transform = self.redDelete.transform = newTransform;
         self.redDelete.alpha = 0.0f;
+      } completion:^(BOOL finished) {
+        if (willDelete) {
+          [self.lineItem.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *item, BOOL *stop) {
+            if (item.index > self.lineItem.index) item.index--;
+          }];
+          [self.lineItem.managedObjectContext deleteObject:self.lineItem];
+          [self.lineItem.managedObjectContext save:nil];
+        }
       }];
+      
       recognizer.enabled = YES;
       self.isPanning = NO;
       break;

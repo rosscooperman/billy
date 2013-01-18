@@ -11,4 +11,6 @@
 
 @interface BLScrollView : UIScrollView
 
+@property (readonly) UIImageView *bottomBorder;
+
 @end

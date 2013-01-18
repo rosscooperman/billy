@@ -9,9 +9,11 @@
 #import "BLViewController.h"
 
 
+@class BLScrollView;
+
 @interface BLFixItemsViewController : BLViewController
 
-@property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
+@property (nonatomic, strong) IBOutlet BLScrollView *contentArea;
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
 @property (nonatomic, strong) IBOutlet UIButton *previousScreenButton;
 @property (nonatomic, strong) IBOutlet UIButton *addLineItemButton;
