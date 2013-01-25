@@ -12,7 +12,6 @@
 
 
 #import "BLSummaryViewController.h"
-#import "UIViewController+GuidedTour.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Assignment.h"
@@ -26,7 +25,6 @@
 @property (nonatomic, strong) NSMutableArray *detailViews;
 @property (nonatomic, strong) NSMutableArray *nameViews;
 @property (nonatomic, strong, readonly) NSArray *people;
-@property (assign) BOOL tourTextShowing;
 
 
 - (UIView *)generateNameViewForIndex:(NSInteger)index;
@@ -68,10 +66,6 @@
     [self.detailViews addObject:[NSNull null]];
   }
   self.contentArea.contentSize = CGSizeMake(320.0, (bill.splitCount * (BOX_HEIGHT + 5.0)) + 75.0);
-  
-  CGPoint tourPoint = CGPointMake(5.0, self.contentArea.contentSize.height - 75.0);
-  [self showTourText:@"bravo, bravo! you made it!\ntap a nickname to view an itemized list" atPoint:tourPoint animated:NO];
-  self.tourTextShowing = self.shouldShowTour;
 }
 
 
@@ -288,24 +282,13 @@
 
 - (void)toggleLineItems:(id)sender
 {
-  void (^complete)() = ^{
-    UIView *view = [sender superview];
-    NSInteger index = [self.nameViews indexOfObject:view];
-    if ([[self.detailViews objectAtIndex:index] isEqual:[NSNull null]]) {
-      [self showLineItems:sender];
-    }
-    else {
-      [self hideLineItems:sender];
-    }
-  };
-  
-  if (self.tourTextShowing) {
-    [self hideTourTextAnimated:YES complete:complete];
-    self.tourTextShowing = NO;
-    [self markTourShown];
+  UIView *view = [sender superview];
+  NSInteger index = [self.nameViews indexOfObject:view];
+  if ([[self.detailViews objectAtIndex:index] isEqual:[NSNull null]]) {
+    [self showLineItems:sender];
   }
   else {
-    complete();
+    [self hideLineItems:sender];
   }
 }
 

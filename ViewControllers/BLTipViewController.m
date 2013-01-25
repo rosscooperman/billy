@@ -8,7 +8,6 @@
 
 #import "BLTipViewController.h"
 #import "BLSummaryViewController.h"
-#import "UIViewController+GuidedTour.h"
 #import "Bill.h"
 
 
@@ -41,8 +40,6 @@
 {
   self.bill = [BLAppDelegate appDelegate].currentBill;
   self.tipPercentage = 0.2;
-  
-  [self showTourText:@"adjust the tip percentage\nby tapping +/-" atPoint:CGPointMake(5.0, 5.0) animated:NO];
 }
 
 
@@ -86,10 +83,6 @@
     }
   }
   self.minusButton.enabled = YES;
-  if (self.shouldShowTour) {
-    [self hideTourTextAnimated:YES complete:nil];
-    [self markTourShown];
-  }
 }
 
 
@@ -104,10 +97,6 @@
     }
   }
   self.plusButton.enabled = YES;
-  if (self.shouldShowTour) {
-    [self hideTourTextAnimated:YES complete:nil];
-    [self markTourShown];
-  }
 }
 
 

@@ -11,7 +11,6 @@
 #define PADDING_WIDTH 45.0f
 
 
-#import "UIViewController+GuidedTour.h"
 #import "UIViewController+ButtonManagement.h"
 #import "BLNamesViewController.h"
 #import "BLCameraViewController.h"
@@ -128,7 +127,6 @@
   
   if (self.nextScreenButton.enabled) return;
   [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
-  [self markTourShown];
 }
 
 

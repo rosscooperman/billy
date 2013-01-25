@@ -11,7 +11,6 @@
 
 #import <ImageIO/CGImageProperties.h>
 
-#import "UIViewController+GuidedTour.h"
 #import "UIViewController+ButtonManagement.h"
 #import "BLCameraViewController.h"
 #import "BLCropViewController.h"
@@ -52,16 +51,6 @@
 
 #pragma mark - View Lifecycle
 
-- (void)viewDidLoad
-{
-  NSString *text = @"normally you would take a picture of\nyour receipt with the camera button\nand the itemized list would be\ngenerated for you.";
-  [self showTourText:text atPoint:CGPointMake(5.0, 25.0) animated:NO];
-  
-  text = @"but let's learn to walk before we run.\ntap the ≫ button to skip camera mode.";
-  [self showTourText:text atPoint:CGPointMake(5.0, 225.0) animated:NO];
-}
-
-
 - (void)viewDidAppear:(BOOL)animated
 {
   if (!self.navigationController.navigationBarHidden) {
@@ -86,11 +75,8 @@
   
   self.skipCameraButton.enabled = YES;
   self.previousScreenButton.enabled = YES;
-  
-  if (!self.shouldShowTour) {
-    self.cameraButton.enabled = YES;
-    self.cameraButton.backgroundColor = CAMERA_BUTTON_COLOR;
-  }
+  self.cameraButton.enabled = YES;
+  self.cameraButton.backgroundColor = CAMERA_BUTTON_COLOR;
 }
 
 
@@ -99,8 +85,6 @@
   self.mask.alpha = 1.0;
   self.cameraButton.backgroundColor = [UIColor lightGrayColor];
   [self.captureSession stopRunning];
-  [self hideTourTextAnimated:NO complete:nil];
-  [self markTourShown];
 }
 
 

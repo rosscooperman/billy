@@ -115,7 +115,6 @@
 		91D0953D1595310C00E22EEC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D0953B1595310C00E22EEC /* Default@2x.png */; };
 		91E62D1215CC546C00E3AD5D /* cameraFocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1015CC546C00E3AD5D /* cameraFocus.png */; };
 		91E62D1315CC546C00E3AD5D /* cameraFocus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1115CC546C00E3AD5D /* cameraFocus@2x.png */; };
-		91E62D1715CC654A00E3AD5D /* UIViewController+GuidedTour.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E62D1615CC654A00E3AD5D /* UIViewController+GuidedTour.m */; };
 		91E62D1A15CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */; };
 		91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */; };
 		91EB2BC01586E56F007FD18B /* BLTaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */; };
@@ -299,8 +298,6 @@
 		91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddCreatedAtForBill.xcdatamodel; sourceTree = "<group>"; };
 		91E62D1015CC546C00E3AD5D /* cameraFocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraFocus.png; sourceTree = "<group>"; };
 		91E62D1115CC546C00E3AD5D /* cameraFocus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraFocus@2x.png"; sourceTree = "<group>"; };
-		91E62D1515CC654A00E3AD5D /* UIViewController+GuidedTour.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+GuidedTour.h"; path = "OtherClasses/UIViewController+GuidedTour.h"; sourceTree = "<group>"; };
-		91E62D1615CC654A00E3AD5D /* UIViewController+GuidedTour.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+GuidedTour.m"; path = "OtherClasses/UIViewController+GuidedTour.m"; sourceTree = "<group>"; };
 		91E62D1815CC7F2B00E3AD5D /* UIViewController+ButtonManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+ButtonManagement.h"; path = "OtherClasses/UIViewController+ButtonManagement.h"; sourceTree = "<group>"; };
 		91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+ButtonManagement.m"; path = "OtherClasses/UIViewController+ButtonManagement.m"; sourceTree = "<group>"; };
 		91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTaxViewController.h; path = ViewControllers/BLTaxViewController.h; sourceTree = "<group>"; };
@@ -658,8 +655,6 @@
 				910945F5164D925500CBD8E2 /* BLFeedback.m */,
 				91E62D1815CC7F2B00E3AD5D /* UIViewController+ButtonManagement.h */,
 				91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */,
-				91E62D1515CC654A00E3AD5D /* UIViewController+GuidedTour.h */,
-				91E62D1615CC654A00E3AD5D /* UIViewController+GuidedTour.m */,
 			);
 			name = "Other Classes";
 			sourceTree = "<group>";
@@ -840,7 +835,6 @@
 				9155239715B0949500F2F539 /* Bill.m in Sources */,
 				9155239A15B0949500F2F539 /* Person.m in Sources */,
 				9155239D15B0949500F2F539 /* Assignment.m in Sources */,
-				91E62D1715CC654A00E3AD5D /* UIViewController+GuidedTour.m in Sources */,
 				91E62D1A15CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m in Sources */,
 				919458631617E56300E0B710 /* BLViewController.m in Sources */,
 				9194586A1618014400E0B710 /* BLMainView.m in Sources */,

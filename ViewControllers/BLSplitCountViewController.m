@@ -8,7 +8,6 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#import "UIViewController+GuidedTour.h"
 #import "UIViewController+ButtonManagement.h"
 #import "BLSplitCountViewController.h"
 #import "BLNamesViewController.h"
@@ -26,7 +25,6 @@
 
 - (void)layoutControls;
 - (void)setCount:(NSInteger)count;
-- (void)transitionTour;
 
 @end
 
@@ -47,10 +45,7 @@
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
-{
-  [self showTourText:@"cycle through the number of splits\nby tapping +/-" atPoint:CGPointMake(5.0, 5.0) animated:NO];
-  if (self.shouldShowTour) [self disableButton:self.nextScreenButton];
-  
+{  
   // bump up the font size of the count label
   self.countLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:375.0];
   self.realView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"viewBackground"]];  
@@ -89,7 +84,6 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-  [self hideTourTextAnimated:NO complete:nil];
   if (!self.transitioned) {
     self.view = self.realView;
     
@@ -147,31 +141,17 @@
 }
 
 
--(void)transitionTour
-{
-  if (self.nextScreenButton.enabled) return;
-  
-  [self enableButton:self.nextScreenButton type:BLButtonTypeForward];
-  [self hideTourTextAnimated:YES complete:^{
-    [self showTourText:@"tap the check to continue" atPoint:CGPointMake(315.0, 400.0) animated:YES];
-    [self markTourShown];
-  }];
-}
-
-
 #pragma mark - IBAction Methods
 
 - (void)incrementCount:(id)sender
 {
   [self setCount:self.bill.splitCount + 1];
-  [self transitionTour];
 }
 
 
 - (void)decrementCount:(id)sender
 {
   [self setCount:self.bill.splitCount - 1];
-  [self transitionTour];
 }
 
 

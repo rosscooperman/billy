@@ -8,7 +8,6 @@
 
 #import "BLTaxViewController.h"
 #import "BLTipViewController.h"
-#import "UIViewController+GuidedTour.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Assignment.h"
@@ -19,7 +18,6 @@
 @property (nonatomic, strong) Bill *bill;
 @property (nonatomic, assign) float taxPercentage;
 @property (nonatomic, strong) NSTimer *longPressTimer;
-@property (assign) BOOL tourShowing;
 
 
 - (void)updateTax:(double)amount;
@@ -90,11 +88,6 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-  CGFloat tourTop = CGRectGetMaxY(self.minusButton.frame) - 15.0;
-  [self showTourText:@"adjust the tax amount by tapping +/-" atPoint:CGPointMake(5.0, 5.0) animated:NO];
-  [self showTourText:@"alteratively, by tapping the amount\nyou can enter it manually" atPoint:CGPointMake(5.0, tourTop) animated:NO];
-  self.tourShowing = self.shouldShowTour;
-  
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
 }
@@ -130,10 +123,6 @@
   self.bill.tax = amount;
   _taxPercentage = (self.bill.tax == 0.0) ? 0.0 : self.bill.tax / self.bill.subtotal;
   [self updateLabels];
-  if (self.tourShowing) [self hideTourTextAnimated:YES complete:^{
-    [self markTourShown];
-    self.tourShowing = NO;
-  }];
 }
 
 
@@ -154,10 +143,6 @@
   CGFloat duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
   [UIView animateWithDuration:duration animations:^{
     self.contentWrapper.transform = CGAffineTransformMakeTranslation(0.0, -(keyboardSize.height / 2.0));
-  }];
-  
-  if (self.tourShowing) [self hideTourTextAnimated:YES complete:^{
-    self.tourShowing = NO;
   }];
 }
 

@@ -15,20 +15,12 @@
 
 
 #import "BLSplitBillViewController.h"
-#import "UIViewController+GuidedTour.h"
 #import "UIViewController+ButtonManagement.h"
 #import "BLTaxViewController.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Assignment.h"
 #import "Person.h"
-
-
-typedef enum {
-  BLTourStepStart = 0,
-  BLTourStepMiddle,
-  BLTourStepDone
-} BLTourStep;
 
 
 @interface BLSplitBillViewController ()
@@ -41,7 +33,6 @@ typedef enum {
 @property (nonatomic, strong) NSMutableArray *lineItems;
 @property (nonatomic, strong) NSArray *people;
 @property (nonatomic, strong) Bill *bill;
-@property (assign) BLTourStep tourStep;
 
 
 - (void)generateLineItems;
@@ -92,11 +83,7 @@ typedef enum {
   self.people = [bill.people sortedArrayUsingDescriptors:descriptors];
 
   self.currentAssignmentIndex = -1;
-  self.currentLineItem = nil;
-  
-  CGPoint tourPoint = CGPointMake(5.0, self.contentArea.contentSize.height);
-  [self showTourText:@"time to split the bill\ntap an item to get started" atPoint:tourPoint animated:NO];
-  self.tourStep = (self.shouldShowTour) ? BLTourStepStart : BLTourStepDone;
+  self.currentLineItem = nil;  
 }
 
 
@@ -211,59 +198,36 @@ typedef enum {
       CGPoint scrollPoint = CGPointMake(0.0, translatedOrigin.y - 405);
       [self.contentArea setContentOffset:scrollPoint animated:YES];
     }
-    
-    if (self.tourStep == BLTourStepMiddle) {
-      CGPoint tourPoint = CGPointMake(5.0, self.contentArea.contentSize.height);
-      NSString *tourText = @"tap the +/- buttons to adjust quantities\nyou can continue once\neverything is assigned";
-      [self showTourText:tourText atPoint:tourPoint animated:YES];
-    }
   }];
 }
 
 
 - (void)lineItemTapped:(UITapGestureRecognizer *)recognizer
 {
-  // this is the actual code to manange a line item being tapped
-  // wrapped in a block so it can potentially occur after the dismissal of tour text
-  void (^complete)() = ^{
-    if (self.currentAssignmentIndex >= 0) {
+  if (self.currentAssignmentIndex >= 0) {
+    [UIView animateWithDuration:0.3 animations:^{
+      self.assignmentView.frame = CGRectOffset(self.assignmentView.frame, 0, -self.assignmentView.frame.size.height);
+      for (NSInteger i = self.currentAssignmentIndex + 3; i < self.contentArea.subviews.count; i++) {
+        CGRect frame = [[self.contentArea.subviews objectAtIndex:i] frame];
+        [[self.contentArea.subviews objectAtIndex:i] setFrame:CGRectOffset(frame, 0, -(self.assignmentView.frame.size.height + 2))];
+      }
+    } completion:^(BOOL finished) {
+      [[self.contentArea.subviews objectAtIndex:0] removeFromSuperview];
+      [[self.contentArea.subviews objectAtIndex:0] removeFromSuperview];
       [UIView animateWithDuration:0.3 animations:^{
-        self.assignmentView.frame = CGRectOffset(self.assignmentView.frame, 0, -self.assignmentView.frame.size.height);
-        for (NSInteger i = self.currentAssignmentIndex + 3; i < self.contentArea.subviews.count; i++) {
-          CGRect frame = [[self.contentArea.subviews objectAtIndex:i] frame];
-          [[self.contentArea.subviews objectAtIndex:i] setFrame:CGRectOffset(frame, 0, -(self.assignmentView.frame.size.height + 2))];
-        }
-      } completion:^(BOOL finished) {
-        [[self.contentArea.subviews objectAtIndex:0] removeFromSuperview];
-        [[self.contentArea.subviews objectAtIndex:0] removeFromSuperview];
-        [UIView animateWithDuration:0.3 animations:^{
-          self.contentArea.contentSize = CGSizeMake(320, self.contentArea.contentSize.height - self.assignmentView.frame.size.height - 2);
-        }];
-        if (self.currentAssignmentIndex != recognizer.view.tag) {
-          [self showAssignmentViewAtIndex:recognizer.view.tag];
-        }
-        else {
-          self.currentAssignmentIndex = -1;
-          self.currentLineItem = nil;
-        }
+        self.contentArea.contentSize = CGSizeMake(320, self.contentArea.contentSize.height - self.assignmentView.frame.size.height - 2);
       }];
-    }
-    else {
-      [self showAssignmentViewAtIndex:recognizer.view.tag];
-    }
-  };
-  
-  if (self.tourStep == BLTourStepStart) {
-    self.tourStep = BLTourStepMiddle;
-    [self hideTourTextAnimated:YES complete:complete];
-  }
-  else if (self.tourStep == BLTourStepMiddle) {
-    self.tourStep = BLTourStepDone;
-    [self markTourShown];
-    [self hideTourTextAnimated:YES complete:complete];
+      if (self.currentAssignmentIndex != recognizer.view.tag) {
+        [self showAssignmentViewAtIndex:recognizer.view.tag];
+      }
+      else {
+        self.currentAssignmentIndex = -1;
+        self.currentLineItem = nil;
+      }
+    }];
   }
   else {
-    complete();
+    [self showAssignmentViewAtIndex:recognizer.view.tag];
   }
 }
 
@@ -351,35 +315,24 @@ typedef enum {
 
 - (void)add:(NSInteger)amount toAssignmentAtIndex:(NSInteger)index
 {
-  void (^complete)() = ^{
-    LineItem *lineItem = [self.lineItems objectAtIndex:self.currentAssignmentIndex];
-    Person *person = [self.people objectAtIndex:index];
-    Assignment *assignment = [self assignmentForPerson:person lineItem:lineItem];
-    
-    if (!assignment) {
-      NSEntityDescription *entity = [NSEntityDescription entityForName:@"Assignment" inManagedObjectContext:lineItem.managedObjectContext];
-      assignment = [[Assignment alloc] initWithEntity:entity insertIntoManagedObjectContext:lineItem.managedObjectContext];
-      assignment.quantity = 0;
-      assignment.person = person;
-      assignment.lineItem = lineItem;
-    }
-    
-    assignment.quantity += amount;
-    [assignment.managedObjectContext save:nil];
-    [self updateAssignmentView];
-    
-    self.assignedQuantity += amount;
-    [self updateNextScreenButton];
-  };
+  LineItem *lineItem = [self.lineItems objectAtIndex:self.currentAssignmentIndex];
+  Person *person = [self.people objectAtIndex:index];
+  Assignment *assignment = [self assignmentForPerson:person lineItem:lineItem];
   
-  if (self.tourStep == BLTourStepMiddle) {
-    self.tourStep = BLTourStepDone;
-    [self markTourShown];
-    [self hideTourTextAnimated:YES complete:complete];
+  if (!assignment) {
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Assignment" inManagedObjectContext:lineItem.managedObjectContext];
+    assignment = [[Assignment alloc] initWithEntity:entity insertIntoManagedObjectContext:lineItem.managedObjectContext];
+    assignment.quantity = 0;
+    assignment.person = person;
+    assignment.lineItem = lineItem;
   }
-  else {
-    complete();
-  }
+  
+  assignment.quantity += amount;
+  [assignment.managedObjectContext save:nil];
+  [self updateAssignmentView];
+  
+  self.assignedQuantity += amount;
+  [self updateNextScreenButton];
 }
 
 
