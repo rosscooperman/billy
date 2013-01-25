@@ -56,6 +56,8 @@ typedef enum {
 - (void)keyboardShown:(NSNotification *)notification;
 - (void)keyboardHidden:(NSNotification *)notification;
 - (void)managedObjectChanged:(NSNotification *)notification;
+- (void)lineItemsRemoved:(NSArray *)lineItems;
+- (void)lineItemsAdded:(NSArray *)lineItems;
 - (BOOL)validateLineItems;
 - (void)nextTourStep;
 
@@ -183,14 +185,14 @@ typedef enum {
 }
 
 
-- (void)managedObjectChanged:(NSNotification *)notification
+- (void)lineItemsRemoved:(NSArray *)lineItems
 {
   __block BOOL foundSpot = NO;
   __block CGFloat shiftHeight = 0.0f;
   __block UIView *foundView = nil;
-
+  
   [UIView animateWithDuration:0.2 animations:^{
-    [[notification.userInfo objectForKey:NSDeletedObjectsKey] enumerateObjectsUsingBlock:^(NSManagedObject *obj, NSUInteger idx, BOOL *stop) {
+    [lineItems enumerateObjectsUsingBlock:^(NSManagedObject *obj, NSUInteger idx, BOOL *stop) {
       if (obj.entity == [NSEntityDescription entityForName:@"LineItem" inManagedObjectContext:self.bill.managedObjectContext]) {
         [self.contentArea.subviews enumerateObjectsUsingBlock:^(UIView *subview, NSUInteger idx, BOOL *stop) {
           if (foundSpot) {
@@ -211,12 +213,49 @@ typedef enum {
         }];
       }
     }];
-      
+    
     if (foundSpot) self.contentArea.bottomBorder.frame = CGRectOffset(self.contentArea.bottomBorder.frame, 0.0f, -shiftHeight);
   } completion:^(BOOL finished) {
     self.contentArea.contentSize = CGSizeMake(self.contentArea.contentSize.width, self.contentArea.contentSize.height - shiftHeight);
     if (foundView) [foundView removeFromSuperview];
   }];
+}
+
+
+- (void)lineItemsAdded:(NSArray *)lineItems
+{
+  __block CGFloat extraHeight = 0.0f;
+  NSMutableArray *addedLineItems = [NSMutableArray arrayWithCapacity:lineItems.count];
+  
+  [lineItems enumerateObjectsUsingBlock:^(NSManagedObject *obj, NSUInteger idx, BOOL *stop) {
+    if (obj.entity == [NSEntityDescription entityForName:@"LineItem" inManagedObjectContext:self.bill.managedObjectContext]) {
+      LineItem *lineItem = (LineItem *)obj;
+      BLEditableLineItem *lineItemView = [[BLEditableLineItem alloc] initWithLineItem:lineItem];
+      [addedLineItems addObject:lineItemView];
+      
+      extraHeight += lineItemView.frame.size.height;
+      lineItemView.transform = CGAffineTransformMakeTranslation(0.0f, -lineItemView.frame.size.height);
+      
+      [self.contentArea insertSubview:lineItemView atIndex:0];
+    }
+  }];
+  
+  [UIView animateWithDuration:0.2 animations:^{
+    self.contentArea.bottomBorder.frame = CGRectOffset(self.contentArea.bottomBorder.frame, 0.0f, extraHeight);
+    [addedLineItems enumerateObjectsUsingBlock:^(BLEditableLineItem *lineItem, NSUInteger idx, BOOL *stop) {
+      lineItem.transform = CGAffineTransformIdentity;
+    }];
+  } completion:^(BOOL finished) {
+    self.contentArea.contentSize = CGSizeMake(self.contentArea.contentSize.width, self.contentArea.contentSize.height + extraHeight);
+    if (addedLineItems.count > 0) [[addedLineItems objectAtIndex:0] becomeFirstResponder];
+  }];
+}
+
+
+- (void)managedObjectChanged:(NSNotification *)notification
+{
+  [self lineItemsRemoved:[notification.userInfo objectForKey:NSDeletedObjectsKey]];
+  [self lineItemsAdded:[notification.userInfo objectForKey:NSInsertedObjectsKey]];
 }
 
 
@@ -434,21 +473,12 @@ typedef enum {
     return;
   }
   
-//  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
-//  LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
-//  lineItem.index = self.lineItems.count;
-//  
-//  [self.bill addLineItemsObject:lineItem];
-//  [self.lineItems addObject:lineItem];
-//  
-//  UIView *newRow = [self generateViewForIndex:lineItem.index];
-//  [self.contentArea addSubview:newRow];
-//  self.contentArea.contentSize = CGSizeMake(320.0f, (TEXT_BOX_HEIGHT + self.borderWidth) * self.bill.lineItems.count);
-//  self.contentBackground.frame = (CGRect){ CGPointMake(0.0f, -self.borderWidth), self.contentArea.contentSize };
-//  
-//  NSDictionary *fields = [self.dataFields objectAtIndex:lineItem.index];
-//  BLTextField *field = [fields objectForKey:@"quantity"];
-//  [field becomeFirstResponder];
+  NSManagedObjectContext *context = [BLAppDelegate appDelegate].managedObjectContext;
+  LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:context];
+  lineItem.index = self.bill.lineItems.count;
+
+  [self.bill addLineItemsObject:lineItem];
+  [self.bill.managedObjectContext save:nil];
 }
 
 @end

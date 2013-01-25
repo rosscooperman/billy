@@ -78,8 +78,14 @@
   [self.quantity resignFirstResponder];
   [self.name resignFirstResponder];
   [self.price resignFirstResponder];
-
+  
   return [super resignFirstResponder];
+}
+
+
+- (BOOL)becomeFirstResponder
+{
+  return [self.quantity becomeFirstResponder];
 }
 
 

@@ -18,5 +18,6 @@
 
 
 - (id)initWithLineItem:(LineItem *)lineItem;
+- (BOOL)becomeFirstResponder;
 
 @end
