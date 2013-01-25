@@ -31,6 +31,7 @@
 
 
 - (void)createSubviews;
+- (void)setReturnTypes;
 - (BLTextField *)textFieldWithFrame:(CGRect)frame;
 - (void)panView:(UIPanGestureRecognizer *)recognizer;
 - (void)keyboardShown:(NSNotification *)notification;
@@ -145,6 +146,9 @@
   self.price.returnKeyType = UIReturnKeyDone;
   [self.fieldWrapper addSubview:self.price];
   
+  // make sure the return types (done or next) are properly set for price and name
+  [self setReturnTypes];
+  
   // if there's only one line item and all fields are empty, start editing immediately
   if (self.lineItem.bill.lineItems.count == 1 && self.lineItem.quantity == 0 && self.lineItem.desc.length == 0 && self.lineItem.price == 0.0) {
     [self.quantity becomeFirstResponder];
@@ -161,6 +165,13 @@
   // register for keyboardShow and keyboardHidden notifications to disable interaction with the wrapper
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
   [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardDidHideNotification object:nil];
+}
+
+
+- (void)setReturnTypes
+{
+  self.name.returnKeyType = (self.price.text.length > 0) ? UIReturnKeyDone : UIReturnKeyNext;
+  self.quantity.returnKeyType = (self.price.text.length > 0 && self.name.text.length > 0) ? UIReturnKeyDone : UIReturnKeyNext;
 }
 
 
@@ -281,7 +292,15 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
   if (textField.returnKeyType == UIReturnKeyNext) {
-    (textField == self.quantity) ? [self.name becomeFirstResponder] : [self.price becomeFirstResponder];
+    if (textField == self.quantity) {
+      (self.name.text.length > 0) ? [self.price becomeFirstResponder] : [self.name becomeFirstResponder];
+    }
+    else if (textField == self.name) {
+      [self.price becomeFirstResponder];
+    }
+    else {
+      [textField resignFirstResponder];
+    }
   }
   else {
     [textField resignFirstResponder];
@@ -298,7 +317,7 @@
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSCharacterSet *nonDigitsSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
-    returnValue = nonDigitRange.location == NSNotFound;    
+    returnValue = nonDigitRange.location == NSNotFound;
   }
   else if (textField == self.price) {
     NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
