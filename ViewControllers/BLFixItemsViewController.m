@@ -113,12 +113,20 @@
   }];
   if (!activeView) return;
 
+  // build a CGRect that represents the portion of the contentArea that will be visible with the keyboard shown
+  // this is tricky to do because the contentArea takes up some, but not all, of the space the keyboard will occupy
   CGRect frame = self.contentArea.frame;
-  frame.size.height -= keyboardSize.height;
-  CGPoint translatedOrigin = [self.view convertPoint:activeView.frame.origin fromView:self.contentArea];
-  translatedOrigin.y += frame.size.height + 10.0f;
+  CGPoint windowOrigin = [[BLAppDelegate appDelegate].window convertPoint:frame.origin fromView:self.contentArea.superview];
+  CGFloat maxY = windowOrigin.y + frame.size.height;
+  frame.size.height -= (keyboardSize.height - (480.0f - maxY));
+  frame = CGRectOffset(frame, self.contentArea.contentOffset.x, self.contentArea.contentOffset.y);
+
+  // now create a test point that represents the bottom left corner of the view the user tapped on
+  CGPoint testPoint = activeView.frame.origin;
+  testPoint.y += activeView.frame.size.height;
   
-  if (!CGRectContainsPoint(frame, translatedOrigin) ) {
+  // if the bottom left corner of the tapped view is obscurred (entirely or partially) scroll the contentArea to compensate
+  if (!CGRectContainsPoint(frame, testPoint) ) {
     CGPoint scrollPoint = CGPointMake(0.0f, activeView.frame.origin.y + activeView.frame.size.height + 16.0f - keyboardSize.height);
     [self.contentArea setContentOffset:scrollPoint animated:YES];
   }
@@ -175,6 +183,8 @@
   __block CGFloat extraHeight = 0.0f;
   NSMutableArray *addedLineItems = [NSMutableArray arrayWithCapacity:lineItems.count];
   
+  UIView *maskingView = [self.contentArea.subviews lastObject];
+  
   [lineItems enumerateObjectsUsingBlock:^(NSManagedObject *obj, NSUInteger idx, BOOL *stop) {
     if (obj.entity == [NSEntityDescription entityForName:@"LineItem" inManagedObjectContext:self.bill.managedObjectContext]) {
       LineItem *lineItem = (LineItem *)obj;
@@ -184,18 +194,30 @@
       extraHeight += lineItemView.frame.size.height;
       lineItemView.transform = CGAffineTransformMakeTranslation(0.0f, -lineItemView.frame.size.height);
       
-      [self.contentArea insertSubview:lineItemView atIndex:0];
+      if (maskingView) {
+        [self.contentArea insertSubview:lineItemView belowSubview:maskingView];
+      }
+      else {
+        [self.contentArea addSubview:lineItemView];
+      }
     }
   }];
-  
+
   [UIView animateWithDuration:0.2 animations:^{
-    self.contentArea.bottomBorder.frame = CGRectOffset(self.contentArea.bottomBorder.frame, 0.0f, extraHeight);
+    if (CGRectGetMaxY(self.contentArea.frame) >= CGRectGetMaxY(self.contentArea.bottomBorder.frame)) {
+      self.contentArea.bottomBorder.frame = CGRectOffset(self.contentArea.bottomBorder.frame, 0.0f, extraHeight);
+    }
     [addedLineItems enumerateObjectsUsingBlock:^(BLEditableLineItem *lineItem, NSUInteger idx, BOOL *stop) {
       lineItem.transform = CGAffineTransformIdentity;
     }];
   } completion:^(BOOL finished) {
     self.contentArea.contentSize = CGSizeMake(self.contentArea.contentSize.width, self.contentArea.contentSize.height + extraHeight);
     if (addedLineItems.count > 0) [[addedLineItems objectAtIndex:0] becomeFirstResponder];
+    if (maskingView) {
+      [addedLineItems enumerateObjectsUsingBlock:^(BLEditableLineItem *lineItem, NSUInteger idx, BOOL *stop) {
+        [lineItem.superview bringSubviewToFront:lineItem];
+      }];
+    }
   }];
 }
 

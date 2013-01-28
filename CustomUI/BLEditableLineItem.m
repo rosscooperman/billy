@@ -92,7 +92,6 @@
 
 - (void)createSubviews
 {
-//  self.backgroundColor = [UIColor colorWithRed:0.54118f green:0.77255f blue:0.64706f alpha:1.0f];
   self.backgroundColor = [UIColor colorWithWhite:0.95f alpha:1.0f];
   
   // add the grey delete indicator
