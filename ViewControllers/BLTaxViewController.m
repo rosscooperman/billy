@@ -62,7 +62,7 @@
     
     NSTextCheckingResult *result = nil;
     NSRange range = [self.bill.rawText rangeOfString:self.bill.rawText];
-    result = [regex firstMatchInString:self.bill.rawText options:options range:range];
+    result = [regex firstMatchInString:self.bill.rawText options:0 range:range];
     
     if (result && result.range.length > 0) {
       self.bill.tax = [[self.bill.rawText substringWithRange:[result rangeAtIndex:1]] floatValue];
