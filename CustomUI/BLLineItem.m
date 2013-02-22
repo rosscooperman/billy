@@ -13,37 +13,19 @@
 
 
 #import "BLLineItem.h"
-
-
-
-#pragma mark - Custom Left-padded UILabel
-
-@interface PaddedLabel : UILabel
-
-@end
-
-@implementation PaddedLabel
-
-- (void)drawTextInRect:(CGRect)rect
-{
-  CGRect inset = (self.textAlignment == UITextAlignmentCenter) ? rect : CGRectInset(rect, 6.0f, 0.0f);
-  [super drawTextInRect:inset];
-}
-
-@end
-
+#import "BLPaddedLabel.h"
 
 
 @interface BLLineItem ()
 
 @property (nonatomic, assign) CGFloat border;
-@property (nonatomic, strong) PaddedLabel *quantity;
-@property (nonatomic, strong) PaddedLabel *name;
-@property (nonatomic, strong) PaddedLabel *price;
+@property (nonatomic, strong) BLPaddedLabel *quantity;
+@property (nonatomic, strong) BLPaddedLabel *name;
+@property (nonatomic, strong) BLPaddedLabel *price;
 
 
 - (void)createSubviews;
-- (PaddedLabel *)labelWithFrame:(CGRect)frame;
+- (BLPaddedLabel *)labelWithFrame:(CGRect)frame;
 
 @end
 
@@ -80,7 +62,7 @@
   // create the quantity label
   self.quantity = [self labelWithFrame:CGRectMake(self.border, self.border, QUANTITY_WIDTH - self.border, HEIGHT - self.border)];
   self.quantity.font = [UIFont fontWithName:@"Avenir-Heavy" size:18];
-  self.quantity.text = (self.lineItem.quantity > 0) ? [NSString stringWithFormat:@"%lld", self.lineItem.quantity] : @"";
+  self.quantity.text = [NSString stringWithFormat:@"%lld", self.lineItem.quantity];
   [self addSubview:quantity];
   
   // create the name label
@@ -109,9 +91,9 @@
 }
 
 
-- (PaddedLabel *)labelWithFrame:(CGRect)frame
+- (BLPaddedLabel *)labelWithFrame:(CGRect)frame
 {
-  PaddedLabel *label = [[PaddedLabel alloc] initWithFrame:frame];
+  BLPaddedLabel *label = [[BLPaddedLabel alloc] initWithFrame:frame];
   
   label.backgroundColor = [UIColor whiteColor];
   label.textColor = [UIColor blackColor];

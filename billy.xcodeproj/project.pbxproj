@@ -94,6 +94,8 @@
 		9198BF18157AEB25001B74A9 /* BLSplitCountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9198BF11157AEB25001B74A9 /* BLSplitCountViewController.m */; };
 		9198BF1A157AEB34001B74A9 /* BLSplitBillViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9198BF19157AEB34001B74A9 /* BLSplitBillViewController.xib */; };
 		91A66BAE16D7F92A00BD4E93 /* BLLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A66BAD16D7F92A00BD4E93 /* BLLineItem.m */; };
+		91A66BB116D8038900BD4E93 /* BLSplitAdjuster.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A66BB016D8038900BD4E93 /* BLSplitAdjuster.m */; };
+		91A66BB416D817AF00BD4E93 /* BLPaddedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 91A66BB316D817AF00BD4E93 /* BLPaddedLabel.m */; };
 		91AAE666158D3A6C00C609C4 /* BLTipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91AAE665158D3A6C00C609C4 /* BLTipViewController.xib */; };
 		91AAE66A158D3A8400C609C4 /* BLTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AAE669158D3A8400C609C4 /* BLTipViewController.m */; };
 		91AAE66E158E54BF00C609C4 /* BLSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AAE66C158E54BF00C609C4 /* BLSummaryViewController.m */; };
@@ -271,6 +273,10 @@
 		9198BF19157AEB34001B74A9 /* BLSplitBillViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLSplitBillViewController.xib; path = NIBs/BLSplitBillViewController.xib; sourceTree = "<group>"; };
 		91A66BAC16D7F92A00BD4E93 /* BLLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLLineItem.h; path = CustomUI/BLLineItem.h; sourceTree = "<group>"; };
 		91A66BAD16D7F92A00BD4E93 /* BLLineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLLineItem.m; path = CustomUI/BLLineItem.m; sourceTree = "<group>"; };
+		91A66BAF16D8038900BD4E93 /* BLSplitAdjuster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLSplitAdjuster.h; path = CustomUI/BLSplitAdjuster.h; sourceTree = "<group>"; };
+		91A66BB016D8038900BD4E93 /* BLSplitAdjuster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSplitAdjuster.m; path = CustomUI/BLSplitAdjuster.m; sourceTree = "<group>"; };
+		91A66BB216D817AF00BD4E93 /* BLPaddedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLPaddedLabel.h; path = CustomUI/BLPaddedLabel.h; sourceTree = "<group>"; };
+		91A66BB316D817AF00BD4E93 /* BLPaddedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLPaddedLabel.m; path = CustomUI/BLPaddedLabel.m; sourceTree = "<group>"; };
 		91AAE665158D3A6C00C609C4 /* BLTipViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTipViewController.xib; path = NIBs/BLTipViewController.xib; sourceTree = "<group>"; };
 		91AAE668158D3A8400C609C4 /* BLTipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTipViewController.h; path = ViewControllers/BLTipViewController.h; sourceTree = "<group>"; };
 		91AAE669158D3A8400C609C4 /* BLTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTipViewController.m; path = ViewControllers/BLTipViewController.m; sourceTree = "<group>"; };
@@ -458,10 +464,14 @@
 				91A66BAD16D7F92A00BD4E93 /* BLLineItem.m */,
 				919458681618014400E0B710 /* BLMainView.h */,
 				919458691618014400E0B710 /* BLMainView.m */,
+				91A66BB216D817AF00BD4E93 /* BLPaddedLabel.h */,
+				91A66BB316D817AF00BD4E93 /* BLPaddedLabel.m */,
 				910945F1164D807000CBD8E2 /* BLPaddedTextField.h */,
 				910945F2164D807000CBD8E2 /* BLPaddedTextField.m */,
 				916E7074163B3A1D0082ECD1 /* BLProgressButton.h */,
 				916E7075163B3A1D0082ECD1 /* BLProgressButton.m */,
+				91A66BAF16D8038900BD4E93 /* BLSplitAdjuster.h */,
+				91A66BB016D8038900BD4E93 /* BLSplitAdjuster.m */,
 				9148AE081579473700985CA0 /* BLTextField.h */,
 				9148AE091579473700985CA0 /* BLTextField.m */,
 				910945ED164C362600CBD8E2 /* BLScrollView.h */,
@@ -849,6 +859,8 @@
 				910945F6164D925500CBD8E2 /* BLFeedback.m in Sources */,
 				91F1B7F11685132C00E81E5E /* BLEditableLineItem.m in Sources */,
 				91A66BAE16D7F92A00BD4E93 /* BLLineItem.m in Sources */,
+				91A66BB116D8038900BD4E93 /* BLSplitAdjuster.m in Sources */,
+				91A66BB416D817AF00BD4E93 /* BLPaddedLabel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
