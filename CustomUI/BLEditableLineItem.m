@@ -181,7 +181,7 @@
 }
 
 
-- (BLTextField *)textFieldWithFrame:(CGRect)frame;
+- (BLTextField *)textFieldWithFrame:(CGRect)frame
 {
   BLTextField *textField = [[BLTextField alloc] initWithFrame:frame];
 

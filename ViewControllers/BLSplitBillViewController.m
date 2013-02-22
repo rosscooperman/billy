@@ -17,6 +17,7 @@
 #import "BLSplitBillViewController.h"
 #import "UIViewController+ButtonManagement.h"
 #import "BLTaxViewController.h"
+#import "BLLineItem.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Assignment.h"
@@ -33,6 +34,7 @@
 @property (nonatomic, strong) NSMutableArray *lineItems;
 @property (nonatomic, strong) NSArray *people;
 @property (nonatomic, strong) Bill *bill;
+@property (nonatomic, assign) CGFloat borderWidth;
 
 
 - (void)generateLineItems;
@@ -63,27 +65,28 @@
 @synthesize lineItems;
 @synthesize bill;
 @synthesize people;
+@synthesize borderWidth;
 
 
 #pragma mark - View Lifecycle
 
 - (void)viewDidLoad
 {
-  // generate an array of the line item objects we care about
+  self.borderWidth = 1.0f / [UIScreen mainScreen].scale;
   self.bill = [BLAppDelegate appDelegate].currentBill;
-  self.lineItems = [NSMutableArray arrayWithCapacity:self.bill.lineItems.count];
-  [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
-    if (!lineItem.deleted && lineItem.quantity > 0.0 && lineItem.price > 0) {
-      [self.lineItems addObject:lineItem];
-    }
-  }];
-  [self generateLineItems];
   
   NSArray *descriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"index" ascending:YES]];
-  self.people = [bill.people sortedArrayUsingDescriptors:descriptors];
-
-  self.currentAssignmentIndex = -1;
-  self.currentLineItem = nil;  
+  NSArray *sortedLineItems = [self.bill.lineItems sortedArrayUsingDescriptors:descriptors];
+  
+  __block NSUInteger currentIndex = 0;
+  [sortedLineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, NSUInteger i, BOOL *stop) {
+    if (!lineItem.deleted && lineItem.quantity > 0.0 && lineItem.price > 0) {
+      BLLineItem *lineItemView = [[BLLineItem alloc] initWithLineItem:lineItem atIndex:currentIndex++];
+      [lineItemView addTarget:self action:@selector(lineItemTapped:) forControlEvents:UIControlEventTouchUpInside];
+      [self.contentArea addSubview:lineItemView];
+      self.contentArea.contentSize = CGSizeMake(320.0f, CGRectGetMaxY(lineItemView.frame) + (1.0f / [UIScreen mainScreen].scale));
+    }
+  }];
 }
 
 
@@ -204,31 +207,31 @@
 
 - (void)lineItemTapped:(UITapGestureRecognizer *)recognizer
 {
-  if (self.currentAssignmentIndex >= 0) {
-    [UIView animateWithDuration:0.3 animations:^{
-      self.assignmentView.frame = CGRectOffset(self.assignmentView.frame, 0, -self.assignmentView.frame.size.height);
-      for (NSInteger i = self.currentAssignmentIndex + 3; i < self.contentArea.subviews.count; i++) {
-        CGRect frame = [[self.contentArea.subviews objectAtIndex:i] frame];
-        [[self.contentArea.subviews objectAtIndex:i] setFrame:CGRectOffset(frame, 0, -(self.assignmentView.frame.size.height + 2))];
-      }
-    } completion:^(BOOL finished) {
-      [[self.contentArea.subviews objectAtIndex:0] removeFromSuperview];
-      [[self.contentArea.subviews objectAtIndex:0] removeFromSuperview];
-      [UIView animateWithDuration:0.3 animations:^{
-        self.contentArea.contentSize = CGSizeMake(320, self.contentArea.contentSize.height - self.assignmentView.frame.size.height - 2);
-      }];
-      if (self.currentAssignmentIndex != recognizer.view.tag) {
-        [self showAssignmentViewAtIndex:recognizer.view.tag];
-      }
-      else {
-        self.currentAssignmentIndex = -1;
-        self.currentLineItem = nil;
-      }
-    }];
-  }
-  else {
-    [self showAssignmentViewAtIndex:recognizer.view.tag];
-  }
+//  if (self.currentAssignmentIndex >= 0) {
+//    [UIView animateWithDuration:0.3 animations:^{
+//      self.assignmentView.frame = CGRectOffset(self.assignmentView.frame, 0, -self.assignmentView.frame.size.height);
+//      for (NSInteger i = self.currentAssignmentIndex + 3; i < self.contentArea.subviews.count; i++) {
+//        CGRect frame = [[self.contentArea.subviews objectAtIndex:i] frame];
+//        [[self.contentArea.subviews objectAtIndex:i] setFrame:CGRectOffset(frame, 0, -(self.assignmentView.frame.size.height + 2))];
+//      }
+//    } completion:^(BOOL finished) {
+//      [[self.contentArea.subviews objectAtIndex:0] removeFromSuperview];
+//      [[self.contentArea.subviews objectAtIndex:0] removeFromSuperview];
+//      [UIView animateWithDuration:0.3 animations:^{
+//        self.contentArea.contentSize = CGSizeMake(320, self.contentArea.contentSize.height - self.assignmentView.frame.size.height - 2);
+//      }];
+//      if (self.currentAssignmentIndex != recognizer.view.tag) {
+//        [self showAssignmentViewAtIndex:recognizer.view.tag];
+//      }
+//      else {
+//        self.currentAssignmentIndex = -1;
+//        self.currentLineItem = nil;
+//      }
+//    }];
+//  }
+//  else {
+//    [self showAssignmentViewAtIndex:recognizer.view.tag];
+//  }
 }
 
 

@@ -14,7 +14,7 @@
 #import "Bill.h"
 
 
-#import "BLFixItemsViewController.h"
+#import "BLSplitBillViewController.h"
 
 
 @interface BLSplitCountViewController ()
@@ -163,7 +163,7 @@
   self.bill.rawText = @"2 Bread 0.00\n2 Bread 0.00\n1 Mussels 12.00\n1 Crudo 11.00\n1 Empire White 18.00\n1 Empire White 18.00\n1 Uni 18.00\nSubtotal 77.00\nTax 6.84\nTotal 83.84";
   [self.bill.managedObjectContext save:nil];
   
-  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
+  BLSplitBillViewController *fixItemsController = [[BLSplitBillViewController alloc] init];
   [self.navigationController pushViewController:fixItemsController animated:YES];
 }
 
