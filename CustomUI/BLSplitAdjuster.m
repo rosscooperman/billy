@@ -11,14 +11,13 @@
 
 
 #import "BLSplitAdjuster.h"
-#import "BLPaddedLabel.h"
 #import "Person.h"
+#import "LineItem.h"
 
 
 @interface BLSplitAdjuster ()
 
 - (void)createSubviews;
-- (void)addPersonView:(Person *)person;
 
 @end
 
@@ -46,7 +45,9 @@
   NSArray *people = [self.bill.people sortedArrayUsingDescriptors:descriptors];
   
   [people enumerateObjectsUsingBlock:^(Person *person, NSUInteger i, BOOL *stop) {
-    [self addPersonView:person];
+    BLSplitAdjusterPerson *personView = [[BLSplitAdjusterPerson alloc] initWithPerson:person];
+    personView.delegate = self;
+    [self addSubview:personView];
   }];
 }
 
@@ -58,22 +59,20 @@
 }
 
 
-- (void)addPersonView:(Person *)person
+#pragma mark - BLSplitAdjusterPersonDelegate Methods
+
+- (void)quantityAdjustedFor:(Person *)person quantity:(NSUInteger)newQuantity
 {
-  UIView *personView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, HEIGHT * person.index, 320.0f, HEIGHT)];
-  UIColor *labelColor = [[BLAppDelegate appDelegate] colorAtIndex:person.index + 1];
-  personView.backgroundColor = [UIColor colorWithRed:0.54118f green:0.77255f blue:0.64706f alpha:1.0f];
-  
-  // set up the quantity view
-  BLPaddedLabel *quantity = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(BORDER, BORDER, 40.0f - BORDER, HEIGHT - BORDER)];
-  quantity.backgroundColor = labelColor;
-  quantity.font = [UIFont fontWithName:@"Avenir-Heavy" size:16];
-  quantity.textAlignment = UITextAlignmentCenter;
-  quantity.tag = 0;
-  quantity.text = @"0";
-  [personView addSubview:quantity];
-  
-  [self addSubview:personView];
+  [self.lineItem assignQuantity:newQuantity forPerson:person];
+  [self.subviews enumerateObjectsUsingBlock:^(BLSplitAdjusterPerson *personView, NSUInteger i, BOOL *stop) {
+    personView.allowIncrementing = !self.lineItem.isFullyAssigned;
+  }];
+}
+
+
+- (float)unitPrice
+{
+  return (self.lineItem.price / self.lineItem.quantity);
 }
 
 @end

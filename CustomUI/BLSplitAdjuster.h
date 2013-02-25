@@ -7,13 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
 #import "Bill.h"
+#import "BLSplitAdjusterPerson.h"
 
 
-@interface BLSplitAdjuster : UIView
+@interface BLSplitAdjuster : UIView <BLSplitAdjusterPersonDelegate>
 
 @property (nonatomic, strong) Bill *bill;
+@property (nonatomic, strong) LineItem *lineItem;
 
 
 - (id)initWithBill:(Bill *)theBill;

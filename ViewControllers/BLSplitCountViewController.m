@@ -145,13 +145,13 @@
 
 - (void)incrementCount:(id)sender
 {
-  [self setCount:self.bill.splitCount + 1];
+  self.count = self.bill.splitCount + 1;
 }
 
 
 - (void)decrementCount:(id)sender
 {
-  [self setCount:self.bill.splitCount - 1];
+  self.count = self.bill.splitCount - 1;
 }
 
 
@@ -160,7 +160,7 @@
 //  BLNamesViewController *namesController = [[BLNamesViewController alloc] init];
 //  [self.navigationController pushViewController:namesController animated:YES];
   
-  self.bill.rawText = @"2 Bread 0.00\n2 Bread 0.00\n1 Mussels 12.00\n1 Crudo 11.00\n1 Empire White 18.00\n1 Empire White 18.00\n1 Uni 18.00\nSubtotal 77.00\nTax 6.84\nTotal 83.84";
+  self.bill.rawText = @"2 Bread 0.00\n2 Bread 0.00\n3 Mussels 12.00\n1 Crudo 11.00\n1 Empire White 18.00\n5 Empire White 18.00\n1 Uni 18.00\nSubtotal 77.00\nTax 6.84\nTotal 83.84";
   [self.bill.managedObjectContext save:nil];
   
   BLSplitBillViewController *fixItemsController = [[BLSplitBillViewController alloc] init];

@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@class Assignment, Bill;
+@class Assignment, Bill, Person;
 
 @interface LineItem : NSManagedObject
 
@@ -21,6 +21,11 @@
 @property (nonatomic, retain) NSSet *assignments;
 @property (nonatomic) int64_t index;
 @property (nonatomic) BOOL deleted;
+@property (readonly) BOOL isFullyAssigned;
+
+
+- (void)assignQuantity:(NSUInteger)quantity forPerson:(Person *)person;
+- (NSUInteger)totalAssignedQuantity;
 
 @end
 
