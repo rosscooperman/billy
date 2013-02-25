@@ -160,8 +160,10 @@
 - (void)updateQuantityBy:(NSInteger)amount
 {
   self.quantity += amount;
+  float newPrice = (self.quantity) ? self.unitPrice * self.quantity : 0.0f;
+  
   self.quantityLabel.text = [self.quantityFormatter stringFromNumber:[NSNumber numberWithUnsignedInteger:self.quantity]];
-  self.priceLabel.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithFloat:(self.unitPrice * self.quantity)]];
+  self.priceLabel.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithFloat:newPrice]];
 
   self.minusButton.enabled = (self.quantity > 0);
   if (self.delegate && [self.delegate respondsToSelector:@selector(quantityAdjustedFor:quantity:)]) {
