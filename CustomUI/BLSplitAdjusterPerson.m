@@ -107,6 +107,7 @@
   
   // set up the name label
   BLPaddedLabel *nameLabel = [self adjustView:[[BLPaddedLabel alloc] init] width:123.0f + BORDER font:@"Avenir"];
+  nameLabel.textAlignment = UITextAlignmentLeft;
   nameLabel.text = self.person.name;
   [self addSubview:nameLabel];
   

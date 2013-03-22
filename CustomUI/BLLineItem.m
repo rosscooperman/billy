@@ -14,6 +14,7 @@
 
 #import "BLLineItem.h"
 #import "BLPaddedLabel.h"
+#import "Assignment.h"
 
 
 @interface BLLineItem ()
@@ -22,6 +23,9 @@
 @property (nonatomic, strong) BLPaddedLabel *quantity;
 @property (nonatomic, strong) BLPaddedLabel *name;
 @property (nonatomic, strong) BLPaddedLabel *price;
+@property (nonatomic, strong) UIView *tooFew;
+@property (nonatomic, assign) CGAffineTransform tooFewRotation;
+@property (nonatomic, assign) CGAffineTransform tooFewTranslation;
 
 
 - (void)createSubviews;
@@ -36,6 +40,9 @@
 @synthesize quantity;
 @synthesize name;
 @synthesize price;
+@synthesize tooFew;
+@synthesize tooFewRotation;
+@synthesize tooFewTranslation;
 
 
 #pragma mark - Object Lifecycle
@@ -63,6 +70,7 @@
   self.quantity = [self labelWithFrame:CGRectMake(self.border, self.border, QUANTITY_WIDTH - self.border, HEIGHT - self.border)];
   self.quantity.font = [UIFont fontWithName:@"Avenir-Heavy" size:18];
   self.quantity.text = [NSString stringWithFormat:@"%lld", self.lineItem.quantity];
+  self.quantity.clipsToBounds = YES;
   [self addSubview:quantity];
   
   // create the name label
@@ -76,6 +84,14 @@
   self.price = [self labelWithFrame:priceFrame];
   self.price.textAlignment = UITextAlignmentRight;
   [self addSubview:self.price];
+  
+  // create the "too few" indicator
+  self.tooFew = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 10.0f)];
+  self.tooFew.backgroundColor = [UIColor colorWithRed:0.89804f green:0.25882f blue:0.14118f alpha:1.0f];
+  self.tooFewRotation = CGAffineTransformMakeRotation(M_PI * 0.25f);
+  self.tooFewTranslation = CGAffineTransformMakeTranslation(-5.0f, -5.0f);
+  self.tooFew.transform = CGAffineTransformConcat(self.tooFewRotation, self.tooFewTranslation);
+  [self.quantity addSubview:self.tooFew];
   
   // use a number formatter to make sure that we use local currency
   NSNumberFormatter *numberFormatter = [[NSNumberFormatter alloc] init];
@@ -101,6 +117,25 @@
   label.textAlignment = UITextAlignmentCenter;
   
   return label;
+}
+
+
+- (void)updateCompletionStatus
+{
+  __block NSUInteger totalAssigned = 0;
+  [self.lineItem.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, BOOL *stop) {
+    totalAssigned += assignment.quantity;
+  }];
+  
+  [UIView animateWithDuration:0.3f animations:^{
+    if (totalAssigned < self.lineItem.quantity) {
+      self.tooFewTranslation = CGAffineTransformMakeTranslation(-5.0f, -5.0f);
+    }
+    else {
+      self.tooFewTranslation = CGAffineTransformMakeTranslation(-10.0f, -10.0f);
+    }
+    self.tooFew.transform = CGAffineTransformConcat(self.tooFewRotation, self.tooFewTranslation);
+  }];
 }
 
 @end

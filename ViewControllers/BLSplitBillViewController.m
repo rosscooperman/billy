@@ -34,6 +34,7 @@
 - (void)lineItemTapped:(id)sender;
 - (void)showAdjusterAt:(BLLineItem *)theLineItem;
 - (void)hideAdjuster:(void(^)())complete;
+- (void)displayValidationFailures;
 
 @end
 
@@ -119,6 +120,16 @@
 }
 
 
+- (void)displayValidationFailures
+{
+  [self.contentArea.subviews enumerateObjectsUsingBlock:^(BLLineItem *subview, NSUInteger i, BOOL *stop) {
+    if ([subview isKindOfClass:[BLLineItem class]]) {
+      [subview updateCompletionStatus];
+    }
+  }];
+}
+
+
 #pragma mark - IBAction Methods
 
 - (void)previousScreen:(id)sender
@@ -129,8 +140,13 @@
 
 - (void)nextScreen:(id)sender
 {
-  BLTaxViewController *taxController = [[BLTaxViewController alloc] init];
-  [self.navigationController pushViewController:taxController animated:YES];
+  if ([self.bill validateLineItems]) {
+    BLTaxViewController *taxController = [[BLTaxViewController alloc] init];
+    [self.navigationController pushViewController:taxController animated:YES];
+  }
+  else {
+    [self displayValidationFailures];
+  }
 }
 
 

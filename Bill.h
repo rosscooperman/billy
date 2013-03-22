@@ -32,6 +32,7 @@
 - (void)storeOriginalImage:(NSData *)imageData;
 - (void)storeProcessedImage:(NSData *)imageData;
 - (NSArray *)sortedPeople;
+- (BOOL)validateLineItems;
 
 @end
 

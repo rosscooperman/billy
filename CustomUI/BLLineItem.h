@@ -18,5 +18,6 @@
 
 
 - (id)initWithLineItem:(LineItem *)lineItem atIndex:(NSUInteger)index;
+- (void)updateCompletionStatus;
 
 @end

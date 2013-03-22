@@ -9,6 +9,7 @@
 #import "Bill.h"
 #import "LineItem.h"
 #import "Person.h"
+#import "Assignment.h"
 #import "BLFeedback.h"
 
 
@@ -205,6 +206,24 @@
   NSArray *names = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
   NSArray *filteredNames = [names filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"name.length > 0"]];
   return [filteredNames sortedArrayUsingDescriptors:[NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"count" ascending:NO]]];
+}
+
+
+- (BOOL)validateLineItems
+{
+  __block BOOL validated = YES;
+  [self.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
+    __block NSUInteger totalAssigned = 0;
+    [lineItem.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, BOOL *stop) {
+      totalAssigned += assignment.quantity;
+    }];
+    
+    if (totalAssigned < lineItem.quantity) {
+      validated = NO;
+      *stop = YES;
+    }
+  }];
+  return validated;
 }
 
 @end
