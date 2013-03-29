@@ -218,7 +218,7 @@
       totalAssigned += assignment.quantity;
     }];
     
-    if (totalAssigned < lineItem.quantity) {
+    if (lineItem.price > 0 && totalAssigned < lineItem.quantity) {
       validated = NO;
       *stop = YES;
     }
