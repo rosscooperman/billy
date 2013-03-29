@@ -13,6 +13,8 @@
 #import "BLSplitAdjusterPerson.h"
 #import "BLPaddedLabel.h"
 #import "Person.h"
+#import "LineItem.h"
+#import "Assignment.h"
 
 
 @interface BLSplitAdjusterPerson ()
@@ -30,6 +32,7 @@
 - (void)createSubviews;
 - (id)adjustView:(id)view width:(CGFloat)width font:(NSString *)font;
 - (float)unitPrice;
+- (void)resetLabels;
 
 - (void)incrementQuantity:(id)sender;
 - (void)decrementQuantity:(id)sender;
@@ -161,21 +164,42 @@
 - (void)updateQuantityBy:(NSInteger)amount
 {
   self.quantity += amount;
-  float newPrice = (self.quantity) ? self.unitPrice * self.quantity : 0.0f;
-  
-  self.quantityLabel.text = [self.quantityFormatter stringFromNumber:[NSNumber numberWithUnsignedInteger:self.quantity]];
-  self.priceLabel.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithFloat:newPrice]];
-
-  self.minusButton.enabled = (self.quantity > 0);
-  if (self.delegate && [self.delegate respondsToSelector:@selector(quantityAdjustedFor:quantity:)]) {
-    [self.delegate quantityAdjustedFor:self.person quantity:self.quantity];
-  }
+  [self resetLabels];
 }
 
 
 - (float)unitPrice
 {
   return (self.delegate) ? [self.delegate unitPrice] : 0.0f;
+}
+
+
+- (void)setQuantityFor:(LineItem *)lineItem
+{
+  __block Assignment *theAssignment = nil;
+  [lineItem.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, BOOL *stop) {
+    if (assignment.person == self.person) {
+      theAssignment = assignment;
+      *stop = YES;
+    }
+  }];
+
+  self.quantity = (theAssignment) ? theAssignment.quantity : 0;
+  [self resetLabels];
+}
+
+
+- (void)resetLabels
+{
+  float newPrice = (self.quantity) ? self.unitPrice * self.quantity : 0.0f;
+  
+  self.quantityLabel.text = [self.quantityFormatter stringFromNumber:[NSNumber numberWithUnsignedInteger:self.quantity]];
+  self.priceLabel.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithFloat:newPrice]];
+  
+  self.minusButton.enabled = (self.quantity > 0);
+  if (self.delegate && [self.delegate respondsToSelector:@selector(quantityAdjustedFor:quantity:)]) {
+    [self.delegate quantityAdjustedFor:self.person quantity:self.quantity];
+  }
 }
 
 

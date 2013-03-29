@@ -89,7 +89,7 @@
   self.tooFew = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 10.0f, 10.0f)];
   self.tooFew.backgroundColor = [UIColor colorWithRed:0.89804f green:0.25882f blue:0.14118f alpha:1.0f];
   self.tooFewRotation = CGAffineTransformMakeRotation(M_PI * 0.25f);
-  self.tooFewTranslation = CGAffineTransformMakeTranslation(-5.0f, -5.0f);
+  self.tooFewTranslation = CGAffineTransformMakeTranslation(-10.0f, -10.0f);
   self.tooFew.transform = CGAffineTransformConcat(self.tooFewRotation, self.tooFewTranslation);
   [self.quantity addSubview:self.tooFew];
   
@@ -128,12 +128,8 @@
   }];
   
   [UIView animateWithDuration:0.3f animations:^{
-    if (totalAssigned < self.lineItem.quantity) {
-      self.tooFewTranslation = CGAffineTransformMakeTranslation(-5.0f, -5.0f);
-    }
-    else {
-      self.tooFewTranslation = CGAffineTransformMakeTranslation(-10.0f, -10.0f);
-    }
+    CGFloat offset = (totalAssigned < self.lineItem.quantity) ? -5.0f : -10.0f;
+    self.tooFewTranslation = CGAffineTransformMakeTranslation(offset, offset);
     self.tooFew.transform = CGAffineTransformConcat(self.tooFewRotation, self.tooFewTranslation);
   }];
 }

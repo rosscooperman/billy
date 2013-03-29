@@ -25,6 +25,9 @@
 @end
 
 
+@class LineItem;
+
+
 @interface BLSplitAdjusterPerson : UIView
 
 @property (nonatomic, strong) Person *person;
@@ -34,5 +37,6 @@
 
 - (id)initWithPerson:(Person *)thePerson;
 - (void)updateQuantityBy:(NSInteger)amount;
+- (void)setQuantityFor:(LineItem *)lineItem;
 
 @end

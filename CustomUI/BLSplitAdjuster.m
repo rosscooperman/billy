@@ -25,6 +25,17 @@
 @implementation BLSplitAdjuster
 
 
+#pragma mark - Property Methods
+
+- (void)setLineItem:(LineItem *)lineItem
+{
+  _lineItem = lineItem;
+  [self.subviews enumerateObjectsUsingBlock:^(BLSplitAdjusterPerson *personView, NSUInteger i, BOOL *stop) {
+    [personView setQuantityFor:lineItem];
+  }];
+}
+
+
 #pragma mark - Object Lifecycle
 
 - (id)initWithBill:(Bill *)theBill
