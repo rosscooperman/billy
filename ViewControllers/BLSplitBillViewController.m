@@ -75,6 +75,7 @@
 - (void)showAdjusterAt:(BLLineItem *)theLineItem
 {
   void(^showBlock)() = ^{
+    self.activeLineItem = theLineItem;
     self.adjusterView.lineItem = theLineItem.lineItem;
     
     // set the starting transform of the adjuster view
@@ -99,8 +100,6 @@
   else {
     showBlock();
   }
-
-  self.activeLineItem = theLineItem;
 }
 
 
