@@ -66,6 +66,10 @@
   }];
   
   self.adjusterView = [[BLSplitAdjuster alloc] initWithBill:self.bill];
+  
+  // the adjuster view needs to be positioned out of view to start (if there are fewer than 2 line items it will be peeking out)
+  self.adjusterView.transform = CGAffineTransformMakeTranslation(0.0f, -self.adjusterView.frame.size.height);
+  
   [self.contentArea insertSubview:self.adjusterView atIndex:0];
 }
 
