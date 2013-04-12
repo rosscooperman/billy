@@ -49,6 +49,7 @@
 @synthesize previewView;
 @synthesize loadingIndicator;
 @synthesize cropBoundary;
+@synthesize cropContainer;
 @synthesize leftHandle;
 @synthesize topHandle;
 @synthesize rightHandle;
@@ -73,7 +74,12 @@
 
 - (void)viewDidLayoutSubviews
 {
-  [self initializeCropRectangle];  
+  if (!self.cropBox) [self initializeCropRectangle];
+}
+
+
+- (void)viewWillAppear:(BOOL)animated
+{
 }
 
 
@@ -86,14 +92,13 @@
   if (self.photoData) {
     self.previewView.alpha = 0.0;
     self.previewView.image = [UIImage imageWithData:self.photoData];
+    self.photoData = nil;
         
-    //self.cropTop = self.delta + 20.0;
-    //self.cropBottom = self.previewView.bounds.size.height - self.delta - 20.0;
     [self adjustCropRectangle];
   
     [UIView animateWithDuration:0.3 animations:^{
       self.previewView.alpha = 1.0;
-      self.cropBoundary.alpha = 1.0;
+      self.cropContainer.alpha = 1.0;
     } completion:^(BOOL finished) {
       [self.loadingIndicator stopAnimating];
     }];
@@ -104,6 +109,7 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
   [self.processingImageIndicator stopAnimating];
+  self.iconMask.hidden = YES;
   [self.processImageButton setImage:[UIImage imageNamed:@"iconCheck"] forState:UIControlStateNormal];
 }
 
@@ -154,10 +160,10 @@
   [self.cropBoundary.layer insertSublayer:self.bottomMask atIndex:0];
   
   // set the starting positions of the crop area
-  self.cropLeft = self.leftHandle.center.x;
-  self.cropTop = self.topHandle.center.y;
-  self.cropRight = self.rightHandle.center.x;
-  self.cropBottom = self.bottomHandle.center.y;
+  self.cropLeft = self.leftHandle.center.x - 16.0f;
+  self.cropTop = self.topHandle.center.y - 16.0f;
+  self.cropRight = self.rightHandle.center.x - 16.0f;
+  self.cropBottom = self.bottomHandle.center.y - 16.0f;
   
   // set up the paths of the various pieces
   [self adjustCropRectangle];
@@ -189,10 +195,10 @@
   // reposition the handles
   CGFloat cropHeight = self.cropBottom - self.cropTop;
   CGFloat cropWidth = self.cropRight - self.cropLeft;
-  self.leftHandle.center = CGPointMake(self.cropLeft, self.cropTop + (cropHeight / 2.0));
-  self.topHandle.center = CGPointMake(self.cropLeft + (cropWidth / 2.0), self.cropTop);
-  self.rightHandle.center = CGPointMake(self.cropRight, self.leftHandle.center.y);
-  self.bottomHandle.center = CGPointMake(self.topHandle.center.x, self.cropBottom);
+  self.leftHandle.center = CGPointMake(self.cropLeft + 16.0f, self.cropTop + (cropHeight / 2.0) + 16.0f);
+  self.topHandle.center = CGPointMake(self.cropLeft + (cropWidth / 2.0) + 16.0f, self.cropTop + 16.0f);
+  self.rightHandle.center = CGPointMake(self.cropRight + 16.0f, self.leftHandle.center.y);
+  self.bottomHandle.center = CGPointMake(self.topHandle.center.x, self.cropBottom + 16.0f);
 }
 
 
@@ -423,7 +429,7 @@
       CGPoint newPanPoint = [recognizer translationInView:self.view];
       if (recognizer.view == self.leftHandle) {
         CGFloat newX = MAX(1.0, self.cropLeft + (newPanPoint.x - self.lastPanPoint.x));
-        if (newX > 0 && newX < self.cropRight - 100) {
+        if (newX > 0.0f && newX < self.cropRight - 100) {
           self.cropLeft = newX;
         }        
       }

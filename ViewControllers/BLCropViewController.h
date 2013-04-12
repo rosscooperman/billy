@@ -18,6 +18,7 @@
 @property (nonatomic, strong) IBOutlet UIImageView *previewView;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (nonatomic, strong) IBOutlet UIView *cropBoundary;
+@property (nonatomic, strong) IBOutlet UIView *cropContainer;
 @property (nonatomic, strong) IBOutlet UIButton *leftHandle;
 @property (nonatomic, strong) IBOutlet UIButton *topHandle;
 @property (nonatomic, strong) IBOutlet UIButton *rightHandle;
