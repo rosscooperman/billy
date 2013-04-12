@@ -48,10 +48,12 @@
 
 - (void)awakeFromInsert
 {
-  LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:self.managedObjectContext];
-  lineItem.index = 0;
-  [self addLineItemsObject:lineItem];
-  [self.managedObjectContext save:nil];
+  if (self.lineItems.count == 0) {
+    LineItem *lineItem = [NSEntityDescription insertNewObjectForEntityForName:@"LineItem" inManagedObjectContext:self.managedObjectContext];
+    lineItem.index = 0;
+    [self addLineItemsObject:lineItem];
+    [self.managedObjectContext save:nil];
+  }
   
   [super awakeFromInsert];
 }
@@ -82,6 +84,7 @@
     [self.managedObjectContext deleteObject:toRemove];
   }
   
+  [self.managedObjectContext save:nil];
   [self didChangeValueForKey:@"splitCount"];
 }
 
@@ -103,16 +106,18 @@
   
   if (_rawText.length > 0) {
     NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
-    NSString *pattern = @"^\\s*([\\dIOS]+)\\s+(.*)?\\s+\\$?([\\dIOS]+\\.[\\dIOS]{2})\\s*$";
+    NSString *pattern = @"^\\s*([\\dlIOS]+)\\s+(.*)?\\s+\\$?([\\dlIOS]+[-.·][\\dlIOS]{2})\\s*$";
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
     NSRange range = [_rawText rangeOfString:_rawText];
+    
+    TFLog(@"%@", _rawText);
   
     if ([regex numberOfMatchesInString:_rawText options:0 range:range] > 0) {
       [self.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
         [self.managedObjectContext deleteObject:lineItem];
       }];
     }
-    
+        
     __block NSUInteger count = 0;
     [regex enumerateMatchesInString:_rawText options:0 range:range usingBlock:^(NSTextCheckingResult *result, NSMatchingFlags flags, BOOL *stop) {
       // create a new line item with a description
@@ -121,17 +126,21 @@
       lineItem.desc = [_rawText substringWithRange:[result rangeAtIndex:2]];
       
       // tweak and set the new line item's quantity
-      NSString *quantity = [[_rawText substringWithRange:[result rangeAtIndex:1]] uppercaseString];
+      NSString *quantity = [[_rawText substringWithRange:[result rangeAtIndex:1]] stringByReplacingOccurrencesOfString:@"l" withString:@"1"];
+      quantity = [quantity uppercaseString];
       quantity = [quantity stringByReplacingOccurrencesOfString:@"I" withString:@"1"];
       quantity = [quantity stringByReplacingOccurrencesOfString:@"O" withString:@"0"];
       quantity = [quantity stringByReplacingOccurrencesOfString:@"S" withString:@"5"];
       lineItem.quantity = quantity.longLongValue;
       
       // tweak and set the line item's price
-      NSString *price = [[_rawText substringWithRange:[result rangeAtIndex:3]] uppercaseString];
+      NSString *price = [[_rawText substringWithRange:[result rangeAtIndex:3]] stringByReplacingOccurrencesOfString:@"l" withString:@"1"];
+      price = [price uppercaseString];
       price = [price stringByReplacingOccurrencesOfString:@"I" withString:@"1"];
       price = [price stringByReplacingOccurrencesOfString:@"O" withString:@"0"];
       price = [price stringByReplacingOccurrencesOfString:@"S" withString:@"5"];
+      price = [price stringByReplacingOccurrencesOfString:@"-" withString:@"."];
+      price = [price stringByReplacingOccurrencesOfString:@"·" withString:@"."];
       lineItem.price = price.doubleValue;
       
       [self addLineItemsObject:lineItem];

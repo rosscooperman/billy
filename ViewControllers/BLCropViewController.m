@@ -477,7 +477,6 @@
     [[BLAppDelegate appDelegate].currentBill storeProcessedImage:UIImageJPEGRepresentation(gray, 1.0)];
   }
   
-  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
   [BLAppDelegate appDelegate].currentBill.rawText = [self ocrImage:gray];
   [[BLAppDelegate appDelegate].managedObjectContext save:nil];
   
@@ -487,6 +486,7 @@
     [BLFeedback processPendingFeedback];
   }
   
+  BLFixItemsViewController *fixItemsController = [[BLFixItemsViewController alloc] init];
   [self.navigationController pushViewController:fixItemsController animated:YES];
 }
 
