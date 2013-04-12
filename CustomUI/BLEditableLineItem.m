@@ -130,6 +130,7 @@
   // create the name text box
   self.name = [self textFieldWithFrame:CGRectMake(self.border + QUANTITY_WIDTH, self.border, NAME_WIDTH - self.border, HEIGHT - self.border)];
   self.name.text = self.lineItem.desc;
+  self.name.keyboardType = UIKeyboardTypeDefault;
   self.name.autocapitalizationType = UITextAutocapitalizationTypeWords;
   self.name.textAlignment = UITextAlignmentLeft;
   self.name.placeholder = @"Description";
@@ -140,7 +141,6 @@
   self.price = [self textFieldWithFrame:priceFrame];
   self.price.text = (self.lineItem.price > 0.0) ? [NSString stringWithFormat:@"%.2f", self.lineItem.price] : @"";
   self.price.textAlignment = UITextAlignmentRight;
-  self.price.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
   self.price.placeholder = @"0.00";
   self.price.returnKeyType = UIReturnKeyDone;
   [self.fieldWrapper addSubview:self.price];
@@ -290,6 +290,7 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
+  [textField resignFirstResponder];
   if (textField.returnKeyType == UIReturnKeyNext) {
     if (textField == self.quantity) {
       (self.name.text.length > 0) ? [self.price becomeFirstResponder] : [self.name becomeFirstResponder];
@@ -297,12 +298,6 @@
     else if (textField == self.name) {
       [self.price becomeFirstResponder];
     }
-    else {
-      [textField resignFirstResponder];
-    }
-  }
-  else {
-    [textField resignFirstResponder];
   }
   return NO;
 }
