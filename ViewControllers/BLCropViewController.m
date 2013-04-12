@@ -78,11 +78,6 @@
 }
 
 
-- (void)viewWillAppear:(BOOL)animated
-{
-}
-
-
 - (void)viewDidAppear:(BOOL)animated
 {
   if (!self.navigationController.navigationBarHidden) {
@@ -110,7 +105,6 @@
 {
   [self.processingImageIndicator stopAnimating];
   self.iconMask.hidden = YES;
-  [self.processImageButton setImage:[UIImage imageNamed:@"iconCheck"] forState:UIControlStateNormal];
 }
 
 
@@ -228,16 +222,16 @@
   cropRect.size.height -= self.cropBoundary.bounds.size.height - scaledSize.height;
   
   // adjust the crop offsets based on the new cropping rectangle
-  self.cropLeft -= cropRect.origin.x;
-  self.cropRight -= cropRect.origin.x;
-  self.cropTop -= cropRect.origin.y;
-  self.cropBottom -= cropRect.origin.y;
+  CGFloat left = self.cropLeft - cropRect.origin.x;
+  CGFloat right = self.cropRight - cropRect.origin.x;
+  CGFloat top = self.cropTop - cropRect.origin.y;
+  CGFloat bottom = self.cropBottom - cropRect.origin.y;
   
   // adjust the cropping rectangle based on the crop points
-  cropRect.origin.x = self.cropLeft;
-  cropRect.origin.y = self.cropTop;
-  cropRect.size.width = self.cropRight - self.cropLeft;
-  cropRect.size.height = self.cropBottom - self.cropTop;
+  cropRect.origin.x = left;
+  cropRect.origin.y = top;
+  cropRect.size.width = right - left;
+  cropRect.size.height = bottom - top;
   
   // expand the cropping rectangle using the reverse scaling factor
   cropRect.origin.x *= reverseScaleFactor;
