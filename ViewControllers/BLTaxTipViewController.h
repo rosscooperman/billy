@@ -7,10 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BLViewController.h"
 #import "BLTextField.h"
+#import "BLScrollView.h"
+#import "BLSummaryView.h"
 
 
-@interface BLTaxViewController : UIViewController <UITextFieldDelegate>
+@interface BLTaxTipViewController : BLViewController <UITextFieldDelegate>
+
+@property (nonatomic, strong) IBOutlet BLScrollView *mainContent;
+@property (nonatomic, strong) IBOutlet BLSummaryView *subTotal;
 
 @property (nonatomic, strong) IBOutlet UILabel *percentLabel;
 @property (nonatomic, strong) IBOutlet BLTextField *amountField;

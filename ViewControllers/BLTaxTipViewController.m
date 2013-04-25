@@ -6,14 +6,14 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#import "BLTaxViewController.h"
+#import "BLTaxTipViewController.h"
 #import "BLTipViewController.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Assignment.h"
 
 
-@interface BLTaxViewController ()
+@interface BLTaxTipViewController ()
 
 @property (nonatomic, strong) Bill *bill;
 @property (nonatomic, assign) float taxPercentage;
@@ -28,17 +28,7 @@
 @end
 
 
-@implementation BLTaxViewController
-
-@synthesize percentLabel;
-@synthesize amountField;
-@synthesize minusButton;
-@synthesize plusButton;
-@synthesize closeKeyboardRecognizer;
-@synthesize bill;
-@synthesize taxPercentage = _taxPercentage;
-@synthesize longPressTimer;
-@synthesize contentWrapper;
+@implementation BLTaxTipViewController
 
 
 #pragma mark - View Lifecycle
@@ -46,12 +36,7 @@
 - (void)viewDidLoad
 {
   self.bill = [BLAppDelegate appDelegate].currentBill;
-  
-  // calculate the subtotal from the available line items
-  self.bill.subtotal = 0.0;
-  [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
-    self.bill.subtotal += lineItem.price;
-  }];
+  self.subTotal.amount = self.bill.subtotal;
   
   // if we don't have an established value for the bill's tax, try to get it from the receipt raw text
   if (!self.bill.tax && self.bill.rawText.length > 0) {

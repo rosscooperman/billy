@@ -117,11 +117,13 @@
 		91CAC83F157E6704001B500F /* BLAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 91CAC83E157E6704001B500F /* BLAppDelegate.m */; };
 		91D0953C1595310C00E22EEC /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D0953A1595310C00E22EEC /* Default.png */; };
 		91D0953D1595310C00E22EEC /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91D0953B1595310C00E22EEC /* Default@2x.png */; };
+		91DF3452171C463000EFD376 /* BLSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DF3451171C463000EFD376 /* BLSummaryView.m */; };
+		91DF3455171C468B00EFD376 /* BLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91DF3454171C468B00EFD376 /* BLView.m */; };
 		91E62D1215CC546C00E3AD5D /* cameraFocus.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1015CC546C00E3AD5D /* cameraFocus.png */; };
 		91E62D1315CC546C00E3AD5D /* cameraFocus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91E62D1115CC546C00E3AD5D /* cameraFocus@2x.png */; };
 		91E62D1A15CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */; };
-		91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */; };
-		91EB2BC01586E56F007FD18B /* BLTaxViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */; };
+		91EB2BBC1586E4B9007FD18B /* BLTaxTipViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EB2BBA1586E4B9007FD18B /* BLTaxTipViewController.m */; };
+		91EB2BC01586E56F007FD18B /* BLTaxTipViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EB2BBF1586E56F007FD18B /* BLTaxTipViewController.xib */; };
 		91EC8CD3157722B0000E7DE8 /* BLNamesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */; };
 		91F1B7F11685132C00E81E5E /* BLEditableLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1B7F01685132C00E81E5E /* BLEditableLineItem.m */; };
 /* End PBXBuildFile section */
@@ -307,14 +309,18 @@
 		91CAC83E157E6704001B500F /* BLAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLAppDelegate.m; path = OtherClasses/BLAppDelegate.m; sourceTree = "<group>"; };
 		91D0953A1595310C00E22EEC /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		91D0953B1595310C00E22EEC /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = SOURCE_ROOT; };
+		91DF3450171C463000EFD376 /* BLSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLSummaryView.h; path = CustomUI/BLSummaryView.h; sourceTree = "<group>"; };
+		91DF3451171C463000EFD376 /* BLSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLSummaryView.m; path = CustomUI/BLSummaryView.m; sourceTree = "<group>"; };
+		91DF3453171C468B00EFD376 /* BLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLView.h; path = CustomUI/BLView.h; sourceTree = "<group>"; };
+		91DF3454171C468B00EFD376 /* BLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLView.m; path = CustomUI/BLView.m; sourceTree = "<group>"; };
 		91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddCreatedAtForBill.xcdatamodel; sourceTree = "<group>"; };
 		91E62D1015CC546C00E3AD5D /* cameraFocus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cameraFocus.png; sourceTree = "<group>"; };
 		91E62D1115CC546C00E3AD5D /* cameraFocus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cameraFocus@2x.png"; sourceTree = "<group>"; };
 		91E62D1815CC7F2B00E3AD5D /* UIViewController+ButtonManagement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIViewController+ButtonManagement.h"; path = "OtherClasses/UIViewController+ButtonManagement.h"; sourceTree = "<group>"; };
 		91E62D1915CC7F2B00E3AD5D /* UIViewController+ButtonManagement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIViewController+ButtonManagement.m"; path = "OtherClasses/UIViewController+ButtonManagement.m"; sourceTree = "<group>"; };
-		91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTaxViewController.h; path = ViewControllers/BLTaxViewController.h; sourceTree = "<group>"; };
-		91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTaxViewController.m; path = ViewControllers/BLTaxViewController.m; sourceTree = "<group>"; };
-		91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTaxViewController.xib; path = NIBs/BLTaxViewController.xib; sourceTree = "<group>"; };
+		91EB2BB91586E4B9007FD18B /* BLTaxTipViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLTaxTipViewController.h; path = ViewControllers/BLTaxTipViewController.h; sourceTree = "<group>"; };
+		91EB2BBA1586E4B9007FD18B /* BLTaxTipViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLTaxTipViewController.m; path = ViewControllers/BLTaxTipViewController.m; sourceTree = "<group>"; };
+		91EB2BBF1586E56F007FD18B /* BLTaxTipViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLTaxTipViewController.xib; path = NIBs/BLTaxTipViewController.xib; sourceTree = "<group>"; };
 		91EC8CD2157722B0000E7DE8 /* BLNamesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BLNamesViewController.xib; path = NIBs/BLNamesViewController.xib; sourceTree = "<group>"; };
 		91F1B7EF1685132C00E81E5E /* BLEditableLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLEditableLineItem.h; path = CustomUI/BLEditableLineItem.h; sourceTree = "<group>"; };
 		91F1B7F01685132C00E81E5E /* BLEditableLineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLEditableLineItem.m; path = CustomUI/BLEditableLineItem.m; sourceTree = "<group>"; };
@@ -477,10 +483,14 @@
 				91A66BB016D8038900BD4E93 /* BLSplitAdjuster.m */,
 				91A66BB516DBC2C700BD4E93 /* BLSplitAdjusterPerson.h */,
 				91A66BB616DBC2C700BD4E93 /* BLSplitAdjusterPerson.m */,
+				91DF3450171C463000EFD376 /* BLSummaryView.h */,
+				91DF3451171C463000EFD376 /* BLSummaryView.m */,
 				9148AE081579473700985CA0 /* BLTextField.h */,
 				9148AE091579473700985CA0 /* BLTextField.m */,
 				910945ED164C362600CBD8E2 /* BLScrollView.h */,
 				910945EE164C362600CBD8E2 /* BLScrollView.m */,
+				91DF3453171C468B00EFD376 /* BLView.h */,
+				91DF3454171C468B00EFD376 /* BLView.m */,
 			);
 			name = "Custom UI";
 			sourceTree = "<group>";
@@ -617,8 +627,8 @@
 				9198BF11157AEB25001B74A9 /* BLSplitCountViewController.m */,
 				91AAE66B158E54BF00C609C4 /* BLSummaryViewController.h */,
 				91AAE66C158E54BF00C609C4 /* BLSummaryViewController.m */,
-				91EB2BB91586E4B9007FD18B /* BLTaxViewController.h */,
-				91EB2BBA1586E4B9007FD18B /* BLTaxViewController.m */,
+				91EB2BB91586E4B9007FD18B /* BLTaxTipViewController.h */,
+				91EB2BBA1586E4B9007FD18B /* BLTaxTipViewController.m */,
 				91AAE668158D3A8400C609C4 /* BLTipViewController.h */,
 				91AAE669158D3A8400C609C4 /* BLTipViewController.m */,
 				919458611617E56300E0B710 /* BLViewController.h */,
@@ -637,7 +647,7 @@
 				9198BF19157AEB34001B74A9 /* BLSplitBillViewController.xib */,
 				91B9CC941576D22100AAEDC0 /* BLSplitCountViewController.xib */,
 				91AAE670158E551F00C609C4 /* BLSummaryViewController.xib */,
-				91EB2BBF1586E56F007FD18B /* BLTaxViewController.xib */,
+				91EB2BBF1586E56F007FD18B /* BLTaxTipViewController.xib */,
 				91AAE665158D3A6C00C609C4 /* BLTipViewController.xib */,
 			);
 			name = NIBs;
@@ -764,7 +774,7 @@
 				9148ADF1157913FA00985CA0 /* tessdata in Resources */,
 				9148AE0615792E9700985CA0 /* BLFixItemsViewController.xib in Resources */,
 				9198BF1A157AEB34001B74A9 /* BLSplitBillViewController.xib in Resources */,
-				91EB2BC01586E56F007FD18B /* BLTaxViewController.xib in Resources */,
+				91EB2BC01586E56F007FD18B /* BLTaxTipViewController.xib in Resources */,
 				91AAE666158D3A6C00C609C4 /* BLTipViewController.xib in Resources */,
 				91AAE671158E551F00C609C4 /* BLSummaryViewController.xib in Resources */,
 				91D0953C1595310C00E22EEC /* Default.png in Resources */,
@@ -847,7 +857,7 @@
 				9198BF17157AEB25001B74A9 /* BLSplitBillViewController.m in Sources */,
 				9198BF18157AEB25001B74A9 /* BLSplitCountViewController.m in Sources */,
 				91CAC83F157E6704001B500F /* BLAppDelegate.m in Sources */,
-				91EB2BBC1586E4B9007FD18B /* BLTaxViewController.m in Sources */,
+				91EB2BBC1586E4B9007FD18B /* BLTaxTipViewController.m in Sources */,
 				91AAE66A158D3A8400C609C4 /* BLTipViewController.m in Sources */,
 				91AAE66E158E54BF00C609C4 /* BLSummaryViewController.m in Sources */,
 				9155238115B07A8C00F2F539 /* billy.xcdatamodeld in Sources */,
@@ -867,6 +877,8 @@
 				91A66BB116D8038900BD4E93 /* BLSplitAdjuster.m in Sources */,
 				91A66BB416D817AF00BD4E93 /* BLPaddedLabel.m in Sources */,
 				91A66BB716DBC2C700BD4E93 /* BLSplitAdjusterPerson.m in Sources */,
+				91DF3452171C463000EFD376 /* BLSummaryView.m in Sources */,
+				91DF3455171C468B00EFD376 /* BLView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,7 +14,6 @@
 
 @interface Bill : NSManagedObject
 
-@property (nonatomic) double subtotal;
 @property (nonatomic) double tax;
 @property (nonatomic) double tip;
 @property (nonatomic) double total;
@@ -27,6 +26,8 @@
 @property (nonatomic, retain) NSDate *createdAt;
 @property (nonatomic, retain) NSSet *people;
 @property (nonatomic, retain) NSSet *lineItems;
+
+@property (readonly) double subtotal;
 
 
 - (void)storeOriginalImage:(NSData *)imageData;

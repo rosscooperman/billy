@@ -16,7 +16,7 @@
 
 #import "BLSplitBillViewController.h"
 #import "UIViewController+ButtonManagement.h"
-#import "BLTaxViewController.h"
+#import "BLTaxTipViewController.h"
 #import "BLLineItem.h"
 #import "BLSplitAdjuster.h"
 #import "Bill.h"
@@ -144,7 +144,7 @@
 - (void)nextScreen:(id)sender
 {
   if ([self.bill validateLineItems]) {
-    BLTaxViewController *taxController = [[BLTaxViewController alloc] init];
+    BLTaxTipViewController *taxController = [[BLTaxTipViewController alloc] init];
     [self.navigationController pushViewController:taxController animated:YES];
   }
   else {

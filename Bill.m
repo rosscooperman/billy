@@ -28,7 +28,6 @@
   NSString *_rawText;
 }
 
-@dynamic subtotal;
 @dynamic tax;
 @dynamic tip;
 @dynamic total;
@@ -109,9 +108,7 @@
     NSString *pattern = @"^\\s*([\\dlIOS]+)\\s+(.*)?\\s+\\$?([\\dlIOS]+[-.·][\\dlIOS]{2})\\s*$";
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
     NSRange range = [_rawText rangeOfString:_rawText];
-    
-    TFLog(@"%@", _rawText);
-  
+      
     if ([regex numberOfMatchesInString:_rawText options:0 range:range] > 0) {
       [self.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
         [self.managedObjectContext deleteObject:lineItem];
@@ -159,6 +156,16 @@
   NSString *response = (_rawText) ? [NSString stringWithString:_rawText] : nil;
   [self didAccessValueForKey:@"rawText"];
   return response;
+}
+
+
+- (double)subtotal
+{
+  __block double subtotal = 0.0f;
+  [self.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
+    subtotal += lineItem.price;
+  }];
+  return subtotal;
 }
 
 
