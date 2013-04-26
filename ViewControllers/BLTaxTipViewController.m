@@ -7,6 +7,7 @@
 //
 
 #import "BLTaxTipViewController.h"
+#import "BLSummaryViewController.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Assignment.h"
@@ -45,8 +46,8 @@
 
 - (void)nextScreen:(id)sender
 {
-//  BLTipViewController *tipController = [[BLTipViewController alloc] init];
-//  [self.navigationController pushViewController:tipController animated:YES];
+  BLSummaryViewController *summaryController = [[BLSummaryViewController alloc] init];
+  [self.navigationController pushViewController:summaryController animated:YES];
 }
 
 

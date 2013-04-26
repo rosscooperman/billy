@@ -82,7 +82,7 @@
   }
   
   if (!self.labelView) {
-    self.labelView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(80.0f + (2.0f * border), 0.0f, 150.0f - border, subviewHeight)];
+    self.labelView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(80.0f + (2.0f * border), 0.0f, 130.0f - border, subviewHeight)];
     self.labelView.backgroundColor = BACKGROUND_COLOR;
     self.labelView.textColor = LABEL_COLOR;
     self.labelView.textAlignment = UITextAlignmentRight;
@@ -92,8 +92,8 @@
   }
   
   if (!self.percentView) {
-    CGFloat width = 320.0f - 230.0f + (border * 2.0f);
-    self.percentView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(230.0f + (border * 2.0f), 0.0f, width, subviewHeight)];
+    CGFloat width = 320.0f - 210.0f + (border * 2.0f);
+    self.percentView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(210.0f + (border * 2.0f), 0.0f, width, subviewHeight)];
     self.percentView.backgroundColor = BACKGROUND_COLOR;
     self.percentView.textColor = PERCENTAGE_COLOR;
     self.percentView.textAlignment = UITextAlignmentRight;

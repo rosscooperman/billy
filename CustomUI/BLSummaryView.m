@@ -40,7 +40,7 @@
   }
   
   if (!self.labelView) {
-    self.labelView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(40.0f + border, 0.0f, 190.0f, subviewHeight)];
+    self.labelView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(40.0f + border, 0.0f, 170.0f, subviewHeight)];
     self.labelView.backgroundColor = [UIColor whiteColor];
     self.labelView.textColor = self.labelColor;
     self.labelView.textAlignment = UITextAlignmentRight;
@@ -50,13 +50,12 @@
   }
   
   if (!self.amountView) {
-    CGFloat width = 320.0f - 230.0f + (border * 2.0f);
-    self.amountView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(230.0f + (border * 2.0f), 0.0f, width, subviewHeight)];
+    CGFloat width = 320.0f - 210.0f + (border * 2.0f);
+    self.amountView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(210.0f + (border * 2.0f), 0.0f, width, subviewHeight)];
     self.amountView.backgroundColor = [UIColor whiteColor];
     self.amountView.textColor = self.labelColor;
     self.amountView.textAlignment = UITextAlignmentRight;
     self.amountView.font = [UIFont fontWithName:self.fontName size:17.0f];
-    self.amountView.padding = 10.0f;
     [self addSubview:self.amountView];
     self.amount = self.amount;
   }
