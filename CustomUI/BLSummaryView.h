@@ -12,6 +12,7 @@
 @interface BLSummaryView : BLView
 
 @property (nonatomic, strong) NSString *label;
+@property (nonatomic, assign) Boolean highlighted;
 @property (nonatomic, assign) double amount;
 
 @end

@@ -16,7 +16,6 @@
 
 @property (nonatomic) double tax;
 @property (nonatomic) double tip;
-@property (nonatomic) double total;
 @property (nonatomic) int64_t splitCount;
 @property (nonatomic) BOOL sendFeedback;
 @property (nonatomic) BOOL feedbackSent;
@@ -28,6 +27,7 @@
 @property (nonatomic, retain) NSSet *lineItems;
 
 @property (readonly) double subtotal;
+@property (readonly) double total;
 @property (nonatomic, assign) double taxPercentage;
 @property (nonatomic, assign) double tipPercentage;
 

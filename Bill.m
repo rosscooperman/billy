@@ -30,7 +30,6 @@
 
 @dynamic tax;
 @dynamic tip;
-@dynamic total;
 @dynamic sendFeedback;
 @dynamic feedbackSent;
 @dynamic originalImage;
@@ -168,6 +167,12 @@
     subtotal += lineItem.price;
   }];
   return subtotal;
+}
+
+
+- (double)total
+{
+  return self.subtotal + self.tax + self.tip;
 }
 
 

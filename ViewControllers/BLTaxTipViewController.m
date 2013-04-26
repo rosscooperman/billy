@@ -7,7 +7,6 @@
 //
 
 #import "BLTaxTipViewController.h"
-#import "BLTipViewController.h"
 #import "Bill.h"
 #import "LineItem.h"
 #import "Assignment.h"
@@ -46,8 +45,8 @@
 
 - (void)nextScreen:(id)sender
 {
-  BLTipViewController *tipController = [[BLTipViewController alloc] init];
-  [self.navigationController pushViewController:tipController animated:YES];
+//  BLTipViewController *tipController = [[BLTipViewController alloc] init];
+//  [self.navigationController pushViewController:tipController animated:YES];
 }
 
 
@@ -63,6 +62,7 @@
   }
   self.taxAmount.amount = self.bill.tax;
   self.tipAmount.amount = self.bill.tip;
+  self.totalAmount.amount = self.bill.total;
 }
 
 @end

@@ -16,6 +16,8 @@
 @property (nonatomic, strong) BLPaddedLabel *labelView;
 @property (nonatomic, strong) BLPaddedLabel *amountView;
 @property (nonatomic, strong) NSNumberFormatter *priceFormatter;
+@property (readonly) NSString *fontName;
+@property (readonly) UIColor *labelColor;
 
 @end
 
@@ -40,9 +42,9 @@
   if (!self.labelView) {
     self.labelView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(40.0f + border, 0.0f, 190.0f, subviewHeight)];
     self.labelView.backgroundColor = [UIColor whiteColor];
-    self.labelView.textColor = [UIColor lightGrayColor];
+    self.labelView.textColor = self.labelColor;
     self.labelView.textAlignment = UITextAlignmentRight;
-    self.labelView.font = [UIFont fontWithName:@"Avenir" size:19.0f];
+    self.labelView.font = [UIFont fontWithName:self.fontName size:17.0f];
     [self addSubview:self.labelView];
     self.label = self.label;
   }
@@ -51,9 +53,9 @@
     CGFloat width = 320.0f - 230.0f + (border * 2.0f);
     self.amountView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(230.0f + (border * 2.0f), 0.0f, width, subviewHeight)];
     self.amountView.backgroundColor = [UIColor whiteColor];
-    self.amountView.textColor = [UIColor lightGrayColor];
+    self.amountView.textColor = self.labelColor;
     self.amountView.textAlignment = UITextAlignmentRight;
-    self.amountView.font = [UIFont fontWithName:@"Avenir" size:19.0f];
+    self.amountView.font = [UIFont fontWithName:self.fontName size:17.0f];
     self.amountView.padding = 10.0f;
     [self addSubview:self.amountView];
     self.amount = self.amount;
@@ -84,6 +86,18 @@
     self.priceFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
   }
   return _priceFormatter;
+}
+
+
+- (NSString *)fontName
+{
+  return (self.highlighted) ? @"Avenir-Heavy" : @"Avenir";
+}
+
+
+- (UIColor *)labelColor
+{
+  return (self.highlighted) ? [UIColor blackColor] : [UIColor lightGrayColor];
 }
 
 @end

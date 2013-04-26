@@ -86,7 +86,7 @@
     self.labelView.backgroundColor = BACKGROUND_COLOR;
     self.labelView.textColor = LABEL_COLOR;
     self.labelView.textAlignment = UITextAlignmentRight;
-    self.labelView.font = [UIFont fontWithName:@"Avenir" size:19.0f];
+    self.labelView.font = [UIFont fontWithName:@"Avenir" size:17.0f];
     [self addSubview:self.labelView];
     self.label = self.label;
   }
@@ -97,7 +97,7 @@
     self.percentView.backgroundColor = BACKGROUND_COLOR;
     self.percentView.textColor = PERCENTAGE_COLOR;
     self.percentView.textAlignment = UITextAlignmentRight;
-    self.percentView.font = [UIFont fontWithName:@"Avenir" size:19.0f];
+    self.percentView.font = [UIFont fontWithName:@"Avenir" size:17.0f];
     [self addSubview:self.percentView];
     self.percentage = self.percentage;
   }

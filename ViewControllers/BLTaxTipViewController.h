@@ -20,7 +20,7 @@
 @property (nonatomic, strong) IBOutlet BLSummaryView *subTotal;
 @property (nonatomic, strong) IBOutlet BLSummaryView *taxAmount;
 @property (nonatomic, strong) IBOutlet BLSummaryView *tipAmount;
-@property (nonatomic, strong) IBOutlet BLSummaryView *billAmount;
+@property (nonatomic, strong) IBOutlet BLSummaryView *totalAmount;
 @property (nonatomic, strong) IBOutlet BLPercentPicker *taxPicker;
 @property (nonatomic, strong) IBOutlet BLPercentPicker *tipPicker;
 
@@ -29,8 +29,5 @@
 
 - (IBAction)nextScreen:(id)sender;
 - (IBAction)previousScreen:(id)sender;
-//- (IBAction)closeKeyboard:(id)sender;
-//- (IBAction)handleIncrementLongPress:(UILongPressGestureRecognizer *)recognizer;
-//- (IBAction)handleDecrementLongPress:(UILongPressGestureRecognizer *)recognizer;
 
 @end
