@@ -10,10 +10,27 @@
 
 @implementation BLPaddedLabel
 
+@synthesize padding = _padding;
+
+
 - (void)drawTextInRect:(CGRect)rect
 {
-  CGRect inset = (self.textAlignment == UITextAlignmentCenter) ? rect : CGRectInset(rect, 6.0f, 0.0f);
+  CGRect inset = (self.textAlignment == UITextAlignmentCenter) ? rect : CGRectInset(rect, self.padding, 0.0f);
   [super drawTextInRect:inset];
+}
+
+
+- (void)setPadding:(CGFloat)padding
+{
+  _padding = padding;
+  [self setNeedsDisplay];
+}
+
+
+- (CGFloat)padding
+{
+  if (!_padding) _padding = 6.0f;
+  return _padding;
 }
 
 @end

@@ -11,27 +11,26 @@
 #import "BLTextField.h"
 #import "BLScrollView.h"
 #import "BLSummaryView.h"
+#import "BLPercentPicker.h"
 
 
-@interface BLTaxTipViewController : BLViewController <UITextFieldDelegate>
+@interface BLTaxTipViewController : BLViewController <BLPercentPickerDelegate>
 
 @property (nonatomic, strong) IBOutlet BLScrollView *mainContent;
 @property (nonatomic, strong) IBOutlet BLSummaryView *subTotal;
+@property (nonatomic, strong) IBOutlet BLSummaryView *taxAmount;
+@property (nonatomic, strong) IBOutlet BLSummaryView *tipAmount;
+@property (nonatomic, strong) IBOutlet BLSummaryView *billAmount;
+@property (nonatomic, strong) IBOutlet BLPercentPicker *taxPicker;
+@property (nonatomic, strong) IBOutlet BLPercentPicker *tipPicker;
 
-@property (nonatomic, strong) IBOutlet UILabel *percentLabel;
-@property (nonatomic, strong) IBOutlet BLTextField *amountField;
-@property (nonatomic, strong) IBOutlet UIButton *minusButton;
-@property (nonatomic, strong) IBOutlet UIButton *plusButton;
-@property (nonatomic, strong) IBOutlet UIView *contentWrapper;
 @property (nonatomic, strong) IBOutlet UITapGestureRecognizer *closeKeyboardRecognizer;
 
 
-- (IBAction)incrementAmount:(id)sender;
-- (IBAction)decrementAmount:(id)sender;
 - (IBAction)nextScreen:(id)sender;
 - (IBAction)previousScreen:(id)sender;
-- (IBAction)closeKeyboard:(id)sender;
-- (IBAction)handleIncrementLongPress:(UILongPressGestureRecognizer *)recognizer;
-- (IBAction)handleDecrementLongPress:(UILongPressGestureRecognizer *)recognizer;
+//- (IBAction)closeKeyboard:(id)sender;
+//- (IBAction)handleIncrementLongPress:(UILongPressGestureRecognizer *)recognizer;
+//- (IBAction)handleDecrementLongPress:(UILongPressGestureRecognizer *)recognizer;
 
 @end

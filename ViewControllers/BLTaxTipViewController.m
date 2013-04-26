@@ -16,14 +16,6 @@
 @interface BLTaxTipViewController ()
 
 @property (nonatomic, strong) Bill *bill;
-@property (nonatomic, assign) float taxPercentage;
-@property (nonatomic, strong) NSTimer *longPressTimer;
-
-
-- (void)updateTax:(double)amount;
-- (void)updateLabels;
-- (void)keyboardShown:(NSNotification *)notification;
-- (void)keyboardHidden:(NSNotification *)notification;
 
 @end
 
@@ -36,155 +28,15 @@
 - (void)viewDidLoad
 {
   self.bill = [BLAppDelegate appDelegate].currentBill;
+  
+  self.taxPicker.increment = 0.00005f;
   self.subTotal.amount = self.bill.subtotal;
-  
-  // if we don't have an established value for the bill's tax, try to get it from the receipt raw text
-  if (!self.bill.tax && self.bill.rawText.length > 0) {
-    NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
-    
-    NSString *pattern = @"[1tl]ax.+\\$?(\\d+\\.\\d{2})";
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
-    
-    NSTextCheckingResult *result = nil;
-    NSRange range = [self.bill.rawText rangeOfString:self.bill.rawText];
-    result = [regex firstMatchInString:self.bill.rawText options:0 range:range];
-    
-    if (result && result.range.length > 0) {
-      self.bill.tax = [[self.bill.rawText substringWithRange:[result rangeAtIndex:1]] floatValue];
-      if (self.bill.tax <= 0.0) self.bill.tax = 0.00001;
-      self.taxPercentage = self.bill.tax / self.bill.subtotal;
-    }
-  }
-  
-  // still no tax value available? assume an average percentage
-  if (!self.bill.tax) {
-    self.taxPercentage = 0.07;
-    self.bill.tax = self.bill.subtotal * self.taxPercentage;
-  }
-  
-  // if, at this point, there's on tax percentage, calculate it based on the tax amount
-  if (!self.taxPercentage || self.taxPercentage <= 0.0) {
-    self.taxPercentage = self.bill.tax / self.bill.subtotal;
-  }
-  
-  [self updateLabels];
-}
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardShown:) name:UIKeyboardDidShowNotification object:nil];
-  [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardHidden:) name:UIKeyboardWillHideNotification object:nil];
-}
-
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-  [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
-#pragma mark - Instance Methods
-
-- (void)updateLabels
-{
-  // roundabout way of testing whether the keyboard is currently shown (and so the amount label should not be touched)
-  if (CGAffineTransformIsIdentity(self.contentWrapper.transform)) {
-    self.amountField.text = [NSString stringWithFormat:@"%.2f", self.bill.tax];
-    if (self.bill.tax <= 0.0) {
-      self.minusButton.enabled = NO;
-    }
-    else {
-      self.minusButton.enabled = YES;    
-    }
-  }
-  self.percentLabel.text = [NSString stringWithFormat:@"%.3f%%", self.taxPercentage * 100.0];
-  [self.bill.managedObjectContext save:nil];  
-}
-
-
-- (void)updateTax:(double)amount
-{
-  self.bill.tax = amount;
-  _taxPercentage = (self.bill.tax == 0.0) ? 0.0 : self.bill.tax / self.bill.subtotal;
-  [self updateLabels];
-}
-
-
-- (void)setTaxPercentage:(float)taxPercentage
-{
-  _taxPercentage = taxPercentage;
-  self.bill.tax = self.taxPercentage * self.bill.subtotal;
-  [self updateLabels];
-}
-
-
-- (void)keyboardShown:(NSNotification *)notification
-{
-  self.closeKeyboardRecognizer.enabled = YES;
-  
-  NSDictionary *info = [notification userInfo];
-  CGSize keyboardSize = [[info objectForKey:UIKeyboardFrameBeginUserInfoKey] CGRectValue].size;
-  CGFloat duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-  [UIView animateWithDuration:duration animations:^{
-    self.contentWrapper.transform = CGAffineTransformMakeTranslation(0.0, -(keyboardSize.height / 2.0));
-  }];
-}
-
-
-- (void)keyboardHidden:(NSNotification *)notification
-{
-  self.closeKeyboardRecognizer.enabled = NO;
-  
-  NSDictionary *info = [notification userInfo];
-  CGFloat duration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
-  [UIView animateWithDuration:duration animations:^{
-    self.contentWrapper.transform = CGAffineTransformIdentity;
-  } completion:^(BOOL finished) {
-    [self updateLabels];
-  }];
+  self.taxPicker.percentage = self.bill.taxPercentage;
+  self.tipPicker.percentage = self.bill.tipPercentage;
 }
 
 
 #pragma mark - IBAction Methods
-
-- (void)incrementAmount:(id)sender
-{
-  [self updateTax:self.bill.tax + 0.01];
-}
-
-
-- (void)decrementAmount:(id)sender
-{
-  if (self.bill.tax >= 0.01) {
-    [self updateTax:self.bill.tax - 0.01];
-  }
-}
-
-
-- (void)handleIncrementLongPress:(UILongPressGestureRecognizer *)recognizer
-{
-  if (recognizer.state == UIGestureRecognizerStateBegan) {
-    self.longPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(incrementAmount:) userInfo:nil repeats:YES];
-  }
-  else if (recognizer.state == UIGestureRecognizerStateEnded) {
-    [self.longPressTimer invalidate];
-    self.longPressTimer = nil;
-  }  
-}
-
-
-- (void)handleDecrementLongPress:(UILongPressGestureRecognizer *)recognizer
-{
-  if (recognizer.state == UIGestureRecognizerStateBegan) {
-    self.longPressTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(decrementAmount:) userInfo:nil repeats:YES];
-  }
-  else if (recognizer.state == UIGestureRecognizerStateEnded) {
-    [self.longPressTimer invalidate];
-    self.longPressTimer = nil;
-  }
-}
-
 
 - (void)previousScreen:(id)sender
 {
@@ -199,47 +51,18 @@
 }
 
 
-- (void)closeKeyboard:(id)sender
+#pragma mark - BLPercentPickerDelegate Methods
+
+- (void)percentageChanged:(BLPercentPicker *)picker
 {
-  [self.amountField resignFirstResponder];
-}
-
-
-#pragma mark - UITextFieldDelegate Methods
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-  self.plusButton.enabled = NO;
-  self.minusButton.enabled = NO;
-}
-
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-  self.plusButton.enabled = YES;
-  self.minusButton.enabled = YES;
-}
-
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
-{
-  NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
-
-  NSCharacterSet *nonDigitsSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
-  NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
-  if (nonDigitRange.location != NSNotFound) {
-    return NO;
+  if (picker == self.taxPicker) {
+    self.bill.taxPercentage = picker.percentage;
   }
-  
-  [self updateTax:[newString floatValue]];
-  return YES;
-}
-
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-  [textField resignFirstResponder];
-  return NO;
+  else if (picker == self.tipPicker) {
+    self.bill.tipPercentage = picker.percentage;
+  }
+  self.taxAmount.amount = self.bill.tax;
+  self.tipAmount.amount = self.bill.tip;
 }
 
 @end

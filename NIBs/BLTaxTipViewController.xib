@@ -44,8 +44,61 @@
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="IBUIView" id="511030509">
 								<reference key="NSNextResponder" ref="589234026"/>
-								<int key="NSvFlags">274</int>
+								<int key="NSvFlags">290</int>
 								<string key="NSFrameSize">{320, 50}</string>
+								<reference key="NSSuperview" ref="589234026"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="102132979"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor" id="1022586055">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MQA</bytes>
+								</object>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+							<object class="IBUIView" id="102132979">
+								<reference key="NSNextResponder" ref="589234026"/>
+								<int key="NSvFlags">290</int>
+								<string key="NSFrame">{{0, 50}, {320, 50}}</string>
+								<reference key="NSSuperview" ref="589234026"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="558913732"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<object class="NSColor" key="IBUIBackgroundColor" id="740581593">
+									<int key="NSColorSpace">3</int>
+									<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+								</object>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+							<object class="IBUIView" id="558913732">
+								<reference key="NSNextResponder" ref="589234026"/>
+								<int key="NSvFlags">292</int>
+								<string key="NSFrame">{{0, 100}, {320, 50}}</string>
+								<reference key="NSSuperview" ref="589234026"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="381879784"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<reference key="IBUIBackgroundColor" ref="1022586055"/>
+								<object class="IBUIAccessibilityConfiguration" key="IBUIAccessibilityConfiguration">
+									<string key="IBUIAccessibilityLabel"/>
+								</object>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+							<object class="IBUIView" id="381879784">
+								<reference key="NSNextResponder" ref="589234026"/>
+								<int key="NSvFlags">290</int>
+								<string key="NSFrame">{{0, 150}, {320, 50}}</string>
+								<reference key="NSSuperview" ref="589234026"/>
+								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="656929762"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<reference key="IBUIBackgroundColor" ref="740581593"/>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+							</object>
+							<object class="IBUIView" id="656929762">
+								<reference key="NSNextResponder" ref="589234026"/>
+								<int key="NSvFlags">290</int>
+								<string key="NSFrame">{{0, 200}, {320, 50}}</string>
 								<reference key="NSSuperview" ref="589234026"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="886156099"/>
@@ -101,10 +154,7 @@
 						<double key="IBUIImageEdgeInsets.right">0.0</double>
 						<int key="IBUILineBreakMode">2</int>
 						<string key="IBUINormalTitle">BACK</string>
-						<object class="NSColor" key="IBUIHighlightedTitleColor" id="1022586055">
-							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
-						</object>
+						<reference key="IBUIHighlightedTitleColor" ref="1022586055"/>
 						<reference key="IBUIDisabledTitleColor" ref="1022586055"/>
 						<reference key="IBUISelectedTitleColor" ref="1022586055"/>
 						<reference key="IBUINormalTitleColor" ref="1022586055"/>
@@ -225,6 +275,38 @@
 					<int key="connectionID">50</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">taxPicker</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="102132979"/>
+					</object>
+					<int key="connectionID">52</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">taxAmount</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="558913732"/>
+					</object>
+					<int key="connectionID">54</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">tipPicker</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="381879784"/>
+					</object>
+					<int key="connectionID">58</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">tipAmount</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="656929762"/>
+					</object>
+					<int key="connectionID">60</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
 						<string key="label">gestureRecognizers</string>
 						<reference key="source" ref="191373211"/>
@@ -233,30 +315,6 @@
 						<bool key="addsContentToExistingCollection">YES</bool>
 					</object>
 					<int key="connectionID">38</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">handleDecrementLongPress:</string>
-						<reference key="source" ref="892293942"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">28</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">handleIncrementLongPress:</string>
-						<reference key="source" ref="356096480"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">32</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">closeKeyboard:</string>
-						<reference key="source" ref="1859867"/>
-						<reference key="destination" ref="372490531"/>
-					</object>
-					<int key="connectionID">39</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -275,6 +333,22 @@
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">46</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="102132979"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">56</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="381879784"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">57</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -329,6 +403,10 @@
 						<reference key="object" ref="589234026"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="511030509"/>
+							<reference ref="102132979"/>
+							<reference ref="558913732"/>
+							<reference ref="381879784"/>
+							<reference ref="656929762"/>
 						</array>
 						<reference key="parent" ref="191373211"/>
 						<string key="objectName">Content Area</string>
@@ -350,6 +428,30 @@
 						<reference key="object" ref="511030509"/>
 						<reference key="parent" ref="589234026"/>
 						<string key="objectName">Subtotal</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">51</int>
+						<reference key="object" ref="102132979"/>
+						<reference key="parent" ref="589234026"/>
+						<string key="objectName">Tax Picker</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">53</int>
+						<reference key="object" ref="558913732"/>
+						<reference key="parent" ref="589234026"/>
+						<string key="objectName">Tax Amount</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="381879784"/>
+						<reference key="parent" ref="589234026"/>
+						<string key="objectName">Tip Picker</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">59</int>
+						<reference key="object" ref="656929762"/>
+						<reference key="parent" ref="589234026"/>
+						<string key="objectName">Tip Amount</string>
 					</object>
 				</array>
 			</object>
@@ -378,7 +480,7 @@
 								<string key="keyPath">contentSize</string>
 								<object class="NSValue" key="value">
 									<int key="NS.special">2</int>
-									<string key="NS.sizeval">{320, 50}</string>
+									<string key="NS.sizeval">{320, 300}</string>
 								</object>
 							</object>
 						</array>
@@ -405,15 +507,98 @@
 					</object>
 				</object>
 				<string key="49.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="51.CustomClassName">BLPercentPicker</string>
+				<object class="NSMutableDictionary" key="51.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+					<object class="IBUIUserDefinedRuntimeAttributesPlaceholder" key="NS.object.0">
+						<string key="name">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+						<reference key="object" ref="102132979"/>
+						<array key="userDefinedRuntimeAttributes">
+							<object class="IBUserDefinedRuntimeAttribute">
+								<string key="typeIdentifier">com.apple.InterfaceBuilder.userDefinedRuntimeAttributeType.string</string>
+								<string key="keyPath">label</string>
+								<string key="value">Tax %</string>
+							</object>
+						</array>
+					</object>
+				</object>
+				<string key="51.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="53.CustomClassName">BLSummaryView</string>
+				<object class="NSMutableDictionary" key="53.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+					<object class="IBUIUserDefinedRuntimeAttributesPlaceholder" key="NS.object.0">
+						<string key="name">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+						<reference key="object" ref="558913732"/>
+						<array key="userDefinedRuntimeAttributes">
+							<object class="IBUserDefinedRuntimeAttribute">
+								<string key="typeIdentifier">com.apple.InterfaceBuilder.userDefinedRuntimeAttributeType.string</string>
+								<string key="keyPath">label</string>
+								<string key="value">Tax Amount</string>
+							</object>
+						</array>
+					</object>
+				</object>
+				<string key="53.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="55.CustomClassName">BLPercentPicker</string>
+				<object class="NSMutableDictionary" key="55.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+					<object class="IBUIUserDefinedRuntimeAttributesPlaceholder" key="NS.object.0">
+						<string key="name">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+						<reference key="object" ref="381879784"/>
+						<array key="userDefinedRuntimeAttributes">
+							<object class="IBUserDefinedRuntimeAttribute">
+								<string key="typeIdentifier">com.apple.InterfaceBuilder.userDefinedRuntimeAttributeType.string</string>
+								<string key="keyPath">label</string>
+								<string key="value">Tip %</string>
+							</object>
+						</array>
+					</object>
+				</object>
+				<string key="55.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="59.CustomClassName">BLSummaryView</string>
+				<object class="NSMutableDictionary" key="59.IBAttributePlaceholdersKey">
+					<string key="NS.key.0">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+					<object class="IBUIUserDefinedRuntimeAttributesPlaceholder" key="NS.object.0">
+						<string key="name">IBUserDefinedRuntimeAttributesPlaceholderName</string>
+						<reference key="object" ref="656929762"/>
+						<array key="userDefinedRuntimeAttributes">
+							<object class="IBUserDefinedRuntimeAttribute">
+								<string key="typeIdentifier">com.apple.InterfaceBuilder.userDefinedRuntimeAttributeType.string</string>
+								<string key="keyPath">label</string>
+								<string key="value">Tip Amount</string>
+							</object>
+						</array>
+					</object>
+				</object>
+				<string key="59.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">50</int>
+			<int key="maxID">60</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">BLPercentPicker</string>
+					<string key="superclassName">BLView</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">delegate</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">delegate</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">delegate</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/BLPercentPicker.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">BLProgressButton</string>
 					<string key="superclassName">UIButton</string>
@@ -442,35 +627,10 @@
 					<string key="className">BLTaxTipViewController</string>
 					<string key="superclassName">BLViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="closeKeyboard:">id</string>
-						<string key="decrementAmount:">id</string>
-						<string key="handleDecrementLongPress:">UILongPressGestureRecognizer</string>
-						<string key="handleIncrementLongPress:">UILongPressGestureRecognizer</string>
-						<string key="incrementAmount:">id</string>
 						<string key="nextScreen:">id</string>
 						<string key="previousScreen:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="closeKeyboard:">
-							<string key="name">closeKeyboard:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="decrementAmount:">
-							<string key="name">decrementAmount:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="handleDecrementLongPress:">
-							<string key="name">handleDecrementLongPress:</string>
-							<string key="candidateClassName">UILongPressGestureRecognizer</string>
-						</object>
-						<object class="IBActionInfo" key="handleIncrementLongPress:">
-							<string key="name">handleIncrementLongPress:</string>
-							<string key="candidateClassName">UILongPressGestureRecognizer</string>
-						</object>
-						<object class="IBActionInfo" key="incrementAmount:">
-							<string key="name">incrementAmount:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="nextScreen:">
 							<string key="name">nextScreen:</string>
 							<string key="candidateClassName">id</string>
@@ -481,60 +641,52 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="amountField">BLTextField</string>
+						<string key="billAmount">BLSummaryView</string>
 						<string key="closeKeyboardRecognizer">UITapGestureRecognizer</string>
-						<string key="contentWrapper">UIView</string>
 						<string key="mainContent">BLScrollView</string>
-						<string key="minusButton">UIButton</string>
-						<string key="percentLabel">UILabel</string>
-						<string key="plusButton">UIButton</string>
 						<string key="subTotal">BLSummaryView</string>
+						<string key="taxAmount">BLSummaryView</string>
+						<string key="taxPicker">BLPercentPicker</string>
+						<string key="tipAmount">BLSummaryView</string>
+						<string key="tipPicker">BLPercentPicker</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="amountField">
-							<string key="name">amountField</string>
-							<string key="candidateClassName">BLTextField</string>
+						<object class="IBToOneOutletInfo" key="billAmount">
+							<string key="name">billAmount</string>
+							<string key="candidateClassName">BLSummaryView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="closeKeyboardRecognizer">
 							<string key="name">closeKeyboardRecognizer</string>
 							<string key="candidateClassName">UITapGestureRecognizer</string>
 						</object>
-						<object class="IBToOneOutletInfo" key="contentWrapper">
-							<string key="name">contentWrapper</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="mainContent">
 							<string key="name">mainContent</string>
 							<string key="candidateClassName">BLScrollView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="minusButton">
-							<string key="name">minusButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="percentLabel">
-							<string key="name">percentLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="plusButton">
-							<string key="name">plusButton</string>
-							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="subTotal">
 							<string key="name">subTotal</string>
 							<string key="candidateClassName">BLSummaryView</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="taxAmount">
+							<string key="name">taxAmount</string>
+							<string key="candidateClassName">BLSummaryView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="taxPicker">
+							<string key="name">taxPicker</string>
+							<string key="candidateClassName">BLPercentPicker</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tipAmount">
+							<string key="name">tipAmount</string>
+							<string key="candidateClassName">BLSummaryView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="tipPicker">
+							<string key="name">tipPicker</string>
+							<string key="candidateClassName">BLPercentPicker</string>
+						</object>
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/BLTaxTipViewController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">BLTextField</string>
-					<string key="superclassName">UITextField</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/BLTextField.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

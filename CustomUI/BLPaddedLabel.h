@@ -11,4 +11,6 @@
 
 @interface BLPaddedLabel : UILabel
 
+@property (nonatomic, assign) CGFloat padding;
+
 @end

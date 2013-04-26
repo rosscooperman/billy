@@ -41,6 +41,8 @@
 
 @synthesize originalData;
 @synthesize processedData;
+@synthesize taxPercentage = _taxPercentage;
+@synthesize tipPercentage = _tipPercentage;
 
 
 #pragma mark - Core Data Lifecycle
@@ -166,6 +168,70 @@
     subtotal += lineItem.price;
   }];
   return subtotal;
+}
+
+
+- (double)taxPercentage
+{
+  if (_taxPercentage) return _taxPercentage;
+  
+  if (self.tax) {
+    _taxPercentage = self.tax / self.subtotal;
+  }
+  else if (self.rawText.length > 0) {
+    NSRegularExpressionOptions options = NSRegularExpressionCaseInsensitive | NSRegularExpressionAnchorsMatchLines;
+    
+    NSString *pattern = @"[1tl]ax.+\\$?(\\d+\\.\\d{2})";
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:options error:nil];
+    
+    NSTextCheckingResult *result = nil;
+    NSRange range = [self.rawText rangeOfString:self.rawText];
+    result = [regex firstMatchInString:self.rawText options:0 range:range];
+    
+    if (result && result.range.length > 0) {
+      double amount = [[self.rawText substringWithRange:[result rangeAtIndex:1]] floatValue];
+      if (amount > 0.0) {
+        self.tax = amount;
+        _taxPercentage = self.tax / self.subtotal;
+        [self.managedObjectContext save:nil];
+      }
+    }
+  }
+  
+  // 6% just seems to be about the average sales tax nationwide...if we get here without finding a tax percentage default to that
+  if (!_taxPercentage) self.taxPercentage = 0.06;
+  return _taxPercentage;
+}
+
+
+- (double)tipPercentage
+{
+  if (_tipPercentage) return _tipPercentage;
+  
+  if (self.tip) {
+    _tipPercentage = self.tip / (self.subtotal + self.tax);
+  }
+  
+  // encourage people to leave 20% ;)
+  if (!_tipPercentage) self.tipPercentage = 0.2;
+  return _tipPercentage;
+}
+
+
+- (void)setTaxPercentage:(double)taxPercentage
+{
+  _taxPercentage = taxPercentage;
+  self.tax = self.subtotal * _taxPercentage;
+  self.tip = (self.subtotal + self.tax) * _tipPercentage;
+  [self.managedObjectContext save:nil];
+}
+
+
+- (void)setTipPercentage:(double)tipPercentage
+{
+  _tipPercentage = tipPercentage;
+  self.tip = (self.subtotal + self.tax) * _tipPercentage;
+  [self.managedObjectContext save:nil];
 }
 
 

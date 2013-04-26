@@ -28,6 +28,8 @@
 @property (nonatomic, retain) NSSet *lineItems;
 
 @property (readonly) double subtotal;
+@property (nonatomic, assign) double taxPercentage;
+@property (nonatomic, assign) double tipPercentage;
 
 
 - (void)storeOriginalImage:(NSData *)imageData;

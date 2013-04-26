@@ -52,8 +52,9 @@
     self.amountView = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(230.0f + (border * 2.0f), 0.0f, width, subviewHeight)];
     self.amountView.backgroundColor = [UIColor whiteColor];
     self.amountView.textColor = [UIColor lightGrayColor];
-    self.amountView.textAlignment = UITextAlignmentCenter;
+    self.amountView.textAlignment = UITextAlignmentRight;
     self.amountView.font = [UIFont fontWithName:@"Avenir" size:19.0f];
+    self.amountView.padding = 10.0f;
     [self addSubview:self.amountView];
     self.amount = self.amount;
   }
