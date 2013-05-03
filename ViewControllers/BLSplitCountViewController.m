@@ -33,16 +33,6 @@
 
 @implementation BLSplitCountViewController
 
-@synthesize countLabel;
-@synthesize controlView;
-@synthesize minusButton;
-@synthesize plusButton;
-@synthesize bill;
-@synthesize nextScreenButton;
-@synthesize realView;
-@synthesize fauxHeader;
-@synthesize transitioned;
-
 
 #pragma mark - View Lifecycle
 
@@ -50,7 +40,14 @@
 {  
   // bump up the font size of the count label
   self.countLabel.font = [UIFont fontWithName:@"Avenir-Heavy" size:375.0];
-  self.realView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"viewBackground"]];  
+  self.realView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"viewBackground"]];
+  
+  // show the "skip ahead switch" if in debug mode
+  NSString *enableShortcuts = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"BLEnableShortcuts"];
+  if ([enableShortcuts isEqualToString:@"YES"]) {
+    self.skipAheadSwitch.on = [[NSUserDefaults standardUserDefaults] boolForKey:@"enableShortcuts"];
+    self.skipAheadSwitch.hidden = NO;
+  }
 }
 
 
@@ -159,17 +156,27 @@
 
 - (void)nextScreen:(id)sender
 {
-  BLNamesViewController *namesController = [[BLNamesViewController alloc] init];
-  [self.navigationController pushViewController:namesController animated:YES];
-  
-//  self.bill.rawText = @"2 Bread 0.00\n2 Bread 0.00\n3 Mussels 950.00\n1 Crudo 11.00\n1 Empire White 18.00\n5 Empire White 18.00\n1 Uni 18.00\nSubtotal 77.00\nTax 6.84\nTotal 83.84";
-//  [self.bill.people enumerateObjectsUsingBlock:^(Person *person, BOOL *stop) {
-//    person.name = @"George";
-//  }];
-//  [self.bill.managedObjectContext save:nil];
-//  
-//  BLTaxTipViewController *taxTipController = [[BLTaxTipViewController alloc] init];
-//  [self.navigationController pushViewController:taxTipController animated:YES];
+  if (self.skipAheadSwitch.on) {
+    self.bill.rawText = @"2 Bread 0.00\n2 Bread 0.00\n3 Mussels 950.00\n1 Crudo 11.00\n1 Empire White 18.00\n5 Empire White 18.00\n1 Uni 18.00\nSubtotal 77.00\nTax 6.84\nTotal 83.84";
+    [self.bill.people enumerateObjectsUsingBlock:^(Person *person, BOOL *stop) {
+      person.name = @"George";
+    }];
+    [self.bill.managedObjectContext save:nil];
+    
+    BLTaxTipViewController *taxTipController = [[BLTaxTipViewController alloc] init];
+    [self.navigationController pushViewController:taxTipController animated:YES];
+  }
+  else {
+    BLNamesViewController *namesController = [[BLNamesViewController alloc] init];
+    [self.navigationController pushViewController:namesController animated:YES];
+  }
+}
+
+
+- (void)toggleSkipAhead:(id)sender
+{
+  [[NSUserDefaults standardUserDefaults] setBool:self.skipAheadSwitch.on forKey:@"enableShortcuts"];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 

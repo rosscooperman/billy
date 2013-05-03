@@ -18,10 +18,12 @@
 @property (nonatomic, strong) IBOutlet UIButton *nextScreenButton;
 @property (nonatomic, strong) IBOutlet UIView *realView;
 @property (nonatomic, strong) IBOutlet UIImageView *fauxHeader;
+@property (nonatomic, strong) IBOutlet UISwitch *skipAheadSwitch;
 
 
 - (IBAction)incrementCount:(id)sender;
 - (IBAction)decrementCount:(id)sender;
 - (IBAction)nextScreen:(id)sender;
+- (IBAction)toggleSkipAhead:(id)sender;
 
 @end
