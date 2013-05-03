@@ -127,6 +127,7 @@
 		91EE1D6A17344016002D2B5A /* navButtonRestart.png in Resources */ = {isa = PBXBuildFile; fileRef = 91EE1D6817344016002D2B5A /* navButtonRestart.png */; };
 		91EE1D6B17344016002D2B5A /* navButtonRestart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 91EE1D6917344016002D2B5A /* navButtonRestart@2x.png */; };
 		91EE1D6E173440A8002D2B5A /* BLPersonSummaryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EE1D6D173440A8002D2B5A /* BLPersonSummaryView.m */; };
+		91EE1D71173452C1002D2B5A /* BLPersonBreakdownView.m in Sources */ = {isa = PBXBuildFile; fileRef = 91EE1D70173452C1002D2B5A /* BLPersonBreakdownView.m */; };
 		91F1B7F11685132C00E81E5E /* BLEditableLineItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 91F1B7F01685132C00E81E5E /* BLEditableLineItem.m */; };
 /* End PBXBuildFile section */
 
@@ -327,6 +328,8 @@
 		91EE1D6917344016002D2B5A /* navButtonRestart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navButtonRestart@2x.png"; sourceTree = "<group>"; };
 		91EE1D6C173440A8002D2B5A /* BLPersonSummaryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLPersonSummaryView.h; path = CustomUI/BLPersonSummaryView.h; sourceTree = "<group>"; };
 		91EE1D6D173440A8002D2B5A /* BLPersonSummaryView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLPersonSummaryView.m; path = CustomUI/BLPersonSummaryView.m; sourceTree = "<group>"; };
+		91EE1D6F173452C1002D2B5A /* BLPersonBreakdownView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLPersonBreakdownView.h; path = CustomUI/BLPersonBreakdownView.h; sourceTree = "<group>"; };
+		91EE1D70173452C1002D2B5A /* BLPersonBreakdownView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLPersonBreakdownView.m; path = CustomUI/BLPersonBreakdownView.m; sourceTree = "<group>"; };
 		91F1B7EF1685132C00E81E5E /* BLEditableLineItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BLEditableLineItem.h; path = CustomUI/BLEditableLineItem.h; sourceTree = "<group>"; };
 		91F1B7F01685132C00E81E5E /* BLEditableLineItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLEditableLineItem.m; path = CustomUI/BLEditableLineItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -486,6 +489,8 @@
 				910945F2164D807000CBD8E2 /* BLPaddedTextField.m */,
 				9119424E17297B03001268BA /* BLPercentPicker.h */,
 				9119424F17297B03001268BA /* BLPercentPicker.m */,
+				91EE1D6F173452C1002D2B5A /* BLPersonBreakdownView.h */,
+				91EE1D70173452C1002D2B5A /* BLPersonBreakdownView.m */,
 				91EE1D6C173440A8002D2B5A /* BLPersonSummaryView.h */,
 				91EE1D6D173440A8002D2B5A /* BLPersonSummaryView.m */,
 				916E7074163B3A1D0082ECD1 /* BLProgressButton.h */,
@@ -889,6 +894,7 @@
 				91DF3455171C468B00EFD376 /* BLView.m in Sources */,
 				9119425017297B03001268BA /* BLPercentPicker.m in Sources */,
 				91EE1D6E173440A8002D2B5A /* BLPersonSummaryView.m in Sources */,
+				91EE1D71173452C1002D2B5A /* BLPersonBreakdownView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
