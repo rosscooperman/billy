@@ -18,6 +18,7 @@
 @property (nonatomic, retain) Bill *bill;
 @property (nonatomic, retain) NSSet *assignments;
 @property (nonatomic) int64_t index;
+@property (readonly) double amountOwed;
 
 @end
 

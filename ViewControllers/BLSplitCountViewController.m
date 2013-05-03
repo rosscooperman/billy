@@ -15,8 +15,10 @@
 
 
 #import "BLTaxTipViewController.h"
+#import "BLSummaryViewController.h"
 #import "BLSplitBillViewController.h"
 #import "Person.h"
+#import "Assignment.h"
 
 
 @interface BLSplitCountViewController ()
@@ -157,14 +159,25 @@
 - (void)nextScreen:(id)sender
 {
   if (self.skipAheadSwitch.on) {
-    self.bill.rawText = @"2 Bread 0.00\n2 Bread 0.00\n3 Mussels 950.00\n1 Crudo 11.00\n1 Empire White 18.00\n5 Empire White 18.00\n1 Uni 18.00\nSubtotal 77.00\nTax 6.84\nTotal 83.84";
+    // \n1 Empire White 18.00\n2 Empire White 18.00\n2 Uni 18.00
+    self.bill.rawText = @"2 Bread 0.00\n2 Bread 0.00\n2 Mussels 12.00\n2 Crudo 11.00\nSubtotal 23.00\nTax 2.04\nTotal 25.04";
     [self.bill.people enumerateObjectsUsingBlock:^(Person *person, BOOL *stop) {
       person.name = @"George";
+
+      [self.bill.lineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, BOOL *stop) {
+        Assignment *assignment = [NSEntityDescription insertNewObjectForEntityForName:@"Assignment" inManagedObjectContext:self.bill.managedObjectContext];
+        assignment.lineItem = lineItem;
+        assignment.quantity = 1;
+        assignment.person = person;
+        [person addAssignmentsObject:assignment];
+      }];
     }];
+    self.bill.taxPercentage = 0.08875;
+    self.bill.tipPercentage = 0.25;
     [self.bill.managedObjectContext save:nil];
     
-    BLTaxTipViewController *taxTipController = [[BLTaxTipViewController alloc] init];
-    [self.navigationController pushViewController:taxTipController animated:YES];
+    BLSummaryViewController *summaryController = [[BLSummaryViewController alloc] init];
+    [self.navigationController pushViewController:summaryController animated:YES];
   }
   else {
     BLNamesViewController *namesController = [[BLNamesViewController alloc] init];

@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 Eastmedia. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BLViewController.h"
 
 
-@interface BLSummaryViewController : UIViewController <UIAlertViewDelegate>
+@interface BLSummaryViewController : BLViewController <UIAlertViewDelegate>
 
 @property (nonatomic, strong) IBOutlet UIScrollView *contentArea;
 
