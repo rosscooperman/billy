@@ -25,6 +25,9 @@
 
 
 - (BLView *)viewForAssignment:(Assignment *)assignment atIndex:(NSUInteger)index;
+- (BLView *)viewForTax;
+- (BLView *)viewForSubtotal;
+- (BLView *)viewForTip;
 
 @end
 
@@ -61,37 +64,11 @@
     [self addSubview:[self viewForAssignment:assignment atIndex:i]];
   }];
   
-  self.subviewsCreated = YES;
+  [self addSubview:[self viewForTax]];
+  [self addSubview:[self viewForSubtotal]];
+  [self addSubview:[self viewForTip]];
   
-//  if (!self.leftPad) {
-//    self.leftPad = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, subviewHeight)];
-//    self.leftPad.backgroundColor = personColor;
-//    [self addSubview:self.leftPad];
-//  }
-//  
-//  if (!self.nameView) {
-//    self.nameView = [[BLPaddedLabel alloc] init];
-//    self.nameView.frame = CGRectMake(40.0f + self.borderSize, 0.0f, 190.0f, subviewHeight);
-//    self.nameView.padding = 12.0f;
-//    self.nameView.backgroundColor = personColor;
-//    self.nameView.textColor = [UIColor blackColor];
-//    self.nameView.font = [UIFont fontWithName:@"Avenir" size:17.0f];
-//    self.nameView.text = self.person.name;
-//    [self addSubview:self.nameView];
-//  }
-//  
-//  if (!self.amountView) {
-//    CGFloat width = 320.0f - 230.0f + (self.borderSize * 2.0f);
-//    self.amountView = [[BLPaddedLabel alloc] init];
-//    self.amountView.frame = CGRectMake(230.0f + (self.borderSize * 2.0f), 0.0f, width, subviewHeight);
-//    self.amountView.padding = 12.0f;
-//    self.amountView.backgroundColor = personColor;
-//    self.amountView.textColor = [UIColor blackColor];
-//    self.amountView.textAlignment = UITextAlignmentRight;
-//    self.amountView.font = [UIFont fontWithName:@"Avenir" size:17.0f];
-//    self.amountView.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithDouble:self.person.amountOwed]];
-//    [self addSubview:self.amountView];
-//  }
+  self.subviewsCreated = YES;
 }
 
 
@@ -169,6 +146,91 @@
   [assignmentView addSubview:price];
   
   return assignmentView;
+}
+
+
+- (BLView *)viewForTax
+{
+  BLView *taxView = [[BLView alloc] initWithFrame:CGRectMake(0.0f, 40.0f * self.assignments.count, 320.0f, 40.0f - self.borderSize)];
+  
+  UIView *leftPad = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 40.0f - self.borderSize)];
+  leftPad.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  [taxView addSubview:leftPad];
+  
+  BLPaddedLabel *name = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(40.0f + self.borderSize, 0.0f, 190.0f, 40.0f - self.borderSize)];
+  name.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  name.padding = 15.0f;
+  name.font = [UIFont fontWithName:@"Avenir-Heavy" size:15.0f];
+  name.text = @"Tax";
+  [taxView addSubview:name];
+  
+  BLPaddedLabel *price = [[BLPaddedLabel alloc] init];
+  price.frame = CGRectMake(230.0f + (self.borderSize * 2.0f), 0.0f, 90.0f - (self.borderSize * 2.0f), 40.0f - self.borderSize);
+  price.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  price.textAlignment = UITextAlignmentRight;
+  price.padding = 15.0f;
+  price.font = [UIFont fontWithName:@"Avenir-Heavy" size:15.0f];
+  price.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithDouble:self.ratio * self.person.bill.tax]];
+  [taxView addSubview:price];
+  
+  return taxView;
+}
+
+
+- (BLView *)viewForSubtotal
+{
+  BLView *subtotalView = [[BLView alloc] initWithFrame:CGRectMake(0.0f, 40.0f * (self.assignments.count + 1), 320.0f, 40.0f - self.borderSize)];
+  
+  UIView *leftPad = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 40.0f - self.borderSize)];
+  leftPad.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  [subtotalView addSubview:leftPad];
+  
+  BLPaddedLabel *name = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(40.0f + self.borderSize, 0.0f, 190.0f, 40.0f - self.borderSize)];
+  name.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  name.padding = 15.0f;
+  name.font = [UIFont fontWithName:@"Avenir-Heavy" size:15.0f];
+  name.text = @"Subtotal";
+  [subtotalView addSubview:name];
+  
+  BLPaddedLabel *price = [[BLPaddedLabel alloc] init];
+  price.frame = CGRectMake(230.0f + (self.borderSize * 2.0f), 0.0f, 90.0f - (self.borderSize * 2.0f), 40.0f - self.borderSize);
+  price.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  price.textAlignment = UITextAlignmentRight;
+  price.padding = 15.0f;
+  price.font = [UIFont fontWithName:@"Avenir-Heavy" size:15.0f];
+  double subtotal = self.ratio * (self.person.bill.subtotal + self.person.bill.tax);
+  price.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithDouble:subtotal]];
+  [subtotalView addSubview:price];
+
+  return subtotalView;
+}
+
+
+- (BLView *)viewForTip
+{
+  BLView *tipView = [[BLView alloc] initWithFrame:CGRectMake(0.0f, 40.0f * (self.assignments.count + 2), 320.0f, 40.0f - self.borderSize)];
+  
+  UIView *leftPad = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 40.0f - self.borderSize)];
+  leftPad.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  [tipView addSubview:leftPad];
+  
+  BLPaddedLabel *name = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(40.0f + self.borderSize, 0.0f, 190.0f, 40.0f - self.borderSize)];
+  name.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  name.padding = 15.0f;
+  name.font = [UIFont fontWithName:@"Avenir-Heavy" size:15.0f];
+  name.text = @"Tip";
+  [tipView addSubview:name];
+  
+  BLPaddedLabel *price = [[BLPaddedLabel alloc] init];
+  price.frame = CGRectMake(230.0f + (self.borderSize * 2.0f), 0.0f, 90.0f - (self.borderSize * 2.0f), 40.0f - self.borderSize);
+  price.backgroundColor = [UIColor colorWithRed:0.80784f green:0.85882f blue:0.90588f alpha:1.0f];
+  price.textAlignment = UITextAlignmentRight;
+  price.padding = 15.0f;
+  price.font = [UIFont fontWithName:@"Avenir-Heavy" size:15.0f];
+  price.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithDouble:self.ratio * self.person.bill.tip]];
+  [tipView addSubview:price];
+  
+  return tipView;
 }
 
 @end
