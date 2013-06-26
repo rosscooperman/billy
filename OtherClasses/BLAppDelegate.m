@@ -38,7 +38,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   // get TestFlight going
-  [TestFlight takeOff:@"134067a92dbd350b70e07b40809e70ce_OTUyMTcyMDEyLTA1LTMwIDE5OjI5OjUxLjIyNjkzNg"];
+  [TestFlight takeOff:@"0659cf99-b18b-4a46-9fa8-a7bc8f28d447"];
   
   // every app deserves a window
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
