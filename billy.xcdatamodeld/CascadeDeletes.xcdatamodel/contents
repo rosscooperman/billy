@@ -17,8 +17,8 @@
         <attribute name="tax" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="tip" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="total" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="lineItems" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="LineItem" inverseName="bill" inverseEntity="LineItem" syncable="YES"/>
-        <relationship name="people" optional="YES" toMany="YES" minCount="2" maxCount="8" deletionRule="Nullify" destinationEntity="Person" inverseName="bill" inverseEntity="Person" syncable="YES"/>
+        <relationship name="lineItems" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="LineItem" inverseName="bill" inverseEntity="LineItem" syncable="YES"/>
+        <relationship name="people" optional="YES" toMany="YES" minCount="2" maxCount="8" deletionRule="Cascade" destinationEntity="Person" inverseName="bill" inverseEntity="Person" syncable="YES"/>
     </entity>
     <entity name="LineItem" representedClassName="LineItem" syncable="YES">
         <attribute name="deleted" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
@@ -26,13 +26,13 @@
         <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="price" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="quantity" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
-        <relationship name="assignments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="lineItem" inverseEntity="Assignment" syncable="YES"/>
+        <relationship name="assignments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Assignment" inverseName="lineItem" inverseEntity="Assignment" syncable="YES"/>
         <relationship name="bill" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Bill" inverseName="lineItems" inverseEntity="Bill" syncable="YES"/>
     </entity>
     <entity name="Person" representedClassName="Person" syncable="YES">
         <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="assignments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Assignment" inverseName="person" inverseEntity="Assignment" syncable="YES"/>
+        <relationship name="assignments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Assignment" inverseName="person" inverseEntity="Assignment" syncable="YES"/>
         <relationship name="bill" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Bill" inverseName="people" inverseEntity="Bill" syncable="YES"/>
     </entity>
     <elements>

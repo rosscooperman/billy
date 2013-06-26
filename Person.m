@@ -26,7 +26,9 @@
 {
   __block double amount = 0.0f;
   [self.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, BOOL *stop) {
-    amount += ((double)assignment.quantity / (double)assignment.lineItem.quantity) * assignment.lineItem.price;
+    if (assignment.lineItem.quantity > 0) {
+      amount += ((double)assignment.quantity / (double)assignment.lineItem.quantity) * assignment.lineItem.price;
+    }
   }];
   
   double ratio = amount / self.bill.subtotal;

@@ -57,7 +57,7 @@
   
   __block NSUInteger currentIndex = 0;
   [sortedLineItems enumerateObjectsUsingBlock:^(LineItem *lineItem, NSUInteger i, BOOL *stop) {
-    if (!lineItem.deleted && lineItem.quantity > 0.0 && lineItem.price > 0) {
+    if (lineItem.quantity > 0 && lineItem.price > 0) {
       BLLineItem *lineItemView = [[BLLineItem alloc] initWithLineItem:lineItem atIndex:currentIndex++];
       [lineItemView addTarget:self action:@selector(lineItemTapped:) forControlEvents:UIControlEventTouchUpInside];
       [self.contentArea addSubview:lineItemView];

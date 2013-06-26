@@ -225,6 +225,8 @@
 		916E7075163B3A1D0082ECD1 /* BLProgressButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BLProgressButton.m; path = CustomUI/BLProgressButton.m; sourceTree = "<group>"; };
 		916E7077163B3F5C0082ECD1 /* navButtonBack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = navButtonBack.png; sourceTree = "<group>"; };
 		916E7078163B3F5C0082ECD1 /* navButtonBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navButtonBack@2x.png"; sourceTree = "<group>"; };
+		916FC7C6177B77A4007FD8E4 /* CascadeDeletes.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = CascadeDeletes.xcdatamodel; sourceTree = "<group>"; };
+		916FC7C7177B7835007FD8E4 /* RemoveLineItemDeletedColumn.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = file; path = RemoveLineItemDeletedColumn.xcdatamodel; sourceTree = "<group>"; };
 		9182241515F12F0400A6CDCF /* AddFeedbackSettingsToBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddFeedbackSettingsToBill.xcdatamodel; sourceTree = "<group>"; };
 		9182241615F139D400A6CDCF /* AddImageURLDataToBill.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AddImageURLDataToBill.xcdatamodel; sourceTree = "<group>"; };
 		9182242715F90A5A00A6CDCF /* libASIHTTPRequest.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libASIHTTPRequest.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1143,6 +1145,8 @@
 		9155237F15B07A8C00F2F539 /* billy.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				916FC7C6177B77A4007FD8E4 /* CascadeDeletes.xcdatamodel */,
+				916FC7C7177B7835007FD8E4 /* RemoveLineItemDeletedColumn.xcdatamodel */,
 				9182241615F139D400A6CDCF /* AddImageURLDataToBill.xcdatamodel */,
 				9182241515F12F0400A6CDCF /* AddFeedbackSettingsToBill.xcdatamodel */,
 				91E62CEA15C7120F00E3AD5D /* AddCreatedAtForBill.xcdatamodel */,
@@ -1152,7 +1156,7 @@
 				9155239E15B0986E00F2F539 /* AddSplitterEntity.xcdatamodel */,
 				9155238015B07A8C00F2F539 /* billy.xcdatamodel */,
 			);
-			currentVersion = 9182241615F139D400A6CDCF /* AddImageURLDataToBill.xcdatamodel */;
+			currentVersion = 916FC7C7177B7835007FD8E4 /* RemoveLineItemDeletedColumn.xcdatamodel */;
 			path = billy.xcdatamodeld;
 			sourceTree = SOURCE_ROOT;
 			versionGroupType = wrapper.xcdatamodel;

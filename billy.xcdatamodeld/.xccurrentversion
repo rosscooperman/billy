@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>_XCCurrentVersionName</key>
-	<string>AddImageURLDataToBill.xcdatamodel</string>
+	<string>RemoveLineItemDeletedColumn.xcdatamodel</string>
 </dict>
 </plist>
