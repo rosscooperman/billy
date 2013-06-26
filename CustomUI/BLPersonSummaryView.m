@@ -19,9 +19,6 @@
 @property (nonatomic, strong) NSNumberFormatter *priceFormatter;
 @property (readonly) CGFloat borderSize;
 
-
-- (void)tapped:(UITapGestureRecognizer *)recognizer;
-
 @end
 
 
@@ -77,14 +74,6 @@
     self.amountView.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithDouble:self.person.amountOwed]];
     [self addSubview:self.amountView];
   }
-}
-
-
-#pragma mark - Action Methods
-
-- (void)tapped:(UITapGestureRecognizer *)recognizer
-{
-  TFLog(@"%@ got tapped", self.person.name);
 }
 
 

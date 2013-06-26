@@ -57,7 +57,6 @@
 {
   if (self.subviewsCreated) return;
   
-//  CGFloat subviewHeight = 40.0f - self.borderSize;
   self.backgroundColor = [UIColor colorWithRed:0.55294f green:0.78431f blue:0.65098f alpha:1.0f];
     
   [self.assignments enumerateObjectsUsingBlock:^(Assignment *assignment, NSUInteger i, BOOL *stop) {
@@ -121,6 +120,7 @@
 - (BLView *)viewForAssignment:(Assignment *)assignment atIndex:(NSUInteger)index
 {
   BLView *assignmentView = [[BLView alloc] initWithFrame:CGRectMake(0.0f, 40.0f * index, 320.0f, 40.0f - self.borderSize)];
+  double assignmentRatio = (double)assignment.quantity / (double)assignment.lineItem.quantity;
   
   BLPaddedLabel *quantity = [[BLPaddedLabel alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 40.0f, 40.0f - self.borderSize)];
   quantity.backgroundColor = [UIColor colorWithRed:0.8549f green:0.89804f blue:0.92941f alpha:1.0f];
@@ -142,7 +142,7 @@
   price.textAlignment = UITextAlignmentRight;
   price.padding = 15.0f;
   price.font = [UIFont fontWithName:@"Avenir" size:15.0f];
-  price.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithDouble:self.ratio * assignment.lineItem.price]];
+  price.text = [self.priceFormatter stringFromNumber:[NSNumber numberWithDouble:assignmentRatio * assignment.lineItem.price]];
   [assignmentView addSubview:price];
   
   return assignmentView;
