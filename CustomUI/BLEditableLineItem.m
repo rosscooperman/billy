@@ -306,28 +306,25 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
   BOOL returnValue = YES;
+  NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
   
   if (textField == self.quantity) {
-    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSCharacterSet *nonDigitsSet = [[NSCharacterSet decimalDigitCharacterSet] invertedSet];
     NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
     returnValue = nonDigitRange.location == NSNotFound;
+    if (returnValue) self.lineItem.quantity = [newString integerValue];
   }
   else if (textField == self.price) {
-    NSString *newString = [textField.text stringByReplacingCharactersInRange:range withString:string];
     NSCharacterSet *nonDigitsSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
     NSRange nonDigitRange = [newString rangeOfCharacterFromSet:nonDigitsSet];
     returnValue = nonDigitRange.location == NSNotFound;
+    if (returnValue) self.lineItem.price = [newString doubleValue];
+  }
+  else if (textField == self.name) {
+    self.lineItem.desc = newString;
   }
   
-  if (returnValue) {
-    self.lineItem.quantity = [self.quantity.text integerValue];
-    self.lineItem.desc = self.name.text;
-    self.lineItem.price = [self.price.text floatValue];
-    
-    [self.lineItem.managedObjectContext save:nil];
-  }
-  
+  if (returnValue) [self.lineItem.managedObjectContext save:nil];  
   return returnValue;
 }
 

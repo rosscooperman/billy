@@ -14,9 +14,11 @@
 #import "Bill.h"
 
 
+// these imports are only for the shortcut in development functionality
 #import "BLTaxTipViewController.h"
 #import "BLSummaryViewController.h"
 #import "BLSplitBillViewController.h"
+#import "BLFixItemsViewController.h"
 #import "Person.h"
 #import "Assignment.h"
 
@@ -176,8 +178,8 @@
     self.bill.tipPercentage = 0.25;
     [self.bill.managedObjectContext save:nil];
     
-    BLSummaryViewController *summaryController = [[BLSummaryViewController alloc] init];
-    [self.navigationController pushViewController:summaryController animated:YES];
+    BLFixItemsViewController *shortcutController = [[BLFixItemsViewController alloc] init];
+    [self.navigationController pushViewController:shortcutController animated:YES];
   }
   else {
     BLNamesViewController *namesController = [[BLNamesViewController alloc] init];

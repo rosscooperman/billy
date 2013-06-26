@@ -154,6 +154,7 @@
 						<string key="NSFrame">{{205, 405}, {110, 50}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">1</int>
@@ -228,27 +229,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">previousScreenButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="703766812"/>
-					</object>
-					<int key="connectionID">21</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">addLineItemButton</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="553724778"/>
 					</object>
 					<int key="connectionID">28</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">nextScreenButton</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="109942440"/>
-					</object>
-					<int key="connectionID">24</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletCollectionConnection" key="connection">
@@ -419,8 +404,6 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="addLineItemButton">UIButton</string>
 						<string key="contentArea">BLScrollView</string>
-						<string key="nextScreenButton">UIButton</string>
-						<string key="previousScreenButton">UIButton</string>
 						<string key="tapRecognizer">UITapGestureRecognizer</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
@@ -431,14 +414,6 @@
 						<object class="IBToOneOutletInfo" key="contentArea">
 							<string key="name">contentArea</string>
 							<string key="candidateClassName">BLScrollView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="nextScreenButton">
-							<string key="name">nextScreenButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="previousScreenButton">
-							<string key="name">previousScreenButton</string>
-							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="tapRecognizer">
 							<string key="name">tapRecognizer</string>

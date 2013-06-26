@@ -26,7 +26,6 @@
 
 @interface BLFixItemsViewController ()
 
-@property (nonatomic, strong) NSMutableArray *dataFields;
 @property (nonatomic, strong) Bill *bill;
 @property (nonatomic, strong) UIView *contentBackground;
 @property (nonatomic, assign) CGFloat borderWidth;
@@ -37,7 +36,6 @@
 - (void)managedObjectChanged:(NSNotification *)notification;
 - (void)lineItemsRemoved:(NSArray *)lineItems;
 - (void)lineItemsAdded:(NSArray *)lineItems;
-- (BOOL)validateLineItems;
 
 @end
 
@@ -45,11 +43,8 @@
 @implementation BLFixItemsViewController
 
 @synthesize contentArea;
-@synthesize nextScreenButton;
-@synthesize previousScreenButton;
 @synthesize addLineItemButton;
 @synthesize tapRecognizer;
-@synthesize dataFields;
 @synthesize bill;
 @synthesize contentBackground;
 @synthesize borderWidth;
@@ -229,28 +224,6 @@
 }
 
 
-- (BOOL)validateLineItems
-{
-  __block BOOL valid = YES;
-  [self.dataFields enumerateObjectsUsingBlock:^(NSDictionary *fields, NSUInteger idx, BOOL *stop) {
-    [fields enumerateKeysAndObjectsUsingBlock:^(NSString *key, UITextField *field, BOOL *stop) {
-      if (!field.enabled) {
-        return;
-      }
-      else if (field.text.length <= 0) {
-        field.backgroundColor = [UIColor redColor];
-        valid = NO;
-      }
-      else {
-        // HERE BE WHERE A LITTLE TRIANGLE WILL GET ADDED
-        //field.backgroundColor = [UIColor colorWithWhite:0.88627451 alpha:1.0];
-      }
-    }];    
-  }];
-  return valid;
-}
-
-
 #pragma mark - IBAction Methods
 
 - (void)contentAreaTapped:(UITapGestureRecognizer *)recognizer
@@ -269,10 +242,8 @@
 
 - (void)acceptChanges:(id)sender
 {
-  if ([self validateLineItems]) {
-    BLSplitBillViewController *splitBillController = [[BLSplitBillViewController alloc] init];
-    [self.navigationController pushViewController:splitBillController animated:YES];
-  }
+  BLSplitBillViewController *splitBillController = [[BLSplitBillViewController alloc] init];
+  [self.navigationController pushViewController:splitBillController animated:YES];
 }
 
 
