@@ -28,6 +28,7 @@
 @property (nonatomic, assign) BOOL isPanning;
 @property (nonatomic, strong) UIImageView *redDelete;
 @property (nonatomic, strong) UIImageView *greyDelete;
+@property (readonly) NSNumberFormatter *moneyFormatter;
 
 
 - (void)createSubviews;
@@ -50,6 +51,7 @@
 @synthesize border;
 @synthesize redDelete;
 @synthesize greyDelete;
+@synthesize moneyFormatter = _moneyFormatter;
 
 
 #pragma mark - Object Lifecycle
@@ -139,9 +141,9 @@
   // create the price text box
   CGRect priceFrame = CGRectMake(320.0f - PRICE_WIDTH + self.border, self.border, PRICE_WIDTH - (self.border * 2.0f), HEIGHT - self.border);
   self.price = [self textFieldWithFrame:priceFrame];
-  self.price.text = (self.lineItem.price > 0.0) ? [NSString stringWithFormat:@"%.2f", self.lineItem.price] : @"";
+  self.price.text = (self.lineItem.price > 0.0) ? [self.moneyFormatter stringFromNumber:[NSNumber numberWithDouble:self.lineItem.price]] : @"";
   self.price.textAlignment = UITextAlignmentRight;
-  self.price.placeholder = @"0.00";
+  self.price.placeholder = [self.moneyFormatter stringFromNumber:[NSNumber numberWithDouble:0.0f]];
   self.price.returnKeyType = UIReturnKeyDone;
   [self.fieldWrapper addSubview:self.price];
   
@@ -286,6 +288,16 @@
 }
 
 
+- (NSNumberFormatter *)moneyFormatter
+{
+  if (!_moneyFormatter) {
+    _moneyFormatter = [[NSNumberFormatter alloc] init];
+    _moneyFormatter.numberStyle = NSNumberFormatterCurrencyStyle;
+  }
+  return _moneyFormatter;
+}
+
+
 #pragma mark - UITextFieldDelegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -300,6 +312,22 @@
     }
   }
   return NO;
+}
+
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+  if (textField == self.price) {
+    textField.text = (self.lineItem.price > 0.0f) ? [NSString stringWithFormat:@"%.2f", self.lineItem.price] : @"";
+  }
+}
+
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+  if (textField == self.price) {
+    textField.text = [self.moneyFormatter stringFromNumber:[NSNumber numberWithDouble:self.lineItem.price]];
+  }
 }
 
 
